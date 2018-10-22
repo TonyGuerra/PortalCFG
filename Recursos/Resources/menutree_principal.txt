@@ -1,0 +1,33 @@
+<html>
+<head>
+<meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+
+<script type="text/javascript">
+
+function Contrair(dimensao){
+    if( Frame2.cols==dimensao ) {
+        Frame2.cols="200,6,*";
+    } else {
+        Frame2.cols=dimensao;
+        hmnavigation.scrolling="no";
+    }
+}
+
+</script>
+
+</head>
+
+  <frameset id="Frame1" name="Frame1" rows="90,*" frameborder="0" framespacing="1">
+  <frame id="hmheader" name="hmheader" marginwidth="0" marginheight="0" scrolling="No" noresize src='menutree_cabecalho?{"login":"!XLOGIN!","sessao":"!XSESSAO!"}' " title="Header">
+  <frameset id="Frame2" cols="200,6,*" frameborder="1" framespacing="1">
+    <frame id="hmnavigation" name="hmnavigation"  scrolling="no" src='menutree_esquerdo?{"login":"!XLOGIN!","sessao":"!XSESSAO!"}' title="Navigation frame">
+    <frame id="hmlinha" name="hmlinha" src="linha_vertical" marginwidth="5" marginheight="0" scrolling="No" title="Content frame">
+    <frame id="hmcontent" name="hmcontent" src='menutree_explicativo?{"login":"!XLOGIN!","sessao":"!XSESSAO!"}' " title="Content frame"> 
+  </frameset>
+    <noframes>
+      Esta p&aacutegina requer Frames!
+    </noframes>
+  </frameset>
+
+</html>

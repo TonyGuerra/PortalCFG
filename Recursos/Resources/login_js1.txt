@@ -1,0 +1,23 @@
+		function AppViewModel() {
+		    var self = this;
+		    self.cLogin    = ko.observable("");
+		    self.cPassword = ko.observable("");
+
+		    self.save = function() {
+		        $.ajax("valida_login", {
+		            data: ko.toJSON({ login: self.cLogin, senha: self.cPassword }),
+		            type: "post", contentType: "application/json",
+		            success: function(result) {
+		                         if( result.indexOf('ERRO') >= 0 ){
+		                             alert(result.substr(0,result.length-8)) ;
+		                         } else {
+		                             document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: result })
+		                             document.form1.action = "autentica_login";
+		                             document.form1.submit();
+		                         }
+		                     }
+		        });
+		    };
+		}
+
+		ko.applyBindings(new AppViewModel());

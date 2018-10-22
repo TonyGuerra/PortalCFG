@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <title>Cabe&ccedilalho do Menu</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+function fMeudiv(cTrace, cValor) {
+       if  (cTrace == '') {
+           document.form1.cTrace.value =  cValor;
+       } else {
+           document.form1.cTrace.value =  cTrace+cValor;
+      }
+
+       meudiv.innerHTML =  document.form1.cTrace.value;
+}
+
+</script>
+
+</head>
+ 
+ <body>
+
+<form id="form1" method="post" name="form1" action="">
+<input id="cTrace" type="hidden" value="" name="cTrace">
+
+<table width="100%" height="10px" background="topo_fundo.png" border="0" cellpadding="0" cellspacing="0">
+     <tr align="left">
+          <td height="40" width="20"></td><td height="40"><img src="topo_logo.png" align="left" border="0" height="40" width="170"></td>
+     </tr>
+     <tr>
+         <td height="20" colspan="3" background="topo1_fundo.gif" align="left" border="0" cellpadding="0" cellspacing="0" >&nbsp;</td>
+     </tr>
+    </tbody>
+</table>
+
+<b><div id="meudiv" name="meudiv" style="WIDTH: 100%; POSITION: absolute; COLOR: white; TOP: 10px" align="right">
+</div></b>
+
+<table 
+      <tr style="background-color: white">
+        <td height="32" align="left" cellspacing="0" cellpadding="0" style="width:300px">
+          <a href="javascript:parent.Contrair('0,6,*');">
+          <ul>
+            <li>Menu</li>
+          </ul>
+          </a>
+        </td>
+        <td id="meutd1" name="meutd1" style="width:100px"></td>
+        <td id="meutd2" name="meutd2" style="width:100px"></td>
+        <td id="meutd3" name="meutd3" style="width:100px"></td>
+      </tr>
+</table>
+<hr style="position:relative;top:-20px;left:-12px;width: 110%">
+</form>
+
+</body>
+</html>

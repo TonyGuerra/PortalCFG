@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <title>PortalCFG</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type='text/javascript' src='knockout.js'></script>
+    <script type="text/javascript" src="json2.js"></script>
+</head>
+
+<style>
+
+    .posicionar {
+        position: absolute;
+        margin: auto;
+    }
+</style>
+
+<body>
+
+    <table width="100%" height="10px" background="topo_fundo.png" border="0" cellpadding="0" cellspacing="0">
+        <tr align="left">
+            <td height="40" width="20"></td>
+            <td height="40"><img src="topo_logo.png" align="left" border="0" height="40" width="190"></td>
+        </tr>
+        <tr>
+            <td height="32" colspan="3" background="topo1_fundo.gif" align="right" border="0" cellpadding="0" cellspacing="0"></td>
+        </tr>
+    </table>
+
+    <Form name="form1" id="form1" action="" method="post">
+
+        <input type="hidden" id="dados" name="dados" value="" />
+
+        <div class="posicionar" style="bottom:0; left:35%; height: 53%; text-align:right; width:40px;">Login:</div>
+        <div class="posicionar" style="bottom:0; left:40%; height: 53%;"><Input TYPE=text data-bind="value: cLogin" style="border-color:#808080;border-width:0.1mm;" MaxLength=15 SIZE=20 /></div>
+        <div class="posicionar" style="bottom:0; left:35%; height: 47%; text-align:right; width:40px;">Senha:</div>
+        <div class="posicionar" style="bottom:0; left:40%; height: 47%;"><Input TYPE=password data-bind="value: cPassword" style="border-color:#808080;border-width:0.1mm;" MaxLength=08 SIZE=10 /></div>
+
+        <div class="posicionar" style="bottom:0; left:40%; height: 41%;"><button data-bind="click: save" style="border-color:#808080;border-width:0.1mm;" SIZE=10>Ok</Input></div>
+
+        <!--<div class="posicionar" style="bottom:0; left:45%; height: 41%;"><a href="javascript:esqueci()">Esqueci minha senha</a></div>-->
+    </Form>
+
+
+    <script type="text/javascript">
+		function AppViewModel() {
+		    var self = this;
+		    self.cLogin    = ko.observable("");
+		    self.cPassword = ko.observable("");
+
+		    self.save = function() {
+		        $.ajax("valida_login", {
+		            data: ko.toJSON({ login: self.cLogin, senha: self.cPassword }),
+		            type: "post", contentType: "application/json",
+		            success: function(result) {
+		                         if( result.indexOf('ERRO') >= 0 ){
+		                             alert(result) ;
+		                         } else {
+		                             document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: result })
+		                             document.form1.action = "autentica_login";
+		                             document.form1.submit();
+		                         }
+		                     }
+		        });
+		    };
+		}
+
+		ko.applyBindings(new AppViewModel());
+	</script>
+
+</body>
+</html>

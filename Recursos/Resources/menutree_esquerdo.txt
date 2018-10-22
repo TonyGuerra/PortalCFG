@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="robots" content="all" />
+<meta charset='UTF-8'>
+<title>PortalCFG</title>
+<link href="/css/dcaccordion.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type='text/javascript' src='jquery.cookie.js'></script>
+<script type='text/javascript' src='jquery.hoverIntent.minified.js'></script>
+<script type='text/javascript' src='jquery.dcjqaccordion.2.7.min.js'></script>
+<script type="text/javascript">
+$(document).ready(function($){
+$('#accordion-1').dcAccordion({
+eventType: 'click',
+autoClose: true,
+saveState: true,
+disableLink: true,
+speed: 'slow',
+showCount: false,
+autoExpand: true,
+cookie: 'dcjq-accordion-1',
+classExpand : 'dcjq-current-parent'
+});
+});
+
+function fLogin() {
+     top.window.location="./login";
+}
+</script>
+<link href="grey.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="grey demo-container" style="left: 0px; top: 0px">
+<ul class="accordion" id="accordion-1" style="left: 0px; top: 0px">
+<li><a href=javascript:fLogin() target="hmcontent">Sair (!XLOGIN!)</a></li>
+
+  !XMENUTROCA!
+
+</ul>
+</div>
+
+<div style="height: 350px">&nbsp;</div>
+</body>
+</html>
