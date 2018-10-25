@@ -218,7 +218,7 @@ namespace Recursos
 
                 cHtml = Generico(request, MeuDB, MeuLib, cMeuPath, cDados);
 
-                if (cHtml.Contains("Sessão Expirou")) { break; }
+                if (cHtml.Contains("Sessao Expirou")) { break; }
 
                 //Registrar os cookies
                 Cookie MeuCookie = new Cookie();
@@ -258,7 +258,7 @@ namespace Recursos
 
                 cHtml = Generico(request, MeuDB, MeuLib, cMeuPath, cDados);
 
-                if  (cHtml.Contains("Sessão Expirou")) { break; }
+                if  (cHtml.Contains("Sessao Expirou")) { break; }
 
                 //Registrar os cookies
                 Cookie MeuCookie = new Cookie();
