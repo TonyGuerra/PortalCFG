@@ -551,6 +551,76 @@ namespace Recursos
                 cHtml = cHtml.Replace("!XTRACE1!", cTrace      );
                 cHtml = cHtml.Replace("!XTRACE2!", cTrace.ToUpper());
 
+                //--------------- Grupos de Browser --------------------------------------------------
+
+                List<string> listGrupo = Grupos(MeuDB, cTabela);
+
+                //--------------- Campos -------------------------------------------------------------
+
+                cQuery = string.Format("SELECT idSequencial, CAMPO, TITULO, TAMANHO, FILTRO, FILTRODE, FILTROATE FROM aa41campos WHERE id0aa40tabelas = {0} and FILTRO <> 1", cTabela);
+
+                //Opções de Menu do usuário
+                campos = new List<string>(new string[] { "idSequencial", "CAMPO", "TITULO", "TAMANHO", "FILTRO", "FILTRODE", "FILTROATE" });
+
+                list = MeuDB.Select(cQuery, campos);
+
+                //--------------- Filtros -------------------------------------------------------------
+                string cAux = "";
+
+                for (int i = 0; i < list[0].Count; i++)
+                {
+
+                    if (list[4][i] == "2")
+                    {
+                        //Parametro de:
+                        cAux += "<div><TABLE style='width: 100 %; '>";
+                        cAux += string.Format("<td style='left: 030px; width: 160px; text-align:right; font-size:11pt; '>{0} de:</td>", list[2][0]); //Titulo
+                        cAux += "<td style='left: 170px;'>";
+                        cAux += string.Format("<Input TYPE=text ID='X{0}1' NAME='X{1}1' VALUE='{2}' style='border-color:#808080; border-width:thin;' MaxLength={3} SIZE={4} />", list[1][0], list[1][0], list[5][0], list[3][0], list[3][0]);
+                        cAux += "</td></TABLE></div>";
+                        //Parametro ate:
+                        cAux += "<div><TABLE style='width: 100 %; '>";
+                        cAux += string.Format("<td style='left: 030px; width: 160px; text-align:right; font-size:11pt; '>{0} ate:</td>", list[2][0]); //Titulo
+                        cAux += "<td style='left: 170px;'>";
+                        cAux += string.Format("<Input TYPE=text ID='X{0}2' NAME='X{1}2' VALUE='{2}' style='border-color:#808080; border-width:thin;' MaxLength={3} SIZE={4} />", list[1][0], list[1][0], list[6][0], list[3][0], list[3][0]);
+                        cAux += "</td></TABLE></div>";
+                    }
+                    else if (list[4][i] == "3")
+                    {
+                        //Parametro parcial:
+                        cAux += "<div><TABLE style='width: 100 %; '>";
+                        cAux += string.Format("<td style='left: 030px; width: 160px; text-align:right; font-size:11pt; '>{0} [contem]:</td>", list[2][0]); //Titulo
+                        cAux += "<td style='left: 170px;'>";
+                        cAux += string.Format("<Input TYPE=text ID='X{0}1' NAME='X{1}1' VALUE='' style='border-color:#808080; border-width:thin;' MaxLength={2} SIZE={3} />", list[1][0], list[1][0], list[3][0], list[3][0]);
+                        cAux += "</td></TABLE></div>";
+                    }
+                    else if (list[4][i] == "4")
+                    {
+                        //Parametro integral:
+                        cAux += "<div><TABLE style='width: 100 %; '>";
+                        cAux += string.Format("<td style='left: 030px; width: 160px; text-align:right; font-size:11pt; '>{0}:</td>", list[2][0]); //Titulo
+                        cAux += "<td style='left: 170px;'>";
+                        cAux += string.Format("<Input TYPE=text ID='X{0}1' NAME='X{1}1' VALUE='' style='border-color:#808080; border-width:thin;' MaxLength={2} SIZE={3} />", list[1][0], list[1][0], list[3][0], list[3][0]);
+                        cAux += "</td></TABLE></div>";
+                    }
+
+                    for (int j = 0; j < listGrupo.Count; j++)
+                    {
+                        if (listGrupo[j] == list[0][i]) //Id
+                        {
+                            //Parametro parcial:
+                            cAux += "<div><TABLE style='width: 100 %; '>";
+                            cAux += string.Format("<td style='left: 030px; width: 160px; text-align:right; font-size:11pt; '>{0} [contem]:</td>", list[2][0]); //Titulo
+                            cAux += "<td style='left: 170px;'>";
+                            cAux += string.Format("<Input TYPE=text ID='X{0}1' NAME='X{1}1' VALUE='' style='border-color:#808080; border-width:thin;' MaxLength={2} SIZE={3} />", list[1][0], list[1][0], "50", "50");
+                            cAux += "</td></TABLE></div>";
+                        }
+                    }
+
+                }
+
+                cHtml = cHtml.Replace("!XPARAMETROS!", cAux);
+                cHtml = cHtml.Replace("!XFILTRARSN!", "S");
 
             } while (false);
 
