@@ -101,6 +101,7 @@ namespace PortalCFG
                                 var cNome = ctx.Request.Url.LocalPath;
                                 cNome = cNome.Replace(".", "_");
                                 cNome = cNome.Replace("/" + Program.cRaiz + "/", "");
+                                cNome = cNome.Replace("images/", "");
 
                                 if (ContainsLoop(ctx.Request.Url.LocalPath))
                                 {

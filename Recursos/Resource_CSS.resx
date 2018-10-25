@@ -118,43 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="autentica_login" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\autentica_login.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="default_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\default_css.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Login" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Login.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="grey_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\grey.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="menutree_cabecalho" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\menu_cabecalho.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="menutree_esquerdo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\menutree_esquerdo.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="menutree_explicativo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\menu_explicativo.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="menutree_principal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\menutree_principal.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="topo1_fundo_gif" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\topo1_fundo.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="topo_fundo_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\topo_fundo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="topo_logo_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\topo_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="arrow_grey_down_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\arrow_grey_down.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="arrow_grey_right_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\arrow_grey_right.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="bg_grey_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\bg_grey.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="tabelas_filtro" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\tabelas_filtro.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="PortalCFG_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\PortalCFG.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

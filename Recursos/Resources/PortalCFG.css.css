@@ -1,0 +1,223 @@
+body {
+       background: #FFFFFF;
+    }
+
+html, body {  
+             min-height: 100%; /*Sets the min height to the   height of the viewport.*/  
+             width: 100%;  height: 100%; /*Effectively, this is min height   
+                                                  for IE5+/Win, since IE wrongly expands   
+                                                  an element to enclose its content.   
+                                                  This mis-behavior screws up modern    
+                                                  browsers*/  
+             margin: 0;  padding: 0;
+          } 
+
+html>body {  height: auto; /*this undoes the IE hack, hiding it   
+                                                     from IE using the child selector*/
+          }
+
+table, th, td {
+    border-spacing: 4px;
+    border-collapse: separate;
+border-left-color: red;
+}
+
+input, select {
+  border-radius: 4px;
+  height: 22px;
+  padding-left:3px;
+  border-color:#808080; 
+  border-width:thin;
+}
+
+href {
+	text-decoration: none;
+}
+
+#xTitulo {
+	    background: #0096FF url("/images/ui-bg_highlight-soft_75_azul_1x100.png") 50% 50% repeat-x;
+	    height: 0.7cm;
+	    width: 100%;
+	    color: #FFFFFF;
+	  } 
+
+#xTitulo2 {
+	    background: #DFEFFE;
+	    height: 0.7cm;
+	    width: 100%;
+	    color: #0096FF;
+	  } 
+
+#xTitulo3 {
+	    background: #F2F9FF;
+	    height: 0.7cm;
+	    width: 100%;
+	    color: #0096FF;
+	  } 
+
+#xTituloErro {
+	       background: #FF0000;
+	       height: 1.5cm;
+	       width: 100%;
+	       color: #FFFFFF;
+	     }
+
+#xcolunaesquerda1 {
+		position:relative;
+               	width:140px;
+		text-align:right;
+		margin-top:1mm;
+		float:left;
+        	color:#0096FF;
+                font-size:11pt;
+} 
+
+#xcolunaesquerda2 {
+               	position:relative;
+		width:auto;
+		float:left;
+		margin-left:1mm;
+		margin-top:0.8mm;
+} 
+
+#xcolunaesquerda3 {
+               	position:relative;
+                width:84%;
+		float:left;
+		margin-left:1mm;
+		margin-top:0.8mm;
+} 
+
+#xSubTitulo {
+	       background: #FFFFFF;
+	       height: 1.5cm;
+	       width: 100%;
+	       color: #FF0000;
+	     } 
+#xLinhaFina {
+	       background: #0096FF;
+	       height: 0.02cm;
+	       width: 100%;
+	       color: #FFFFFF;
+	    } 
+
+#xTituloEsq {
+	      text-align: right; 
+	    } 
+
+#xRodape {
+	     position: absolute;  
+             bottom: -5;  
+             width: 100%;
+	     background: #FFFFFF;
+  	     height: 0.2cm;
+	  }
+
+#xFundoCinza {
+	       background: #0080FF;
+	       height: 100%;
+	       width: 100%;
+	       color: #FFFFFF;
+	    } 
+
+
+.Cordefundo {
+	    background: #F2F9FF;
+	    height: 0.7cm;
+	    width: 100%;
+	    color: #0096FF;
+            position:relative; 
+            width:100%;
+            height:7mm;
+            display:inline-table;
+	  } 
+
+.SemCordefundo {
+	    background: #FFFFFF;
+	    height: 0.7cm;
+	    width: 100%;
+	    color: #0096FF;
+            position:relative; 
+            width:100%;
+            height:7mm;
+            display:inline-table;
+	  } 
+
+.NadaCordefundo {
+	    display: none;
+	  } 
+
+.Cordelinha {
+	    background: #F2F9FF;
+	  } 
+
+.SemCordelinha {
+	    background: #FFFFFF;
+	  } 
+
+.CorExclinha {
+	    background: #E2E1DE;
+	  } 
+
+
+	  
+.alignleftTitulo {
+              position: relative;
+  	      top: -14%;
+	      float: left;
+  	      font-weight: bold;
+	      font-size: 16pt;
+	   }
+
+.alignleft {
+              position: relative;
+	      float: left;
+	   }
+
+.alignright {
+           position: relative;
+	       float: right;
+	    }
+				
+.posicionar  { 
+  	    	 position: absolute;
+  		 margin: auto;
+	     }		   
+
+.livre  { 
+  	    position: absolute;
+	    color: #0080FF;  
+        }
+
+
+.leftTitulo {
+	      float: left;
+              width:40%;
+	   }
+
+
+
+h3 {
+  color: #FF0000;
+  font-weight: bold;
+  font-size: 18pt;
+}
+
+.BordaDiv {
+    border:solid #0096FF 1px;
+    padding:10px 5px 10px 5px;
+    margin:12px 12px 12px 25px;
+}
+
+ .TabControl{ position:relative; left:3px; } 
+ .TabControl #header{ width:100%; border: solid 0px; overflow:hidden; height:25px; cursor:hand} 
+ .TabControl #content{ width:100%; border: solid 1px; border-color: #0096FF; overflow:hidden; } 
+ .TabControl .abas{display:inline;} 
+ .TabControl .abas li{float:left} 
+ .aba{width:100px; height:30px; border:solid 1px; border-radius:5px 5px 0 0; border-color: #3366ff; text-align:center; padding-top:5px; background:white; color:#3399ff;} 
+ .ativa{width:100px; height:30px; border:solid 1 px; border-radius:5px 5px 0 0; text-align:center; padding-top:5px; background:white; color:#3399ff} 
+ .ativa span, .selected span{ color:blue; } 
+ .TabControl #content{background:white} 
+ .TabControl .conteudo{width:100%; background:white; display:none;color:black} 
+ .selected{width:100px; height:30px; border:solid 1 px; border-radius:5px 5px 0 0; text-align:center; padding-top:5px; background:white; color:#3399ff;}
+ li { cursor: pointer; cursor: hand; color:white; }

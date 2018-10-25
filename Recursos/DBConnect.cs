@@ -158,7 +158,7 @@ namespace Recursos
             //List<string> campos = new List<string>(new string[] { "id", "name", "age" });
 
             //Create a list to store the result
-            List<string>[] list = new List<string>[3];
+            List<string>[] list = new List<string>[campos.Count];
 
             foreach (string campo in campos)
             {

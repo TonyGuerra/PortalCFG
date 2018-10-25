@@ -22,7 +22,7 @@ namespace Recursos {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource_JS {
+    public class Resource_JS {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Recursos {
         ///   Retorna a instância de ResourceManager armazenada em cache usada por essa classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Recursos.Resource_JS", typeof(Resource_JS).Assembly);
@@ -51,12 +51,86 @@ namespace Recursos {
         ///   pesquisas de recursos que usam essa classe de recurso de tipo de alta segurança.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery Cookie Plugin v1.4.1
+        /// * https://github.com/carhartl/jquery-cookie
+        /// *
+        /// * Copyright 2006, 2014 Klaus Hartl
+        /// * Released under the MIT license
+        /// */
+        ///(function (factory) {
+        ///	if (typeof define === &apos;function&apos; &amp;&amp; define.amd) {
+        ///		// AMD (Register as an anonymous module)
+        ///		define([&apos;jquery&apos;], factory);
+        ///	} else if (typeof exports === &apos;object&apos;) {
+        ///		// Node/CommonJS
+        ///		module.exports = factory(require(&apos;jquery&apos;));
+        ///	} else {
+        ///		// Browser globals
+        ///		factory(jQuery);
+        ///	}
+        ///}(function ($) {
+        ///
+        ///	var plu [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string jquery_cookie_js {
+            get {
+                return ResourceManager.GetString("jquery_cookie_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*
+        /// * DC jQuery Vertical Accordion Menu - jQuery vertical accordion menu plugin
+        /// * Copyright (c) 2011 Design Chemical
+        /// *
+        /// * Dual licensed under the MIT and GPL licenses:
+        /// * 	http://www.opensource.org/licenses/mit-license.php
+        /// * 	http://www.gnu.org/licenses/gpl.html
+        /// *
+        /// */
+        ///
+        ///(function($){
+        ///
+        ///	$.fn.dcAccordion = function(options) {
+        ///
+        ///		//set default options 
+        ///		var defaults = {
+        ///			classParent	 : &apos;dcjq-parent&apos;,
+        ///			classActive	 : &apos;active&apos;,
+        ///			classArrow	 : &apos;dcjq-icon&apos;,
+        ///			classCount	 : &apos;dcjq-count [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string jquery_dcjqaccordion_2_7_min_js {
+            get {
+                return ResourceManager.GetString("jquery_dcjqaccordion_2_7_min_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /**
+        ///* hoverIntent r6 // 2011.02.26 // jQuery 1.5.1+
+        ///* &lt;http://cherne.net/brian/resources/jquery.hoverIntent.html&gt;
+        ///* 
+        ///* @param  f  onMouseOver function || An object with configuration options
+        ///* @param  g  onMouseOut function  || Nothing (use configuration options object)
+        ///* @author    Brian Cherne brian(at)cherne(dot)net
+        ///*/
+        ///(function($){$.fn.hoverIntent=function(f,g){var cfg={sensitivity:7,interval:100,timeout:0};cfg=$.extend(cfg,g?{over:f,out:g}:f);var cX,cY,pX,pY;var track=function(ev){cX=ev.pageX;cY=ev.pag [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string jquery_hoverIntent_minified_js {
+            get {
+                return ResourceManager.GetString("jquery_hoverIntent_minified_js", resourceCulture);
             }
         }
         

@@ -51,12 +51,32 @@ namespace Recursos {
         ///   pesquisas de recursos que usam essa classe de recurso de tipo de alta segurança.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrow_grey_down_png {
+            get {
+                object obj = ResourceManager.GetObject("arrow_grey_down_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrow_grey_right_png {
+            get {
+                object obj = ResourceManager.GetObject("arrow_grey_right_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -78,6 +98,16 @@ namespace Recursos {
         internal static string autentica_login {
             get {
                 return ResourceManager.GetString("autentica_login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bg_grey_png {
+            get {
+                object obj = ResourceManager.GetObject("bg_grey_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -116,7 +146,7 @@ namespace Recursos {
         ///&lt;head&gt;
         ///    &lt;title&gt;Cabe&amp;ccedilalho do Menu&lt;/title&gt;
         ///    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=ISO-8859-1&quot;&gt;
-        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;/js/jquery.min.js&quot;&gt;&lt;/script&gt;
+        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
         ///
         ///&lt;script type=&quot;text/javascript&quot;&gt;
         ///
@@ -127,7 +157,7 @@ namespace Recursos {
         ///           document.form1.cTrace.value =  cTrace+cValor;
         ///      }
         ///
-        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///     [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         internal static string menutree_cabecalho {
             get {
@@ -143,9 +173,9 @@ namespace Recursos {
         ///&lt;meta charset=&apos;UTF-8&apos;&gt;
         ///&lt;title&gt;PortalCFG&lt;/title&gt;
         ///&lt;link href=&quot;/css/dcaccordion.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
-        ///&lt;script type=&quot;text/javascript&quot; src=&quot;/js/jquery.min.js&quot;&gt;&lt;/script&gt;
-        ///&lt;script type=&apos;text/javascript&apos; src=&apos;/js/jquery.cookie.js&apos;&gt;&lt;/script&gt;
-        ///&lt;script type=&apos;text/javascript&apos; src=&apos;/js/jquery.hoverIn [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
+        ///&lt;script type=&apos;text/javascript&apos; src=&apos;jquery.cookie.js&apos;&gt;&lt;/script&gt;
+        ///&lt;script type=&apos;text/javascript&apos; src=&apos;jquery.hoverIntent.minifie [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         internal static string menutree_esquerdo {
             get {
@@ -162,11 +192,11 @@ namespace Recursos {
         ///
         ///   &lt;meta content=&quot;text/html;charset=ISO-8859-1&quot; http-equiv=&quot;Content-Type&quot;&gt;
         ///
-        ///   &lt;link type=&quot;text/css&quot; href=&quot;/css/default.css&quot; rel=&quot;stylesheet&quot; /&gt;
+        ///   &lt;link type=&quot;text/css&quot; href=&quot;default.css&quot; rel=&quot;stylesheet&quot; /&gt;
         ///&lt;/head&gt;
         ///
         ///&lt;body style=&quot;margin:0px 0px 0px 0px; background-color:#FFFFFF;&quot; &gt;
-        ///&lt;div id=&quot;hmpopupDiv&quot; style=&quot;visibility:hidden; position:absolute; z-ind [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///&lt;div id=&quot;hmpopupDiv&quot; style=&quot;visibility:hidden; position:absolute; z-index:10 [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         internal static string menutree_explicativo {
             get {
@@ -201,6 +231,34 @@ namespace Recursos {
         internal static string menutree_principal {
             get {
                 return ResourceManager.GetString("menutree_principal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+        ///&lt;html&gt;
+        ///&lt;head&gt;
+        ///    &lt;title&gt;PortalCFG&lt;/title&gt;
+        ///    &lt;meta charset=&apos;UTF-8&apos;&gt;
+        /// 
+        ///&lt;link href=&quot;PortalCFG.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;    
+        ///
+        ///&lt;SCRIPT LANGUAGE=&quot;JavaScript&quot;&gt;
+        ///
+        ///function fFiltro() { 
+        ///   document.form1.action = &quot;tabelas_browse&quot;;
+        ///   document.form1.submit()
+        ///}
+        ///
+        ///function fIncluir() { 
+        ///
+        ///    document.form1.action = &quot;tabelas_cadastro?xOperacao=3&amp;xTabOrigem=&quot;+document.form1.cTabela.value;
+        ///    document.form1.submit();
+        ///       [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string tabelas_filtro {
+            get {
+                return ResourceManager.GetString("tabelas_filtro", resourceCulture);
             }
         }
         

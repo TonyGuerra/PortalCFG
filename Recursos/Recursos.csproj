@@ -50,6 +50,11 @@
     <Compile Include="LogFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recursos.cs" />
+    <Compile Include="Resource_CSS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource_CSS.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resource_JS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -62,6 +67,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resource_CSS.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource_CSS.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resource_JS.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource_JS.Designer.cs</LastGenOutput>
@@ -109,6 +118,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\menu_cabecalho.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jquery_dcjqaccordion_2_7_min_js.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jquery_hoverIntent_minified_js.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jquery_cookie_js.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\default_css.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bg_grey_png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_grey_down.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_grey_right.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tabelas_filtro.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PortalCFG.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\grey.css.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
