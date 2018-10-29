@@ -131,9 +131,15 @@
     <value>Resources\jquery_min_js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="json2_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\json2_js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+    <value>Resources\json2.js.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="knockout_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\knockout_js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="knockout_mapping_latest_debug_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\knockout.mapping-latest.debug.js.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="knockout_mapping_latest_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\knockout.mapping-latest.js.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

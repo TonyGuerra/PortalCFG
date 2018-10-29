@@ -188,5 +188,36 @@ namespace Recursos {
                 return ResourceManager.GetString("knockout_js", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /// Knockout Mapping plugin v2.4.1
+        ////// (c) 2013 Steven Sanderson, Roy Jacobs - http://knockoutjs.com/
+        ////// License: MIT (http://www.opensource.org/licenses/mit-license.php)
+        ///(function (factory) {
+        ///	// Module systems magic dance.
+        ///
+        ///	if (typeof require === &quot;function&quot; &amp;&amp; typeof exports === &quot;object&quot; &amp;&amp; typeof module === &quot;object&quot;) {
+        ///		// CommonJS or Node: hard-coded dependency on &quot;knockout&quot;
+        ///		factory(require(&quot;knockout&quot;), exports);
+        ///	} else if (typeof define === &quot;function&quot; &amp;&amp; define[&quot;amd&quot;]) {
+        ///		// AMD anonymous [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string knockout_mapping_latest_debug_js {
+            get {
+                return ResourceManager.GetString("knockout_mapping_latest_debug_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /// Knockout Mapping plugin v2.4.1
+        ////// (c) 2013 Steven Sanderson, Roy Jacobs - http://knockoutjs.com/
+        ////// License: MIT (http://www.opensource.org/licenses/mit-license.php)
+        ///(function(e){&quot;function&quot;===typeof require&amp;&amp;&quot;object&quot;===typeof exports&amp;&amp;&quot;object&quot;===typeof module?e(require(&quot;knockout&quot;),exports):&quot;function&quot;===typeof define&amp;&amp;define.amd?define([&quot;knockout&quot;,&quot;exports&quot;],e):e(ko,ko.mapping={})})(function(e,f){function y(b,c){var a,d;for(d in c)if(c.hasOwnProperty(d)&amp;&amp;c[d])if(a=f.getType(b[d]),d&amp;&amp;b[d]&amp;&amp;&quot;array&quot;!==a&amp;&amp; [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string knockout_mapping_latest_js {
+            get {
+                return ResourceManager.GetString("knockout_mapping_latest_js", resourceCulture);
+            }
+        }
     }
 }

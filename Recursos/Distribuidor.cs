@@ -19,6 +19,7 @@ namespace Recursos
         {
             DBConnect MeuDB = new DBConnect(cDataBase);
             ArtLib MeuLib = new ArtLib();
+            Browser MeuBrowser = new Browser();
             string cHtml = "ERRO: Html nao atribuido";
             string cDados = "";
 
@@ -64,6 +65,7 @@ namespace Recursos
                 {
                     LogFile.Log(" .");
                     cMeuPath = cMeuPath.Replace(".", "_");
+                    cMeuPath = cMeuPath.Replace("-", "_");
 
                     if (Resource_JS.ResourceManager.GetObject(cMeuPath) == null)
                     {
@@ -101,7 +103,11 @@ namespace Recursos
                 }
                 else if (cMeuPath == "tabelas_filtro")
                 {
-                    cHtml = Tabelas_Filtro(request, MeuDB, MeuLib, cMeuPath, cDados);
+                    cHtml = MeuBrowser.Tabelas_Filtro(request, MeuDB, MeuLib, cMeuPath, cDados);
+                }
+                else if (cMeuPath == "pagina_browser")
+                {
+                    cHtml = MeuBrowser.Pagina_Browser(request, MeuDB, MeuLib, cMeuPath, cDados);
                 }
                 else if (Resources.ResourceManager.GetObject(cMeuPath) != null)
                 {
@@ -140,19 +146,19 @@ namespace Recursos
                     break;
                 }
 
-                string cQuery = "SELECT USUARIO, SENHA, VALIDADE FROM aa10usuarios WHERE USUARIO = '" + oLogin["login"] + "'";
+                string cQuery = "SELECT * FROM aa10usuarios WHERE USUARIO = '" + oLogin["login"] + "'";
                 List<string> campos = new List<string>(new string[] { "USUARIO", "SENHA", "VALIDADE" });
 
-                List<string>[] list = MeuDB.Select(cQuery, campos);
+                MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
 
-                if (list.Length < 3)
+                if (list.Count < campos.Count)
                 {
                     cHtml = string.Format("ERRO: Usuario nao encontrado! {0:d} {0:t}", DateTime.Now);
                     break;
                 }
 
-                string cSenha = list[1][0];
-                DateTime dDataValida = DateTime.ParseExact(list[2][0].Substring(0, 10), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                string cSenha = list["SENHA"].First();
+                DateTime dDataValida = DateTime.ParseExact(list["VALIDADE"].First().Substring(0, 10), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
 
                 if (dDataValida < DateTime.Now)
                 {
@@ -270,23 +276,23 @@ namespace Recursos
                 request.Cookies.Add(MeuCookie);
 
                 // Dados do Usuario
-                string cQuery = "SELECT idSequencial, PERMISSAO FROM aa10usuarios a10 Where a10.USUARIO = '" + oLogin["login"] + "'";
+                string cQuery = "SELECT * FROM aa10usuarios a10 Where a10.USUARIO = '" + oLogin["login"] + "'";
                 List<string> campos = new List<string>(new string[] { "idSequencial", "PERMISSAO" });
 
-                List<string>[] list = MeuDB.Select(cQuery, campos);
+                MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
 
-                if (list.Length < 2)
+                if (list.Count < campos.Count)
                 {
                     cHtml = string.Format("ERRO: Usuario nao encontrado! {0:d} {0:t}", DateTime.Now);
                     break;
                 }
 
-                string cIdUsuario = list[0][0];
-                string cPermissao = list[1][0];
+                string cIdUsuario = list["idSequencial"].First();
+                string cPermissao = list["PERMISSAO"].First();
 
                 //Opções de Menu do usuário
                 campos = new List<string>(new string[] { "idSequencial", "MENU", "DESCRICAO", "TIPO", "PAGINA", "STATUS" });
-                cQuery = "SELECT idSequencial, MENU, DESCRICAO, TIPO, PAGINA, STATUS FROM aa30menu a30 ";
+                cQuery = "SELECT * FROM aa30menu a30 ";
 
                 if  (cPermissao != "1")
                 {
@@ -304,7 +310,7 @@ namespace Recursos
 
                 list = MeuDB.Select(cQuery, campos);
 
-                if (list.Length < 4)
+                if (list.Count < campos.Count)
                 {
                     cHtml = string.Format("ERRO: Usuario nao encontrado! {0:d} {0:t}", DateTime.Now);
                     break;
@@ -314,7 +320,7 @@ namespace Recursos
                 string cMenu      = "M";
                 string cParametros = "?{\"login\":\"" + oLogin["login"] + "\",\"sessao\":\"" + oLogin["sessao"] + "\",\"menu\":\"xxx\"}";
 
-                for (int i = 0; i < list[1].Count; i++)
+                for (int i = 0; i < list["idSequencial"].Count; i++)
                 {
                     MenuNivel(MeuLib, list, cMenu, 1, ref i, ref cMeuMenu, cParametros);
                 }
@@ -328,7 +334,7 @@ namespace Recursos
             return cHtml;
         }
 
-        private static void MenuNivel(ArtLib MeuLib, List<string>[] list, string cMenu, int nNivel, ref int i, ref string cMeuMenu, string cParametros)
+        private static void MenuNivel(ArtLib MeuLib, MultiValueDictionary<string, string> list, string cMenu, int nNivel, ref int i, ref string cMeuMenu, string cParametros)
         {
             string cMenuNivel = "";
             string cDescricao = "";
@@ -336,17 +342,17 @@ namespace Recursos
 
             do
             {
-                cMenuNivel = list[1][i].Trim();
+                cMenuNivel = list["MENU"].ElementAt(i).Trim();
 
-                if ((list[5][i] != "A") || (cMenuNivel.Length > (nNivel+2)))
+                if ((list["STATUS"].ElementAt(i) != "A") || (cMenuNivel.Length > (nNivel+2)))
                 {
                     i++;
                     continue;
                 }
 
-                cDescricao = MeuLib.HTMLAcento(list[2][i].Trim());
+                cDescricao = MeuLib.HTMLAcento(list["DESCRICAO"].ElementAt(i).Trim());
 
-                if (list[3][i] == "M")
+                if (list["TIPO"].ElementAt(i) == "M")
                 {
                     cMeuMenu += "<li class='dcjq-current-parent'><a href='#'>" + cDescricao + "</a>";
                     cMeuMenu += "<ul>";
@@ -357,21 +363,21 @@ namespace Recursos
                     cMeuMenu += "</ul>";
                     cMeuMenu += "</li>";
                 }
-                else if (list[3][i] == "H")
+                else if (list["TIPO"].ElementAt(i) == "H")
                 {
-                    cRotina = list[4][i].Trim(); 
-                    if (!String.IsNullOrEmpty(cRotina)) { cRotina = "./" + cRotina + cParametros.Replace("xxx", list[0][i]); } //id Menu
+                    cRotina = list["PAGINA"].ElementAt(i).Trim(); 
+                    if (!String.IsNullOrEmpty(cRotina)) { cRotina = "./" + cRotina + cParametros.Replace("xxx", list["idSequencial"].ElementAt(i)); } //id Menu
                     cMeuMenu += "   <li><a href='" + cRotina + "' target='hmcontent'>" + cDescricao + "</a></li>";
                 }
 
                 i++;
 
-            } while ((list[1].Count() > i) && (list[1][i].Substring(0, nNivel) == cMenu));
+            } while ((list["MENU"].Count() > i) && (list["MENU"].ElementAt(i).Substring(0, nNivel) == cMenu));
 
             i--;
         }
 
-        private static string Generico(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
+        public static string Generico(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string cHtml = "ERRO: Html nao atribuido";
@@ -402,7 +408,7 @@ namespace Recursos
 
                 if (!Check_Sessao(request, MeuDB, MeuLib, oLogin["login"], oLogin["sessao"]))
                 {
-                    cHtml = s_mensagem("Sessão expirou! Logue novamente!", "javascript:fLogin()");
+                    cHtml = S_mensagem("Sessão expirou! Logue novamente!", "javascript:fLogin()");
                     break;
                 }
 
@@ -418,7 +424,7 @@ namespace Recursos
             return cHtml;
         }
 
-        private static bool Check_Sessao(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cLogin, string cSessao)
+        public static bool Check_Sessao(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cLogin, string cSessao)
         {
             bool lOk = false;
 
@@ -434,30 +440,30 @@ namespace Recursos
                     LogFile.Log(request.Cookies[1].Name + " - " + request.Cookies[1].Value);
                 }
 
-                string cQuery = "SELECT SESSAO, PERMISSAO, TEMPO FROM aa20sessao WHERE USUARIO = '" + cLogin + "'";
+                string cQuery = "SELECT * FROM aa20sessao WHERE USUARIO = '" + cLogin + "'";
                 List<string> campos = new List<string>(new string[] { "SESSAO", "PERMISSAO", "TEMPO" });
 
-                List<string>[] list = MeuDB.Select(cQuery, campos);
+                MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
 
-                if ((list.Length < 3) || (list[0].Count <= 0))
+                if ((list.Count < campos.Count) || (list["SESSAO"].Count <= 0))
                 {
                     LogFile.Log(string.Format("Check_Sessao: Sessao do usuario nao encontrado! Login: {0}", cLogin));
                     break;
                 }
 
-                if (list[0][0] != cSessao)
+                if (list["SESSAO"].First() != cSessao)
                 {
                     LogFile.Log(string.Format("Check_Sessao: Sessao invalida! Login: {0}", cLogin));
                     break;
                 }
 
-                if (list[1][0] != "1")
+                if (list["PERMISSAO"].First() != "1")
                 {
                     LogFile.Log(string.Format("Check_Sessao: Sem permissao! Login: {0}", cLogin));
                     break;
                 }
 
-                DateTime dTempo = DateTime.ParseExact(list[2][0], "G", null);
+                DateTime dTempo = DateTime.ParseExact(list["TEMPO"].First(), "G", null);
 
                 var diff = DateTime.Now.Subtract(dTempo);
 
@@ -483,153 +489,7 @@ namespace Recursos
             return lOk;
         }
 
-        private static List<string> Grupos(DBConnect MeuDB, string cTabela)
-        {
-
-            List<string> Grupo = new List<string>();
-
-            string cQuery = string.Format("SELECT a43.id0aa41campos FROM aa42indices a42, aa43cmpindices a43 " +
-                                          "WHERE a43.id0aa42indices = a42.idSequencial " +
-                                          "AND a43.QUEBRA = 'S' AND a42.id0aa40tabelas = {0} ", cTabela);
-            //Opções de Menu do usuário
-            List<string> campos = new List<string>(new string[] { "id0aa41campos" });
-
-            List<string>[] list = MeuDB.Select(cQuery, campos);
-
-            if  ((list.Length < 1) || (list[0].Count <= 0)) { return Grupo; }
-
-            for (int i = 0; i < list[0].Count; i++)
-            {
-                Grupo.Add(list[0][i]);
-            }
-
-            return Grupo;
-
-        }
-
-        private static string Tabelas_Filtro(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
-        {
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string cQueryString = HttpUtility.UrlDecode(request.Url.Query);
-            dynamic oLogin = serializer.Deserialize<dynamic>(cDados.Replace("dados=", ""));
-            string cHtml = "ERRO: Html nao atribuido";
-
-            LogFile.Log(" --- Tabelas_Filtro:");
-
-            if (!String.IsNullOrEmpty(cQueryString))
-            {
-                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(1));
-            }
-
-            do
-            {
-
-                cHtml = Generico(request, MeuDB, MeuLib, cMeuPath, cDados);
-
-                if (cHtml.Contains("Sessao Expirou")) { break; }
-
-                string cQuery = string.Format("SELECT id1aa40tabelas, DESCRICAO FROM aa30menu WHERE idSequencial = {0} ", oLogin["menu"]); //Menu
-
-                //Opções de Menu do usuário
-                List<string> campos = new List<string>(new string[] { "id1aa40tabelas", "DESCRICAO" });
-
-                List<string>[] list = MeuDB.Select(cQuery, campos);
-
-                if ((list.Length < 2) || (list[0].Count <= 0))
-                {
-                    LogFile.Log(string.Format("Tabelas_Filtro: Problema para obter os dados do menu! Menu: {0}", oLogin["login"]));
-                    break;
-                }
-
-                string cTabela = list[0][0];
-                string cTrace = list[1][0];
-
-                cHtml = cHtml.Replace("!XTABELA!", cTabela     );
-                cHtml = cHtml.Replace("!XLOGIN!" , oLogin["login"]);
-                cHtml = cHtml.Replace("!XSESSAO!", oLogin["sessao"]);
-                cHtml = cHtml.Replace("!XMENU!"  , oLogin["menu"]);
-                cHtml = cHtml.Replace("!XTRACE1!", cTrace      );
-                cHtml = cHtml.Replace("!XTRACE2!", cTrace.ToUpper());
-
-                //--------------- Grupos de Browser --------------------------------------------------
-
-                List<string> listGrupo = Grupos(MeuDB, cTabela);
-
-                //--------------- Campos -------------------------------------------------------------
-
-                cQuery = string.Format("SELECT idSequencial, CAMPO, TITULO, TAMANHO, FILTRO, FILTRODE, FILTROATE FROM aa41campos WHERE id0aa40tabelas = {0} and FILTRO <> 1", cTabela);
-
-                //Opções de Menu do usuário
-                campos = new List<string>(new string[] { "idSequencial", "CAMPO", "TITULO", "TAMANHO", "FILTRO", "FILTRODE", "FILTROATE" });
-
-                list = MeuDB.Select(cQuery, campos);
-
-                //--------------- Filtros -------------------------------------------------------------
-                string cAux = "";
-
-                for (int i = 0; i < list[0].Count; i++)
-                {
-
-                    if (list[4][i] == "2")
-                    {
-                        //Parametro de:
-                        cAux += "<div><TABLE style='width: 100 %; '>";
-                        cAux += string.Format("<td style='left: 030px; width: 160px; text-align:right; font-size:11pt; '>{0} de:</td>", list[2][0]); //Titulo
-                        cAux += "<td style='left: 170px;'>";
-                        cAux += string.Format("<Input TYPE=text ID='X{0}1' NAME='X{1}1' VALUE='{2}' style='border-color:#808080; border-width:thin;' MaxLength={3} SIZE={4} />", list[1][0], list[1][0], list[5][0], list[3][0], list[3][0]);
-                        cAux += "</td></TABLE></div>";
-                        //Parametro ate:
-                        cAux += "<div><TABLE style='width: 100 %; '>";
-                        cAux += string.Format("<td style='left: 030px; width: 160px; text-align:right; font-size:11pt; '>{0} ate:</td>", list[2][0]); //Titulo
-                        cAux += "<td style='left: 170px;'>";
-                        cAux += string.Format("<Input TYPE=text ID='X{0}2' NAME='X{1}2' VALUE='{2}' style='border-color:#808080; border-width:thin;' MaxLength={3} SIZE={4} />", list[1][0], list[1][0], list[6][0], list[3][0], list[3][0]);
-                        cAux += "</td></TABLE></div>";
-                    }
-                    else if (list[4][i] == "3")
-                    {
-                        //Parametro parcial:
-                        cAux += "<div><TABLE style='width: 100 %; '>";
-                        cAux += string.Format("<td style='left: 030px; width: 160px; text-align:right; font-size:11pt; '>{0} [contem]:</td>", list[2][0]); //Titulo
-                        cAux += "<td style='left: 170px;'>";
-                        cAux += string.Format("<Input TYPE=text ID='X{0}1' NAME='X{1}1' VALUE='' style='border-color:#808080; border-width:thin;' MaxLength={2} SIZE={3} />", list[1][0], list[1][0], list[3][0], list[3][0]);
-                        cAux += "</td></TABLE></div>";
-                    }
-                    else if (list[4][i] == "4")
-                    {
-                        //Parametro integral:
-                        cAux += "<div><TABLE style='width: 100 %; '>";
-                        cAux += string.Format("<td style='left: 030px; width: 160px; text-align:right; font-size:11pt; '>{0}:</td>", list[2][0]); //Titulo
-                        cAux += "<td style='left: 170px;'>";
-                        cAux += string.Format("<Input TYPE=text ID='X{0}1' NAME='X{1}1' VALUE='' style='border-color:#808080; border-width:thin;' MaxLength={2} SIZE={3} />", list[1][0], list[1][0], list[3][0], list[3][0]);
-                        cAux += "</td></TABLE></div>";
-                    }
-
-                    for (int j = 0; j < listGrupo.Count; j++)
-                    {
-                        if (listGrupo[j] == list[0][i]) //Id
-                        {
-                            //Parametro parcial:
-                            cAux += "<div><TABLE style='width: 100 %; '>";
-                            cAux += string.Format("<td style='left: 030px; width: 160px; text-align:right; font-size:11pt; '>{0} [contem]:</td>", list[2][0]); //Titulo
-                            cAux += "<td style='left: 170px;'>";
-                            cAux += string.Format("<Input TYPE=text ID='X{0}1' NAME='X{1}1' VALUE='' style='border-color:#808080; border-width:thin;' MaxLength={2} SIZE={3} />", list[1][0], list[1][0], "50", "50");
-                            cAux += "</td></TABLE></div>";
-                        }
-                    }
-
-                }
-
-                cHtml = cHtml.Replace("!XPARAMETROS!", cAux);
-                cHtml = cHtml.Replace("!XFILTRARSN!", "S");
-
-            } while (false);
-
-            LogFile.Log(" --- Fim Tabelas_Filtro!");
-
-            return cHtml;
-        }
-
-        private static string s_mensagem(string cMensagem, string onclick)
+       public static string S_mensagem(string cMensagem, string onclick)
         {
             ArtLib MeuLib = new ArtLib();
 

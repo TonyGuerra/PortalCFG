@@ -29,7 +29,7 @@ namespace Recursos {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public Resource_CSS() {
+        internal Resource_CSS() {
         }
         
         /// <summary>
@@ -57,6 +57,24 @@ namespace Recursos {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /* Page */
+        ///body,html,div,blockquote,img,label,p,h1,h2,h3,h4,h5,h6,pre,ul,ol,li,dl,dt,dd,form,a,fieldset,input,th,td{border:0;outline:none;margin:0;padding:0;}
+        ///ul, ul li{list-style: none;}
+        ///ul.text {margin-bottom: 1em; line-height: 1.5em;}
+        ///.text-center {text-align: center;}
+        ///body {font: normal 13px Arial, sans-serif;}
+        ///h2 {font: normal 26px Arial, sans-serif; padding: 20px 0; margin: 0 0 30px 0;}
+        ///.wrap {width: 960px; margin: 0 auto;}
+        ///.demo-container {padding: 0px; float: left; width: 260px;}
+        ///.demo-cont [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string dcaccordion_css {
+            get {
+                return ResourceManager.GetString("dcaccordion_css", resourceCulture);
             }
         }
         

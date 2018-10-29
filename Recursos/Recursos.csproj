@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Experimental.Collections, Version=1.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Experimental.Collections.1.0.3-alpha\lib\portable-net45+win8+wp8\Microsoft.Experimental.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=8.0.12.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArtLib.cs" />
+    <Compile Include="Browser.cs" />
     <Compile Include="DBConnect.cs" />
     <Compile Include="Distribuidor.cs" />
     <Compile Include="LogFile.cs" />
@@ -81,6 +85,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\topo_fundo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -94,9 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\jquery_min_js.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\json2_js.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\knockout_js.txt" />
@@ -148,6 +150,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\grey.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pagina_browser.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dcaccordion.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\knockout.mapping-latest.debug.js.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_visualizar.gif.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_mais.gif.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_edit.gif.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\knockout.mapping-latest.js.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\json2.js.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ui-bg_highlight-soft_75_azul_1x100.png.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

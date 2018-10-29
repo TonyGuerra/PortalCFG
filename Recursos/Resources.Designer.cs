@@ -29,7 +29,7 @@ namespace Recursos {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public Resources() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -235,26 +235,74 @@ namespace Recursos {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///  &lt;head&gt;
+        ///    
+        ///    &lt;meta name=&quot;generator&quot; content=&quot;PORTALCFG&quot;&gt;
+        ///    &lt;meta name=&quot;created&quot; content=&quot;sex, 17 jun 2011 13:05:43 GMT&quot;&gt;
+        ///    &lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+        ///    &lt;meta name=&quot;keywords&quot; content=&quot;&quot;&gt;
+        ///    &lt;meta charset=&apos;UTF-8&apos;&gt;
+        ///    &lt;title&gt;PortalCFG&lt;/title&gt;
+        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;json2.js&quot;&gt;&lt;/script&gt;
+        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
+        ///    &lt;script type=&apos;text/javascript&apos; src=&apos;knockout.js&apos;&gt;&lt;/script&gt;
+        ///    &lt;script type=&quot;text/ja [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string pagina_browser {
+            get {
+                return ResourceManager.GetString("pagina_browser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_edit_gif {
+            get {
+                object obj = ResourceManager.GetObject("portal_edit_gif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_mais_gif {
+            get {
+                object obj = ResourceManager.GetObject("portal_mais_gif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_visualizar_gif {
+            get {
+                object obj = ResourceManager.GetObject("portal_visualizar_gif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
         ///&lt;html&gt;
         ///&lt;head&gt;
         ///    &lt;title&gt;PortalCFG&lt;/title&gt;
         ///    &lt;meta charset=&apos;UTF-8&apos;&gt;
         /// 
-        ///&lt;link href=&quot;PortalCFG.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;    
+        ///	&lt;link href=&quot;PortalCFG.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;    
         ///
-        ///&lt;SCRIPT LANGUAGE=&quot;JavaScript&quot;&gt;
+        ///	&lt;script type=&quot;text/javascript&quot;&gt;
         ///
-        ///function fFiltro() { 
-        ///   document.form1.action = &quot;tabelas_browse&quot;;
-        ///   document.form1.submit()
-        ///}
-        ///
-        ///function fIncluir() { 
-        ///
-        ///    document.form1.action = &quot;tabelas_cadastro?xOperacao=3&amp;xTabOrigem=&quot;+document.form1.cTabela.value;
-        ///    document.form1.submit();
-        ///       [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///		function toJSONString( form ) {
+        ///			var obj = {};
+        ///			var elements = form.querySelectorAll( &quot;input, select, textarea&quot; );
+        ///			for( var i = 0; i &lt; elements.length; ++i ) {
+        ///				var element = elements[i];
+        ///				var name = element.id;  //Obtem pelo id, retirar a pro [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         internal static string tabelas_filtro {
             get {
@@ -288,6 +336,16 @@ namespace Recursos {
         internal static System.Drawing.Bitmap topo1_fundo_gif {
             get {
                 object obj = ResourceManager.GetObject("topo1_fundo_gif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ui_bg_highlight_soft_75_azul_1x100_png {
+            get {
+                object obj = ResourceManager.GetObject("ui_bg_highlight_soft_75_azul_1x100_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -157,4 +157,19 @@
   <data name="tabelas_filtro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\tabelas_filtro.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="pagina_browser" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\pagina_browser.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="portal_edit_gif" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portal_edit.gif.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="portal_mais_gif" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portal_mais.gif.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="portal_visualizar_gif" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portal_visualizar.gif.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ui_bg_highlight_soft_75_azul_1x100_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ui-bg_highlight-soft_75_azul_1x100.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

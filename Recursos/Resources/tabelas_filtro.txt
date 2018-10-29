@@ -4,141 +4,117 @@
     <title>PortalCFG</title>
     <meta charset='UTF-8'>
  
-<link href="PortalCFG.css" rel="stylesheet" type="text/css" />    
+	<link href="PortalCFG.css" rel="stylesheet" type="text/css" />    
 
-<SCRIPT LANGUAGE="JavaScript">
+	<script type="text/javascript">
 
-function fFiltro() { 
-   document.form1.action = "tabelas_browse";
-   document.form1.submit()
-}
+		function toJSONString( form ) {
+			var obj = {};
+			var elements = form.querySelectorAll( "input, select, textarea" );
+			for( var i = 0; i < elements.length; ++i ) {
+				var element = elements[i];
+				var name = element.id;  //Obtem pelo id, retirar a propriedade name do elemento HTML de entrada.
+				var value = element.value;
 
-function fIncluir() { 
+				if( name ) {
+					obj[ name ] = value;
+				}
+			}
 
-    document.form1.action = "tabelas_cadastro?xOperacao=3&xTabOrigem="+document.form1.cTabela.value;
-    document.form1.submit();
+			return JSON.stringify( obj );
+		}
+
+		function fFiltro() { 
+
+		   document.form1.dados.value = toJSONString( document.form1 );
+		   document.form1.action = "pagina_browser";
+		   document.form1.submit()
+
+		}
+
+		function fIncluir() { 
+
+			document.form1.action = "tabelas_cadastro?xOperacao=3&xTabOrigem="+document.form1.Tabela.value;
+			document.form1.submit();
          
-}
+		}
 
-
-</SCRIPT>
+	</script>
 
 </head>
 
 <body style="color:#0080FF; font-family: Arial; font-style: normal; text-decoration: none; font-size: 10pt;">
 
 <Form name="form1" id="form1" method="post" action="">
-<input name="cTrace1" id="cTrace1" type="hidden" value=">> Base de Dados > ">
-<input name="cTrace2" id="cTrace2" type="hidden" value=" !XTRACE1! Filtro > ">
-<input name="cLogin" id="cLogin" type="hidden" value="!XLOGIN!">
-<input name="cSessao" id="cSessao" type="hidden" value="!XSESSAO!">
-<input name="cMenu" id="cMenu" type="hidden" value="!XMENU!">
-<input name="cTipoTabela" id="cTipoTabela" type="hidden" value="!XTRACE1!">
-<input name="cTabela" id="cTabela" type="hidden" value="!XTABELA!">
-<input name="cOrigem" id="cOrigem" type="hidden" value="FILTRO">
+	<input name="dados" id="dados" type="hidden" value="" />
+	<input id="trace1" type="hidden" value=">> Base de Dados > ">
+	<input id="trace2" type="hidden" value=" !XTRACE1! Filtro > ">
+	<input id="login" type="hidden" value="!XLOGIN!">
+	<input id="sessao" type="hidden" value="!XSESSAO!">
+	<input id="menu" type="hidden" value="!XMENU!">
+	<input id="tipotabela" type="hidden" value="!XTRACE1!">
+	<input id="tabela" type="hidden" value="!XTABELA!">
+	<input id="origem" type="hidden" value="FILTRO">
 
-<div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
-<div id="xLinhaFina" style="position:relative;width:100%;height:0.6mm;"></div>
-<div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
+	<div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
+	<div id="xLinhaFina" style="position:relative;width:100%;height:0.6mm;"></div>
+	<div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
 
-<div style="position:relative; font-weight: bold; Left:010px;"> >> !XTRACE2! FILTRO </div>
+	<div style="position:relative; font-weight: bold; Left:010px;"> >> !XTRACE2! FILTRO </div>
 
-<div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
-<div id="xLinhaFina" style="position:relative;width:100%;height:0.6mm;"></div>
-<div style="position:relative;height: 15px;">&nbsp;</div>
+	<div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
+	<div id="xLinhaFina" style="position:relative;width:100%;height:0.6mm;"></div>
+	<div style="position:relative;height: 15px;">&nbsp;</div>
 
-<div>
-<TABLE style="width:100%;">
-<td style="left:030px; width:160px;text-align:right;font-size:11pt;">Sequencial de:</td>
-<td style="left:170px;">
-<Input TYPE=text NAME="XSEQUENCIAL1" VALUE="0" style="border-color:#808080; border-width:thin; text-transform: uppercase;" MaxLength=07 SIZE=07 />
-</td>
-</TABLE>
-</div>
+	<div>
+		<TABLE style="width:100%;">
+			<td style="left:030px; width:160px;text-align:right;font-size:11pt;">Sequencial de:</td>
+			<td style="left:170px;">
+				<Input TYPE=text id="XSEQUENCIAL1" VALUE="0" style="border-color:#808080; border-width:thin; text-transform: uppercase;" MaxLength=07 SIZE=07 />
+			</td>
+		</TABLE>
+	</div>
 
-<div>
-<TABLE style="width:100%;">
-<td style="left:030px; width:160px;text-align:right;font-size:11pt;">Sequencial ate:</td>
-<td style="left:170px;">
-<Input TYPE=text NAME="XSEQUENCIAL2" VALUE="9999999" style="border-color:#808080; border-width:thin; text-transform: uppercase;" MaxLength=07 SIZE=07 />
-</td>
-</TABLE>
-</div>
+	<div>
+		<TABLE style="width:100%;">
+			<td style="left:030px; width:160px;text-align:right;font-size:11pt;">Sequencial ate:</td>
+			<td style="left:170px;">
+				<Input TYPE=text id="XSEQUENCIAL2" VALUE="9999999" style="border-color:#808080; border-width:thin; text-transform: uppercase;" MaxLength=07 SIZE=07 />
+			</td>
+		</TABLE>
+	</div>
 
-!XPARAMETROS!
+	!XPARAMETROS!
 
-<!-- desabilitado
+	<div style="position:relative; height: 20px;">&nbsp;</div>
 
-<div>
-<TABLE style="width:100%;">
-<td style="left:030px; width:160px;text-align:right;font-size:11pt;">Tabela de:</td>
-<td style="left:170px;">
-<Input TYPE=text NAME="XTABELA1" VALUE="" style="border-color:#808080; border-width:thin; text-transform: uppercase;" MaxLength=15 SIZE=15 />
-</td>
-</TABLE>
-</div>
+	<div class="leftTitulo" style="position:relative;width:27%;text-align:right;">
+		<Input TYPE=button NAME="XFiltrar" VALUE="Filtrar" style="border-color:#808080;border-width:thin;" SIZE=10 onclick="javascript:fFiltro();" />
+	</div>
 
-<div>
-<TABLE style="width:100%;">
-<td style="left:030px; width:160px;text-align:right;font-size:11pt;">Tabela ate:</td>
-<td style="left:170px;">
-<Input TYPE=text NAME="XTABELA2" VALUE="zzzzzzzzzz" style="border-color:#808080; border-width:thin; text-transform: uppercase;" MaxLength=15 SIZE=15 />
-</td>
-</TABLE>
-</div>
+	<!-- desabilitado
 
-<div>
-<TABLE style="width:100%;">
-<td style="left:030px; width:160px;text-align:right;font-size:11pt;">Descri&ccedil&atildeo [cont&eacutem]:</td>
-<td style="left:170px;">
-<Input TYPE=text NAME="XDESCRICAO1" VALUE="" style="border-color:#808080; border-width:thin; text-transform: uppercase;" MaxLength=50 SIZE=50 />
-</td>
-</TABLE>
-</div>
+	<div class="leftTitulo" style="position:relative;left:020px; width:68px;">
+		<Input TYPE=button NAME="XIncluir" VALUE="Incluir" style="border-color:#808080;border-width:thin;" SIZE=10 onclick="javascript:fIncluir();" />
+	</div>
 
-<div>
-<TABLE style="position:relative;width:100%;">
-<td style="left:030px; width:130px;text-align:right;font-size:11pt;">Status:</td>
-<td style="left:170px;">
-<select name="XStatus" id="XStatus" class="combo" style="border-color:#C0C0C0;border-width:0.2mm">
-  <option value="A" selected>Ativo</option>
-  <option value="I">Inativo</option>
-  <option value="T">Ambos</option>
-</select>
-</td>
-</TABLE>
-</div>
-
--->
-
-<div style="position:relative; height: 20px;">&nbsp;</div>
-
-<div class="leftTitulo" style="position:relative;width:27%;text-align:right;">
-<Input TYPE=button NAME="XFiltrar" VALUE="Filtrar" style="border-color:#808080;border-width:thin;" SIZE=10 onclick="javascript:fFiltro();" />
-</div>
-
-<!-- desabilitado
-
-<div class="leftTitulo" style="position:relative;left:020px; width:68px;">
-<Input TYPE=button NAME="XIncluir" VALUE="Incluir" style="border-color:#808080;border-width:thin;" SIZE=10 onclick="javascript:fIncluir();" />
-</div>
-
--->
+	-->
 
 </Form>
 
-<SCRIPT LANGUAGE="JavaScript">
-    var cTrace1 = document.form1.cTrace1.value;
-    var cTrace2 = document.form1.cTrace2.value;
+<script type="text/javascript">
 
-   document.form1.XSEQUENCIAL1.focus();
+    var cTrace1 = document.form1.Trace1.value;
+    var cTrace2 = document.form1.Trace2.value;
 
-    parent.Frame1.hmheader.fMeudiv(cTrace1, cTrace2);
+    document.form1.XSEQUENCIAL1.focus();
+
+    parent.Frame1.hmheader.fMeudiv(Trace1, Trace2);
     parent.Frame1.hmheader.meutd1.innerHTML='';
     parent.Frame1.hmheader.meutd2.innerHTML='';
     parent.Frame1.hmheader.meutd3.innerHTML='';
    
-</SCRIPT>
+</script>
 
 </body>
 </html>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Recursos
         private string password;
 
         //Constructor
-        public  DBConnect(string cDataBase)
+        public DBConnect(string cDataBase)
         {
             Initialize(cDataBase);
         }
@@ -26,11 +27,11 @@ namespace Recursos
         //Initialize values
         private void Initialize(string cDataBase)
         {
-            server   = "127.0.0.1";
+            server = "127.0.0.1";
             database = cDataBase;
-            uid      = "admin";
+            uid = "admin";
             password = "admin01";
-            string connectionString = "Server=" + server + ";Port=3306;" + "Database=" +database + ";" + 
+            string connectionString = "Server=" + server + ";Port=3306;" + "Database=" + database + ";" +
                                       "Uid=" + uid + ";" + "Pwd=" + password + ";SslMode=none;";
 
             connection = new MySqlConnection(connectionString);
@@ -89,7 +90,7 @@ namespace Recursos
             int nReg = 0;
 
             //open connection
-            if  (this.OpenConnection())
+            if (this.OpenConnection())
             {
                 //create command and assign the query and connection from the constructor
                 MySqlCommand cmd = new MySqlCommand(query, connection);
@@ -114,7 +115,7 @@ namespace Recursos
             //string query = "UPDATE tableinfo SET name='Joe', age='22' WHERE name='John Smith'";
 
             //Open connection
-            if  (this.OpenConnection())
+            if (this.OpenConnection())
             {
                 //create mysql command
                 MySqlCommand cmd = new MySqlCommand();
@@ -138,7 +139,7 @@ namespace Recursos
         {
             //string query = "DELETE FROM tableinfo WHERE name='John Smith'";
 
-            if  (this.OpenConnection())
+            if (this.OpenConnection())
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
 
@@ -151,26 +152,28 @@ namespace Recursos
         }
 
         //Select statement
-        public List<string>[] Select(string query, List<string> campos)
+        public MultiValueDictionary<string, string> Select(string query, List<string> campos, bool substituiasterisco = true)
         {
             //string query = "SELECT * FROM tableinfo";
 
-            //List<string> campos = new List<string>(new string[] { "id", "name", "age" });
-
             //Create a list to store the result
-            List<string>[] list = new List<string>[campos.Count];
-
-            foreach (string campo in campos)
-            {
-                list[campos.IndexOf(campo)] = new List<string>();
-            }
-            //list[0] = new List<string>();
-            //list[1] = new List<string>();
-            //list[2] = new List<string>();
+            MultiValueDictionary<string, string> list = new MultiValueDictionary<string, string>();
 
             //Open connection
             if (this.OpenConnection() == true)
             {
+                string cCampos = "";
+
+                if (substituiasterisco)
+                {
+                    foreach (string campo in campos)
+                    {
+                        cCampos += (String.IsNullOrEmpty(cCampos) ? "" : ",") + campo;
+                    }
+
+                    query = query.Replace("*", cCampos);
+                }
+
                 //Create Command
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 //Create a data reader and Execute the command
@@ -179,13 +182,9 @@ namespace Recursos
                 //Read the data and store them in the list
                 while (dataReader.Read())
                 {
-                    //list[0].Add(dataReader["id"] + "");
-                    //list[1].Add(dataReader["name"] + "");
-                    //list[2].Add(dataReader["age"] + "");
-
                     foreach (string campo in campos)
                     {
-                        list[campos.IndexOf(campo)].Add(dataReader[campo] + "");
+                        list.Add(campo, dataReader[campo] + "");
                     }
 
                 }
@@ -229,6 +228,77 @@ namespace Recursos
             {
                 return Count;
             }
+        }
+
+        public string OrdemTabela(string cTabela)
+        {
+            string cQuery = "select a41.CAMPO, a43.ORDNUMERO from aa43cmpindices as a43, aa41campos as a41 " +
+              String.Format("where id0aa42indices = (select idSequencial from aa42indices where id0aa40tabelas = {0} limit 0,1) ", cTabela) +
+                            "and a43.id0aa41campos = a41.idSequencial";
+
+            string cOrdem = "";
+
+            do
+            {
+                List<string> campos = new List<string>(new string[] { "CAMPO", "ORDNUMERO" });
+                MultiValueDictionary<string, string> list = Select(cQuery, campos);
+                if ((list.Count < campos.Count))
+                {
+                    LogFile.Log(string.Format("OrdemTabela: Problema para obter a Ordem da Tabela! Tabela: {0}", cTabela));
+                    break;
+                }
+
+                for (int i = 0; i < list["CAMPO"].Count; i++)
+                {
+                    if (list["ORDNUMERO"].ElementAt(i) == "S")
+                    {
+                        cOrdem = (String.IsNullOrEmpty(cOrdem) ? "" : ",") + String.Format("({0}*1", list["CAMPO"].ElementAt(i));
+                    }
+                    else
+                    {
+                        cOrdem = (String.IsNullOrEmpty(cOrdem) ? "" : ",") + list["CAMPO"].ElementAt(i);
+                    }
+                }
+
+            } while (false);
+
+            return cOrdem;
+
+        }
+
+        public string SQLCombo(string cTabelaConsulta, string cIdCampoConsulta, string cCampoOrigem)
+        {
+
+            string xQuery = "";
+
+            do
+            {
+                string cQuery = String.Format("SELECT * FROM aa40tabelas WHERE idSequencial = {0} ", cTabelaConsulta);
+                List<string> campos = new List<string>(new string[] { "TABELA" });
+                MultiValueDictionary<string, string> list = Select(cQuery, campos);
+                if ((list.Count < campos.Count))
+                {
+                    LogFile.Log(string.Format("SQLCombo: Problema para obter o Nome da Tabela Consulta! Tabela: {0}", cTabelaConsulta));
+                    break;
+                }
+
+                string cNomeTabela = list["TABELA"].First();
+
+                cQuery = String.Format("SELECT * FROM aa41campos WHERE idSequencial = {0} ", cIdCampoConsulta);
+                campos = new List<string>(new string[] { "CAMPO" });
+                list = Select(cQuery, campos);
+                if ((list.Count < campos.Count))
+                {
+                    LogFile.Log(string.Format("SQLCombo: Problema para obter o Nome do Campo Consulta! IdCampo: {0}", cIdCampoConsulta));
+                    break;
+                }
+
+                xQuery = String.Format("(SELECT concat({0},'' ('',idSequencial,'')'') FROM {1} WHERE idSequencial = t1.{2}) D{3} ", list["CAMPO"].First(), cNomeTabela, cCampoOrigem, cCampoOrigem);
+
+            } while (false);
+
+            return xQuery;
+
         }
 
         //Backup

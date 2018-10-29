@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Recursos
 {
-    class ArtLib
+    public class ArtLib
     {
+        public int nTPagina = 20;  //Total de registros por pagina no browser
+        
         string cAlfabeto = " 1234567890ABCDEFGHIJKLMNOPQRSTUVXZWYabcdefghijklmnopqrstuvxzwy -_=/?\\|*+.,;:!@#$%&()[]{}<>~^\"ÁÉÍÓÚáéíóúÂÊÔâêôÃÕãõÜüÇç©³¡'+#13+#10+«»";
         string cAlfHTML = " -_=/?\\|*+.,;:!@#$%&()[]{}<>~^\"1234567890ABCDEFGHIJKLMNOPQRSTUVXZWYabcdefghijklmnopqrstuvxzwy";
         string cDecimal = "0123456789";
@@ -194,6 +196,18 @@ namespace Recursos
 
             return cS;
 
+        }
+
+        public string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+
+        public string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
     }
 }

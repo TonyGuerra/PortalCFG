@@ -122,6 +122,8 @@ namespace PortalCFG
                                     var rstr = _responderMethod(ctx.Request);
                                     var buf = Encoding.UTF8.GetBytes(rstr);
                                     ctx.Response.ContentLength64 = buf.Length;
+                                    //ctx.Response.ContentType = "text/html; charset=utf-8";
+                                    //ctx.Response.ContentEncoding = 
                                     ctx.Response.OutputStream.Write(buf, 0, buf.Length);
                                 }
 
