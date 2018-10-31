@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Recursos
 {
     public class ArtLib
     {
         public int nTPagina = 20;  //Total de registros por pagina no browser
-        
+
         string cAlfabeto = " 1234567890ABCDEFGHIJKLMNOPQRSTUVXZWYabcdefghijklmnopqrstuvxzwy -_=/?\\|*+.,;:!@#$%&()[]{}<>~^\"ÁÉÍÓÚáéíóúÂÊÔâêôÃÕãõÜüÇç©³¡'+#13+#10+«»";
         string cAlfHTML = " -_=/?\\|*+.,;:!@#$%&()[]{}<>~^\"1234567890ABCDEFGHIJKLMNOPQRSTUVXZWYabcdefghijklmnopqrstuvxzwy";
         string cDecimal = "0123456789";
@@ -204,10 +206,37 @@ namespace Recursos
             return System.Convert.ToBase64String(plainTextBytes);
         }
 
-        public string Base64Decode(string base64EncodedData)
+        public string Base64Decode(string inputStr)
         {
-            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
-            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+            byte[] decodedByteArray =
+              Convert.FromBase64CharArray(inputStr.ToCharArray(),
+                                            0, inputStr.Length);
+            string plainText = Encoding.UTF8.GetString(decodedByteArray);
+            return (plainText);
+        }
+
+        public string ValCombo(string cOpcoes, string cValor)
+        {
+            int nP = 0;
+            string cOpcao = "";
+
+            nP = cOpcoes.IndexOf(cValor+"=");
+            nP = (nP <= 0 ? cOpcoes.IndexOf(cValor+";") : nP);
+
+            cOpcao = cOpcoes.Substring(nP, cOpcoes.Length-nP);
+            nP = cOpcao.IndexOf(";");
+            nP = (nP <= 0 ? cOpcao.Length+1 : nP);
+            cOpcao = cOpcao.Substring(0, nP - 1);
+            nP = cOpcao.IndexOf("=");
+
+            if  (nP <= 0)
+            {
+                return cOpcao;
+            }
+            else
+            {
+                return cOpcao.Substring(nP + 1, cOpcao.Length - (nP+1));
+            }
         }
     }
 }

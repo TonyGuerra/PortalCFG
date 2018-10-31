@@ -9,12 +9,12 @@
 
 function fMeudiv(cTrace, cValor) {
        if  (cTrace == '') {
-           document.form1.cTrace.value =  cValor;
+           document.form1.trace.value =  cValor;
        } else {
-           document.form1.cTrace.value =  cTrace+cValor;
+           document.form1.trace.value =  cTrace+cValor;
       }
 
-       meudiv.innerHTML =  document.form1.cTrace.value;
+       meudiv.innerHTML =  document.form1.trace.value;
 }
 
 </script>
@@ -24,7 +24,7 @@ function fMeudiv(cTrace, cValor) {
  <body>
 
 <form id="form1" method="post" name="form1" action="">
-<input id="cTrace" type="hidden" value="" name="cTrace">
+<input id="trace" name="trace" type="hidden" value="">
 
 <table width="100%" height="10px" background="topo_fundo.png" border="0" cellpadding="0" cellspacing="0">
      <tr align="left">

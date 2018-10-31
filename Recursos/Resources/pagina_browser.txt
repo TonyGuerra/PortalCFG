@@ -92,8 +92,8 @@ height:1.5mm;">
 
 <script type='text/javascript'>
 
-    var cTrace1 = document.form1.cTrace1.value;
-    var cTrace2 = document.form1.cTrace2.value;
+    var cTrace1 = document.form1.trace1.value;
+    var cTrace2 = document.form1.trace2.value;
 
      parent.Frame1.hmheader.fMeudiv(cTrace1, cTrace2);
      parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:history.go(-1);" style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
@@ -185,9 +185,9 @@ function ViewModel() {
 
         // Comportamento    
         self.obterBrowse = function() {
-               jQuery.ajax("obterBrowse", {
+               jQuery.ajax("obter_browser", {
                    data: ko.toJSON( { login: self.cLogin, sessao: self.cSessao, taborigem: self.cTabela, tabela: self.$el().attr('name'), filtro: self.cFiltro, paginaatu: self.nPaginaAtu(), paginafim: self.nPaginaFim}),
-                   type: "put",   
+                   type: "post",   
                    contentType: "application/json",
                    success: function(result) {
                            var xJSon = ko.toJSON(result);

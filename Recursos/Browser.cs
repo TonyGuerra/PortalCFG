@@ -389,28 +389,28 @@ namespace Recursos
                 int nPaginaFim = 0;
 
                 /*
-                if (oLogin["XPaginaAtu"] != null)
+                if (oLogin["paginaatu"] != null)
                 {
-                    nPaginaAtu = Int32.Parse(oLogin["XPaginaAtu"]);
-                    nPaginaFim = Int32.Parse(oLogin["XPaginaFim"]);
+                    nPaginaAtu = oLogin["paginaatu"];
+                    nPaginaFim = oLogin["paginafim"];
                     cTrace1    = oLogin["trace1"];
                 }
                 else
                 {
                 */
-                cTrace1 = oLogin["trace1"] + oLogin["trace2"];
+                    cTrace1 = oLogin["trace1"] + oLogin["trace2"];
 
-                nRegs = MeuDB.Count(String.Format("SELECT Count(idSequencial) REGS FROM {0} ", cNomeTabela));
+                    nRegs = MeuDB.Count(String.Format("SELECT Count(idSequencial) REGS FROM {0} ", cNomeTabela));
 
-                if (nRegs < 0)
-                {
-                    LogFile.Log(string.Format("Pagina_Browser: Problema para obter o total de registros da tabela! Tabela: {0}", cNomeTabela));
-                    break;
-                }
-                else if (nRegs > 0)
-                {
-                    nPaginaFim = (int)(nRegs / MeuLib.nTPagina);
-                }
+                    if (nRegs < 0)
+                    {
+                        LogFile.Log(string.Format("Pagina_Browser: Problema para obter o total de registros da tabela! Tabela: {0}", cNomeTabela));
+                        break;
+                    }
+                    else if (nRegs > 0)
+                    {
+                        nPaginaFim = (int)(nRegs / MeuLib.nTPagina);
+                    }
 
                 //}
 
@@ -487,13 +487,16 @@ namespace Recursos
                         cFiltro += String.Format(" AND {0} >= '{1}' ", list["CAMPO"].ElementAt(i), oLogin[cParametro]);
                         //Parametro ate:
                         cParametro = String.Format("X{0}2", list["CAMPO"].ElementAt(i));
-                        cFiltro += String.Format(" AND {0} >= '{1}' ", list["CAMPO"].ElementAt(i), oLogin[cParametro]);
+                        cFiltro += String.Format(" AND {0} <= '{1}' ", list["CAMPO"].ElementAt(i), oLogin[cParametro]);
                     }
                     else if (list["FILTRO"].ElementAt(i) == "3")
                     {
                         //Parametro parcial:
                         cParametro = String.Format("X{0}3", list["CAMPO"].ElementAt(i));
-                        cFiltro += String.Format(" AND {0} LIKE '%{1}%' ", list["CAMPO"].ElementAt(i), oLogin[cParametro]);
+                        if (!String.IsNullOrEmpty(oLogin[cParametro]))
+                        {
+                            cFiltro += String.Format(" AND {0} LIKE '%{1}%' ", list["CAMPO"].ElementAt(i), oLogin[cParametro]);
+                        }
                     }
                     else if (list["FILTRO"].ElementAt(i) == "4")
                     {
@@ -508,14 +511,17 @@ namespace Recursos
                         {
                             //Parametro parcial:
                             cParametro = String.Format("X{0}5", list["CAMPO"].ElementAt(i));
-                            cFiltro += String.Format(" AND {0} LIKE '%{1}%' ", list["CAMPO"].ElementAt(i), oLogin[cParametro]);
+                            if (!String.IsNullOrEmpty(oLogin[cParametro]))
+                            {
+                                cFiltro += String.Format(" AND {0} LIKE '%{1}%' ", list["CAMPO"].ElementAt(i), oLogin[cParametro]);
+                            }
                         }
-                    } //for[j]
 
+                    } //for[j]
+                    
                 } //for[i]
 
             } while (false);
-
 
             return MeuLib.Base64Encode(cFiltro);
         }
@@ -559,24 +565,39 @@ namespace Recursos
 
                 string cLimite = "";
 
-                if  (Int32.Parse(oLogin["paginaatu"]) > 0)
+                if  (oLogin["paginaatu"] > 0)
                 {
-                    cLimite = String.Format(" Limit {0}, {1} ", (Int32.Parse(oLogin["paginaatu"])-1)*MeuLib.nTPagina, MeuLib.nTPagina);
+                    cLimite = String.Format(" Limit {0}, {1} ", (oLogin["paginaatu"]-1)*MeuLib.nTPagina, MeuLib.nTPagina);
                 }
 
                 //--------------- Filtro -----------------------------------------------------------
 
-                string cFiltro = MeuLib.Base64Decode(oLogin["filtro"]);
+                string cFiltro = oLogin["filtro"];
 
-                var aTabela = oLogin["tabela"].Split("|");
+                cFiltro = MeuLib.Base64Decode(cFiltro);
+
+                string[] aTabela = null;
+
+                if  (oLogin["tabela"].Contains("|"))
+                {
+                    aTabela = oLogin["tabela"].Split("|");
+                }
+                else
+                {
+                    aTabela = new string[] { oLogin["tabela"] };
+                }
+                
 
                 string cJSon = "{";
 
-                for (int i=0; i < aTabela.Length, i++)
+                for (int i=0; i < aTabela.Length; i++)
                 {
-                    Obter_Browse_Inicio(MeuDB, MeuLib, aTabela[i], cFiltro, cLimite);
+                    cJSon += Obter_Browse_JSon(MeuDB, MeuLib, aTabela[i], cFiltro, cLimite);
                 }
 
+                cJSon += "}";
+
+                cHtml = cJSon;
 
             } while (false);
 
@@ -585,8 +606,9 @@ namespace Recursos
             return cHtml;
         }
 
-        private static string Obter_Browse_Inicio(DBConnect MeuDB, ArtLib MeuLib, string cTabela, string cFiltro, string cLimite)
+        private static string Obter_Browse_JSon(DBConnect MeuDB, ArtLib MeuLib, string cTabela, string cFiltro, string cLimite)
         {
+
             LogFile.Log("Obter_Browse_Inicio: cTabela: " + cTabela);
 
             string cJSon = "";
@@ -607,10 +629,35 @@ namespace Recursos
 
                 string cOrderBy = MeuDB.OrdemTabela(cTabela);
 
+                //--------------- Tem Status da Tabela -----------------------------------------------------------
+
+                bool lTemStatus = false;
+                int nRegs = MeuDB.Count(String.Format("SELECT Count(idSequencial) REGS FROM aa46status WHERE id0aa40tabelas = '{0}' ", cTabela));
+                MultiValueDictionary<string, string> aStatus = null;
+
+                if (nRegs < 0)
+                {
+                    LogFile.Log(string.Format("Obter_Browse_Inicio: Problema para obter o total de status da tabela! Tabela: {0}", cTabela));
+                    break;
+                }
+                else if (nRegs > 0)
+                {
+                    lTemStatus = true;
+
+                    cQuery = string.Format("SELECT CODIGO, DESCRICAO, STATUS, " +
+                                           "(SELECT DESCRICAO FROM aa46status b46 WHERE b46.id0aa40tabelas = 13 AND b46.CODIGO = a46.STATUS LIMIT 0,1) AS COR " +
+                                           "FROM aa46status a46 " +
+                                           "WHERE id0aa40tabelas = {0}  ORDER BY ORDEM ", cTabela);
+                    campos = new List<string>(new string[] { "CODIGO", "DESCRICAO", "STATUS", "COR" });
+                    aStatus = MeuDB.Select(cQuery, campos);
+                }
+
                 //--------------- Campos da Tabela -----------------------------------------------------------
 
                 cQuery = string.Format("SELECT * FROM aa41campos WHERE id0aa40tabelas = {0} AND BROWSESN='S' AND OPERACAO <> 'I' ORDER BY ORDEM", cTabela);
                 campos = new List<string>(new string[] { "TITULO", "CAMPO", "OPCOES", "CONSULTATIPO", "CONSULTACODIGO", "CONSULTACAMPO", "IDSEQUENCIAL" });
+                if (lTemStatus) { campos.Add("STATUS"); }
+
                 MultiValueDictionary<string, string> aCampos = MeuDB.Select(cQuery, campos);
                 if ((aCampos.Count < campos.Count))
                 {
@@ -619,7 +666,8 @@ namespace Recursos
                 }
 
                 string cQueryCombo = "";
-                string[] aXCampos = new string[aCampos["CAMPO"].Count];
+                int nSomaStatus = (lTemStatus ? 1 : 0);
+                string[] aXCampos = new string[aCampos["CAMPO"].Count + 1 + nSomaStatus];
 
                 for (int i = 0; i < aCampos["CAMPO"].Count(); i++)
                 {
@@ -631,32 +679,130 @@ namespace Recursos
                     }
                 }
 
-                //--------------- Status da Tabela -----------------------------------------------------------
-
-                cQuery = string.Format("SELECT CODIGO, DESCRICAO, " +
-                                       "(SELECT DESCRICAO FROM portalcfg.aa46status b46 WHERE b46.id0aa40tabelas = 13 AND b46.CODIGO = a46.STATUS LIMIT 0,1) AS COR " +
-                                       "FROM aa46status a46 " +
-                                       "WHERE id0aa40tabelas = {0}  ORDER BY ORDEM ", cTabela);
-                campos = new List<string>(new string[] { "CODIGO", "DESCRICAO", "COR" });
-                MultiValueDictionary<string, string> aStatus = MeuDB.Select(cQuery, campos);
+                if  (lTemStatus)
+                {
+                    aXCampos[aXCampos.Length-2] = "IDSEQUENCIAL";
+                    aXCampos[aXCampos.Length-1] = "STATUS";
+                }
+                else
+                {
+                    aXCampos[aXCampos.Length - 1] = "IDSEQUENCIAL";
+                }
 
                 //--------------- Trace do processo --------------------------------------------------
 
                 cQuery = String.Format("Select * From (SELECT *{0} FROM {1} t1) t2 {2} {3} ", cQueryCombo, cNomeTabela, cFiltro, (String.IsNullOrEmpty(cOrderBy) ? "" : "ORDER BY " + cOrderBy)) + cLimite;
 
                 campos = new List<string>(aXCampos);
-                list = MeuDB.Select(cQuery, campos);
+                list = MeuDB.Select(cQuery, campos, false);
                 if ((list.Count < campos.Count))
                 {
                     LogFile.Log(string.Format("Obter_Browse_Inicio: Problema para obter o Nome da Tabela! Tabela: {0}", cTabela));
                     break;
                 }
 
+                //--------------- Grupos de Browser --------------------------------------------------
+                List<string> listGrupo = Grupos(MeuDB, cTabela);
 
+                //--------------- Montando o JSON --------------------------------------------------
+
+                cJSon += (String.IsNullOrEmpty(cJSon) ? "" : ",");
+                cJSon += String.Format("\"status\":\"1\", \"xbrowse{0}\":[", cTabela);
+
+                string cJSon2 = "{";
+                string cJSon3 = "";
+                string cValor = "";
+                string cStatus = "";
+                string cImagem = "";
+                int nLin = 0;
+                int nG = 0;
+                bool lTaEmGrupo = false;
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    cJSon += (cJSon2 == "{" ? "" : ",");
+                    cJSon2 = "{";
+                    cJSon3 = "";
+                    nG = 0;
+
+                    for (int j = 0; j < aCampos["CAMPO"].Count(); j++)
+                    {
+                        cValor = list[aCampos["CAMPO"].ElementAt(j)].ElementAt(i);
+
+                        if (!String.IsNullOrEmpty(aCampos["OPCOES"].ElementAt(j)))
+                        {
+                            cValor = MeuLib.ValCombo(aCampos["OPCOES"].ElementAt(j), cValor);
+                        }
+
+                        if (aCampos["CONSULTATIPO"].ElementAt(j) == "1") //Combo de consulta
+                        {
+                            cValor = list["D" + aCampos["CAMPO"].ElementAt(j)].ElementAt(i);
+                        }
+
+                        lTaEmGrupo = false;
+
+                        for (int k = 0; k < listGrupo.Count(); k++)  //Grupos de registro
+                        {
+                            if (listGrupo[k] == aCampos["IDSEQUENCIAL"].ElementAt(j))
+                            {
+                                nG++;
+
+                                cJSon3 += (nG == 1 ? String.Format(", \"TR_GRUPO\"     : \"{0}\" ", cValor) : "");
+                                cJSon3 += (nG == 2 ? String.Format(", \"TR_SUBGRUPO\"  : \"{0}\" ", cValor) : "");
+                                cJSon3 += (nG == 3 ? String.Format(", \"TR_MINIGRUPO\" : \"{0}\" ", cValor) : "");
+
+                                lTaEmGrupo = true;
+                            }
+
+                            if (lTaEmGrupo)
+                            {
+                                cJSon2 += (cJSon2 == "{" ? "" : ",") + String.Format("\"{0}\" : \"{1}\"", aCampos["CAMPO"].ElementAt(j), cValor);
+                            }
+
+                        } //for k
+
+                    } //for j
+
+                    if (lTemStatus)
+                    {
+                        cStatus = list["STATUS"].ElementAt(i);
+
+                        cJSon2 += (cJSon2 == "{" ? "" : ",") + String.Format(" \"STATUS\" : \"{0}\" ", cStatus);
+
+                        for (int k = 0; k < aStatus["CODIGO"].Count(); k++)  //Status da tabela
+                        {
+                            if (aStatus["CODIGO"].ElementAt(k) == cStatus)
+                            {
+                                cImagem = "{" + String.Format("\"imagem\" : \"portal_led_{0}.png\", \"titulo\" : \"{1}\"", aStatus["COR"].ElementAt(k), aStatus["DESCRICAO"].ElementAt(k)) + "}";
+                                cJSon2 += String.Format(", \"IMGSTATUS\" : \"{0}\" ", cImagem);
+                                break;
+                            }
+                        }
+
+                    }
+
+                    cJSon2 += (cJSon2 == "{" ? "" : ",") + String.Format(" \"idSequencial\" : {0} ", list["IDSEQUENCIAL"].ElementAt(i));
+
+                    cJSon2 += String.Format(", \"tabela\" : {0} ", cTabela);
+
+                    cJSon2 += cJSon3;
+
+                    if (cJSon3.IndexOf("TR_GRUPO") <= 0) { cJSon2 += ", \"TR_GRUPO\" : \"\", \"TR_SUBGRUPO\" : \"\", \"TR_MINIGRUPO\" : \"\""; }
+                    else if (cJSon3.IndexOf("TR_SUBGRUPO") <= 0) { cJSon2 += ", \"TR_SUBGRUPO\" : \"\", \"TR_MINIGRUPO\" : \"\""; }
+                    else if (cJSon3.IndexOf("TR_MINIGRUPO") <= 0) { cJSon2 += ", \"TR_MINIGRUPO\" : \"\""; }
+
+                    nLin++;
+
+                    cJSon2 += String.Format(", \"TR_ID\" : \"{0}\" ", ((nLin % 2) == 0 ? "xTitulo3" : "TRBranco"));
+
+                    cJSon += cJSon2 + "}";
+
+                } //for i
+
+                cJSon += "]";
 
             } while (false);
-
-
+            
             return cJSon;
         }
     }

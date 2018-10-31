@@ -104,12 +104,12 @@
 
 <script type="text/javascript">
 
-    var cTrace1 = document.form1.Trace1.value;
-    var cTrace2 = document.form1.Trace2.value;
+    var cTrace1 = document.form1.trace1.value;
+    var cTrace2 = document.form1.trace2.value;
 
     document.form1.XSEQUENCIAL1.focus();
 
-    parent.Frame1.hmheader.fMeudiv(Trace1, Trace2);
+    parent.Frame1.hmheader.fMeudiv(cTrace1, cTrace2);
     parent.Frame1.hmheader.meutd1.innerHTML='';
     parent.Frame1.hmheader.meutd2.innerHTML='';
     parent.Frame1.hmheader.meutd3.innerHTML='';

@@ -39,7 +39,15 @@ namespace Recursos
                     byte[] formData = new byte[nTam];
                     request.InputStream.Read(formData, 0, nTam);
                     cDados = Encoding.ASCII.GetString(formData);
-                    cDados = HttpUtility.UrlDecode(cDados.Replace("\0", ""));
+                    if  ((cDados.IndexOf("dados=") >= 0) && (cDados.IndexOf("dados=") <= 1))
+                    {
+                        cDados = HttpUtility.UrlDecode(cDados.Replace("\0", ""));
+                    }
+                    else
+                    {
+                        cDados =cDados.Replace("\0", "");
+                    }
+                    
                 }
 
                 if (cMeuPath.Contains(".css"))
@@ -108,6 +116,10 @@ namespace Recursos
                 else if (cMeuPath == "pagina_browser")
                 {
                     cHtml = MeuBrowser.Pagina_Browser(request, MeuDB, MeuLib, cMeuPath, cDados);
+                }
+                else if (cMeuPath == "obter_browser")
+                {
+                    cHtml = MeuBrowser.Obter_Browser(request, MeuDB, MeuLib, cMeuPath, cDados);
                 }
                 else if (Resources.ResourceManager.GetObject(cMeuPath) != null)
                 {
