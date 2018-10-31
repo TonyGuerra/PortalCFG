@@ -112,6 +112,16 @@ namespace Recursos {
         }
         
         /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap estrutura_png {
+            get {
+                object obj = ResourceManager.GetObject("estrutura_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
         ///&lt;html&gt;
         ///&lt;head&gt;
@@ -152,12 +162,12 @@ namespace Recursos {
         ///
         ///function fMeudiv(cTrace, cValor) {
         ///       if  (cTrace == &apos;&apos;) {
-        ///           document.form1.cTrace.value =  cValor;
+        ///           document.form1.trace.value =  cValor;
         ///       } else {
-        ///           document.form1.cTrace.value =  cTrace+cValor;
+        ///           document.form1.trace.value =  cTrace+cValor;
         ///      }
         ///
-        ///     [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///       [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         internal static string menutree_cabecalho {
             get {
@@ -172,10 +182,10 @@ namespace Recursos {
         ///&lt;meta name=&quot;robots&quot; content=&quot;all&quot; /&gt;
         ///&lt;meta charset=&apos;UTF-8&apos;&gt;
         ///&lt;title&gt;PortalCFG&lt;/title&gt;
-        ///&lt;link href=&quot;/css/dcaccordion.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+        ///&lt;link href=&quot;dcaccordion.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
         ///&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
         ///&lt;script type=&apos;text/javascript&apos; src=&apos;jquery.cookie.js&apos;&gt;&lt;/script&gt;
-        ///&lt;script type=&apos;text/javascript&apos; src=&apos;jquery.hoverIntent.minifie [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///&lt;script type=&apos;text/javascript&apos; src=&apos;jquery.hoverIntent.minified.js&apos; [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         internal static string menutree_esquerdo {
             get {
@@ -259,9 +269,109 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Permissao_png {
+            get {
+                object obj = ResourceManager.GetObject("Permissao_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap portal_edit_gif {
             get {
                 object obj = ResourceManager.GetObject("portal_edit_gif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_led_amarelo_png {
+            get {
+                object obj = ResourceManager.GetObject("portal_led_amarelo_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_led_azul_png {
+            get {
+                object obj = ResourceManager.GetObject("portal_led_azul_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_led_bege_png {
+            get {
+                object obj = ResourceManager.GetObject("portal_led_bege_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_led_laranja_png {
+            get {
+                object obj = ResourceManager.GetObject("portal_led_laranja_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_led_marrom_png {
+            get {
+                object obj = ResourceManager.GetObject("portal_led_marrom_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_led_preto_png {
+            get {
+                object obj = ResourceManager.GetObject("portal_led_preto_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_led_roxo_png {
+            get {
+                object obj = ResourceManager.GetObject("portal_led_roxo_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_led_verde_png {
+            get {
+                object obj = ResourceManager.GetObject("portal_led_verde_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_led_vermelho_png {
+            get {
+                object obj = ResourceManager.GetObject("portal_led_vermelho_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -336,6 +446,36 @@ namespace Recursos {
         internal static System.Drawing.Bitmap topo1_fundo_gif {
             get {
                 object obj = ResourceManager.GetObject("topo1_fundo_gif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tree_pagina_gif {
+            get {
+                object obj = ResourceManager.GetObject("tree_pagina_gif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tree_pasta_aberta_gif {
+            get {
+                object obj = ResourceManager.GetObject("tree_pasta_aberta_gif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tree_pasta_fechada_gif {
+            get {
+                object obj = ResourceManager.GetObject("tree_pasta_fechada_gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

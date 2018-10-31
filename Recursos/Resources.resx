@@ -172,4 +172,46 @@
   <data name="ui_bg_highlight_soft_75_azul_1x100_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ui-bg_highlight-soft_75_azul_1x100.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="estrutura_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Estrutura.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Permissao_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Permissao.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="portal_led_amarelo_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portal_led_amarelo.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="portal_led_azul_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portal_led_azul.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="portal_led_bege_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portal_led_bege.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="portal_led_laranja_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portal_led_laranja.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="portal_led_marrom_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portal_led_marrom.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="portal_led_preto_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portal_led_preto.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="portal_led_roxo_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portal_led_roxo.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="portal_led_verde_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portal_led_verde.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="portal_led_vermelho_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portal_led_vermelho.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tree_pagina_gif" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tree_pagina.gif.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tree_pasta_aberta_gif" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tree_pasta_aberta.gif.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tree_pasta_fechada_gif" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tree_pasta_fechada.gif.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -228,7 +228,8 @@ namespace Recursos
 
             if (!String.IsNullOrEmpty(cQueryString))
             {
-                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(1));
+                int nP = (cQueryString.Contains("dados=") ? 7 : 1);
+                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(nP));
             }
 
             do
@@ -268,7 +269,8 @@ namespace Recursos
 
             if (!String.IsNullOrEmpty(cQueryString))
             {
-                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(1));
+                int nP = (cQueryString.Contains("dados=") ? 7 : 1);
+                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(nP));
             }
 
             do
@@ -401,7 +403,8 @@ namespace Recursos
 
             if (!String.IsNullOrEmpty(cQueryString))
             {
-                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(1));
+                int nP = (cQueryString.Contains("dados=") ? 7 : 1 );
+                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(nP));
             }
 
             do

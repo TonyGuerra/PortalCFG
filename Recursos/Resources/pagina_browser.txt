@@ -13,7 +13,7 @@
     <script type='text/javascript' src='knockout.js'></script>
     <script type="text/javascript" src="knockout.mapping-latest.js"></script>
  
-<link href="PortalCFG.css" rel="stylesheet" type="text/css" />    
+	<link href="PortalCFG.css" rel="stylesheet"/>    
 
 </head>
 
@@ -191,9 +191,9 @@ function ViewModel() {
                    contentType: "application/json",
                    success: function(result) {
                            var xJSon = ko.toJSON(result);
-                           var cJSon = JSON.stringify(xJSon);
-                           cJSon = cJSon.replace(/!!x/g,'\\x');
-                           cJSon = eval(cJSon);  //Executa a acentuacao no token \x, nao delimitar com apostrofe pois resulta em erro no parse();
+                           //var cJSon = JSON.stringify(xJSon);
+                           //cJSon = cJSon.replace(/!!x/g,'\\x');
+                           cJSon = eval(xJSon);  //Executa a acentuacao no token \x, nao delimitar com apostrofe pois resulta em erro no parse();
                            //console.log(cJSon);
                            xJSon = JSON.parse(cJSon);
                            self.obterDados(ko.mapping.fromJS(xJSon));

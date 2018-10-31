@@ -26,7 +26,8 @@ namespace Recursos
 
             if (!String.IsNullOrEmpty(cQueryString))
             {
-                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(1));
+                int nP = (cQueryString.Contains("dados=") ? 7 : 1);
+                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(nP));
             }
 
             do
@@ -185,7 +186,8 @@ namespace Recursos
 
             if (!String.IsNullOrEmpty(cQueryString))
             {
-                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(1));
+                int nP = (cQueryString.Contains("dados=") ? 7 : 1);
+                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(nP));
             }
 
             do
@@ -291,7 +293,7 @@ namespace Recursos
                         if (lCampoRETIRAR) { continue; }
 
                         cImagem = "portal_menos.gif";
-                    }
+                    } else if (!String.IsNullOrEmpty(list["IMAGEM"].ElementAt(i))) { cImagem = list["IMAGEM"].ElementAt(i); }
 
                     aOpcoes.Add(nA, cOpcao);
                     aOpcoes.Add(nA, list["DESCRICAO"].ElementAt(i));
@@ -340,24 +342,28 @@ namespace Recursos
                     cLinha += "<td data-bind=\"template: { name: 'statusTemplate1', data: IMGSTATUS }\"></td>";
                 }
 
+                //--------------- Grupos de Browser --------------------------------------------------
+
                 bool lTaEmGrupo = false;
+
+                List<string> listGrupo = Grupos(MeuDB, oLogin["tabela"]);
 
                 for (int i = 0; i < aCampos.Count; i++)
                 {
-                    for (int j = 0; j < aOpcoes.Count; j++)
+                    for (int j = 0; j < listGrupo.Count; j++)
                     {
-                        if (aCampos[i].ElementAt(0) == aOpcoes[j].ElementAt(0))
+                        if (listGrupo[j] == aCampos[i].ElementAt(0))
                         {
                             lTaEmGrupo = true;
                             break;
                         }
+                    }
 
-                        if (!lTaEmGrupo)
-                        {
-                            cCabecalho += String.Format("<td style='margin-right: 1mm; margin-left: 1mm;'><strong>{0}</strong></td>", aCampos[i].ElementAt(0));
+                    if (!lTaEmGrupo)
+                    {
+                        cCabecalho += String.Format("<td style='margin-right: 1mm; margin-left: 1mm;'><strong>{0}</strong></td>", aCampos[i].ElementAt(0));
 
-                            cLinha += String.Format("<td data-bind=\"text: {0}\" style='margin-left:1mm; margin-right:1mm; font-weight:bold;'></td>", aCampos[i].ElementAt(1));
-                        }
+                        cLinha += String.Format("<td data-bind=\"text: {0}\" style='margin-left:1mm; margin-right:1mm; font-weight:bold;'></td>", aCampos[i].ElementAt(1));
                     }
                 }
 
@@ -537,7 +543,8 @@ namespace Recursos
 
             if (!String.IsNullOrEmpty(cQueryString))
             {
-                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(1));
+                int nP = (cQueryString.Contains("dados=") ? 7 : 1);
+                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(nP));
             }
 
             do
@@ -754,12 +761,13 @@ namespace Recursos
                                 lTaEmGrupo = true;
                             }
 
-                            if (lTaEmGrupo)
-                            {
-                                cJSon2 += (cJSon2 == "{" ? "" : ",") + String.Format("\"{0}\" : \"{1}\"", aCampos["CAMPO"].ElementAt(j), cValor);
-                            }
-
                         } //for k
+
+                        if (!lTaEmGrupo)
+                        {
+                            cJSon2 += (cJSon2 == "{" ? "" : ",") + String.Format("\"{0}\" : \"{1}\"", aCampos["CAMPO"].ElementAt(j), cValor);
+                        }
+
 
                     } //for j
 
@@ -774,7 +782,7 @@ namespace Recursos
                             if (aStatus["CODIGO"].ElementAt(k) == cStatus)
                             {
                                 cImagem = "{" + String.Format("\"imagem\" : \"portal_led_{0}.png\", \"titulo\" : \"{1}\"", aStatus["COR"].ElementAt(k), aStatus["DESCRICAO"].ElementAt(k)) + "}";
-                                cJSon2 += String.Format(", \"IMGSTATUS\" : \"{0}\" ", cImagem);
+                                cJSon2 += String.Format(", \"IMGSTATUS\" : {0} ", cImagem);
                                 break;
                             }
                         }
@@ -783,7 +791,7 @@ namespace Recursos
 
                     cJSon2 += (cJSon2 == "{" ? "" : ",") + String.Format(" \"idSequencial\" : {0} ", list["IDSEQUENCIAL"].ElementAt(i));
 
-                    cJSon2 += String.Format(", \"tabela\" : {0} ", cTabela);
+                    cJSon2 += String.Format(", \"TABELA\" : {0} ", cTabela);
 
                     cJSon2 += cJSon3;
 

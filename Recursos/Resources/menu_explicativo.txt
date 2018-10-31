@@ -1,12 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional-dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 
 <head>
   <title>Tela Explicativa</title>
 
    <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+   <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
 
-   <link type="text/css" href="default.css" rel="stylesheet" />
+   <link rel="stylesheet" href="default.css" />
 </head>
 
 <body style="margin:0px 0px 0px 0px; background-color:#FFFFFF;" >

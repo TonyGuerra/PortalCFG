@@ -104,9 +104,6 @@
     <None Include="Resources\knockout_js.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\login_js1.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\autentica_login.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +174,48 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ui-bg_highlight-soft_75_azul_1x100.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\estrutura.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Permissao.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_led_amarelo.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_led_azul.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_led_bege.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_led_laranja.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_led_marrom.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_led_preto.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_led_roxo.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_led_verde.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_led_vermelho.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tree_pasta_aberta.gif.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tree_pasta_fechada.gif.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tree_pagina.gif.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
