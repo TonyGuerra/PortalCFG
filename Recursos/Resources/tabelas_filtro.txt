@@ -47,7 +47,7 @@
 
 <Form name="form1" id="form1" method="post" action="">
 	<input name="dados" id="dados" type="hidden" value="" />
-	<input id="trace1" type="hidden" value=">> Base de Dados > ">
+	<input id="trace1" type="hidden" value=">> Principal > ">
 	<input id="trace2" type="hidden" value=" !XTRACE1! Filtro > ">
 	<input id="login" type="hidden" value="!XLOGIN!">
 	<input id="sessao" type="hidden" value="!XSESSAO!">
@@ -109,10 +109,10 @@
 
     document.form1.XSEQUENCIAL1.focus();
 
-    parent.Frame1.hmheader.fMeudiv(cTrace1, cTrace2);
-    parent.Frame1.hmheader.meutd1.innerHTML='';
-    parent.Frame1.hmheader.meutd2.innerHTML='';
-    parent.Frame1.hmheader.meutd3.innerHTML='';
+    parent.DATA.caminho(cTrace1+cTrace2);
+    //parent.Frame1.hmheader.meutd1.innerHTML='';
+    //parent.Frame1.hmheader.meutd2.innerHTML='';
+    //parent.Frame1.hmheader.meutd3.innerHTML='';
    
 </script>
 

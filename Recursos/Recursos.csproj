@@ -53,6 +53,7 @@
     <Compile Include="Distribuidor.cs" />
     <Compile Include="LogFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Program.cs" />
     <Compile Include="Recursos.cs" />
     <Compile Include="Resource_CSS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -179,9 +180,6 @@
     <None Include="Resources\estrutura.png.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Permissao.png.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\portal_led_amarelo.png.png" />
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +214,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\tree_pagina.gif.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portal_menos.gif.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\permissao.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jquery-ui.js.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

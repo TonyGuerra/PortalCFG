@@ -332,7 +332,7 @@ namespace Recursos
 
                 string cMeuMenu   = "";
                 string cMenu      = "M";
-                string cParametros = "?{\"login\":\"" + oLogin["login"] + "\",\"sessao\":\"" + oLogin["sessao"] + "\",\"menu\":\"xxx\"}";
+                string cParametros = "{\"login\":\"" + oLogin["login"] + "\",\"sessao\":\"" + oLogin["sessao"] + "\",\"menu\":\"xxx\"}";
 
                 for (int i = 0; i < list["idSequencial"].Count; i++)
                 {
@@ -380,8 +380,8 @@ namespace Recursos
                 else if (list["TIPO"].ElementAt(i) == "H")
                 {
                     cRotina = list["PAGINA"].ElementAt(i).Trim(); 
-                    if (!String.IsNullOrEmpty(cRotina)) { cRotina = "./" + cRotina + cParametros.Replace("xxx", list["idSequencial"].ElementAt(i)); } //id Menu
-                    cMeuMenu += "   <li><a href='" + cRotina + "' target='hmcontent'>" + cDescricao + "</a></li>";
+                    if (!String.IsNullOrEmpty(cRotina)) { cRotina = cRotina + "?" + MeuLib.Base64Encode(cParametros.Replace("xxx", list["idSequencial"].ElementAt(i))); } //id Menu
+                    cMeuMenu += "   <li><a href=\"javascript:fPagina('" + cRotina + "')\">" + cDescricao + "</a></li>";
                 }
 
                 i++;
@@ -404,7 +404,9 @@ namespace Recursos
             if (!String.IsNullOrEmpty(cQueryString))
             {
                 int nP = (cQueryString.Contains("dados=") ? 7 : 1 );
-                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(nP));
+                string cJSon = cQueryString.Substring(nP);
+                if (!cJSon.Contains("{")) { cJSon = MeuLib.Base64Decode(cJSon); }
+                oLogin = serializer.Deserialize<dynamic>(cJSon);
             }
 
             do

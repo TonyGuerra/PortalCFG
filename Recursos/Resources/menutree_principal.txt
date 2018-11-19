@@ -1,34 +1,106 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
-<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
 
-<script type="text/javascript">
+  <head>
+  	<meta http-equiv="Pragma" content="no-cache">
 
-function Contrair(dimensao){
-    if( Frame2.cols==dimensao ) {
-        Frame2.cols="200,6,*";
-    } else {
-        Frame2.cols=dimensao;
-        hmnavigation.scrolling="no";
-    }
-}
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type='text/javascript' src='knockout.js'></script>
+    <script type="text/javascript" src="knockout.mapping-latest.js"></script>
 
-</script>
 
-</head>
+	    <script type="text/javascript">
 
-  <frameset id="Frame1" name="Frame1" rows="90,*" frameborder="0" framespacing="1">
-  <frame id="hmheader" name="hmheader" marginwidth="0" marginheight="0" scrolling="No" noresize src='menutree_cabecalho?dados={"login":"!XLOGIN!","sessao":"!XSESSAO!"}' title="Header">
-  <frameset id="Frame2" cols="200,6,*" frameborder="1" framespacing="1">
-    <frame id="hmnavigation" name="hmnavigation"  scrolling="no" src='menutree_esquerdo?dados={"login":"!XLOGIN!","sessao":"!XSESSAO!"}' title="Navigation frame">
-    <frame id="hmlinha" name="hmlinha" src="linha_vertical" marginwidth="5" marginheight="0" scrolling="No" title="Content frame">
-    <frame id="hmcontent" name="hmcontent" src='menutree_explicativo?dados={"login":"!XLOGIN!","sessao":"!XSESSAO!"}' " title="Content frame"> 
-  </frameset>
-    <noframes>
-      Esta p&aacutegina requer Frames!
-    </noframes>
-  </frameset>
+		  //function DATA() {
+		  //  var self = this;
+		//	self.showMenu= ko.observable(true);
+		//	self.caminho = ko.observable('>> Principal');
+		 // };
+		 
+		 var DATA = {
+		 	caminho: ko.observable('>> Principal'),
+			showMenu: ko.observable(true),
+			menuExplicativo: ko.observable('menutree_explicativo?dados={"login":"!XLOGIN!","sessao":"!XSESSAO!"}') 
+		 }
+		
+		window.onload = function() {
+		  ko.applyBindings(DATA);
+		};
+		
+
+	</script>
+	
+	<STYLE type="text/css">
+
+		html{
+		   	height: 100%;
+			overflow-y: hidden;
+			overflow-x: hidden;
+		    margin: 0;
+			padding: 0;
+		}
+
+	   body {
+		    height: 95.3%;
+		    width: 100%;
+		    position: relative;
+			overflow: visible;
+		    margin: 0;
+		    padding: 0;
+		}
+		
+		div {
+		    position: relative;
+	 		overflow: visible;
+		    margin: 0;
+		    padding: 0;
+	        border: none;
+		}
+		.container{
+	     display:flex;
+		 height:90%;
+	   }
+		.cabecalho{
+	       height: 15%;
+		    margin: 0;
+		    padding: 0;
+	   }
+		.fixed{
+		   position: relative;
+           width: 24%;
+           float: left;
+	   }
+		.flex-item{
+	       position: relative;
+           width: 100%;
+	       //background:blue;
+	   }
+	   
+	   .hide-important {
+          display: none !important;
+       }
+	   
+	   
+   </STYLE>
+
+  </head>
+
+  <body>
+  
+    <input type="hidden" data-bind="value: caminho" />  
+	
+	<div  class="cabecalho">	
+	  <iframe id="meuframe" name="meuframe" src='menutree_cabecalho?dados={"login":"!XLOGIN!","sessao":"!XSESSAO!"}' style='width:100%;height:100%;overflow:visible;'></iframe>
+	</div>
+	<div class="container">
+		<div class="fixed" data-bind="css: {'hide-important': !showMenu()}">	
+		  <iframe id="meuframe2" name="meuframe2" src='menutree_esquerdo?dados={"login":"!XLOGIN!","sessao":"!XSESSAO!"}' style='width:100%;height:100%;overflow:visible;''></iframe>
+		</div>
+		<div class="flex-item">	
+		  <iframe id="meuframe3" name="meuframe3" data-bind="attr: {src: menuExplicativo}" style='width:100%;height:100%;overflow:visible;''></iframe>
+		</div>
+	</div>
+
+  </body>
 
 </html>

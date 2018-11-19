@@ -19,7 +19,8 @@ namespace Recursos
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string cQueryString = HttpUtility.UrlDecode(request.Url.Query);
-            dynamic oLogin = serializer.Deserialize<dynamic>(cDados.Replace("dados=", ""));
+            string cJSon = cDados.Replace("dados=", "");
+            dynamic oLogin = serializer.Deserialize<dynamic>(cJSon);
             string cHtml = "ERRO: Html nao atribuido";
 
             LogFile.Log(" --- Tabelas_Filtro:");
@@ -27,13 +28,14 @@ namespace Recursos
             if (!String.IsNullOrEmpty(cQueryString))
             {
                 int nP = (cQueryString.Contains("dados=") ? 7 : 1);
-                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(nP));
+                cJSon = MeuLib.Base64Decode(cQueryString.Substring(nP));
+                oLogin = serializer.Deserialize<dynamic>(cJSon);
             }
 
             do
             {
 
-                cHtml = Distribuidor.Generico(request, MeuDB, MeuLib, cMeuPath, cDados);
+                cHtml = Distribuidor.Generico(request, MeuDB, MeuLib, cMeuPath, cJSon);
 
                 if (cHtml.Contains("Sessao Expirou")) { break; }
 
@@ -311,10 +313,10 @@ namespace Recursos
 
                 if (lCampoSTATUS)
                 {
-                    cCabecalho += "<td style='margin - right: 1mm; margin - left: 1mm; '><strong>Sts</strong></td>";
+                    cCabecalho += "<div style='margin - right: 1mm; margin - left: 1mm; display: inline-block;'><strong>Sts</strong></div>";
                 }
 
-                cLinha = String.Format("<tbody data-bind='foreach: xbrowse{0}'>", oLogin["tabela"]);
+                cLinha = String.Format("<tbody id='meutab'  data-bind='foreach: xbrowse{0}'>", oLogin["tabela"]);
 
                 //Grupo Browser
                 int nColunas = (1 + (lCampoSTATUS ? 1 : 0) + aCampos.Count + 2);
@@ -361,7 +363,7 @@ namespace Recursos
 
                     if (!lTaEmGrupo)
                     {
-                        cCabecalho += String.Format("<td style='margin-right: 1mm; margin-left: 1mm;'><strong>{0}</strong></td>", aCampos[i].ElementAt(0));
+                        cCabecalho += String.Format("<div style='margin-right: 1mm; margin-left: 1mm;display: inline-block;'><strong>{0}</strong></div>", aCampos[i].ElementAt(0));
 
                         cLinha += String.Format("<td data-bind=\"text: {0}\" style='margin-left:1mm; margin-right:1mm; font-weight:bold;'></td>", aCampos[i].ElementAt(1));
                     }
@@ -683,8 +685,14 @@ namespace Recursos
                     if  (aCampos["CONSULTATIPO"].ElementAt(i) == "1" /*Combo de tabela*/)
                     {
                         cQueryCombo = "," + MeuDB.SQLCombo(aCampos["CONSULTACODIGO"].ElementAt(i), aCampos["CONSULTACAMPO"].ElementAt(i), aCampos["CAMPO"].ElementAt(i));
+                        aXCampos = new List<string>(aXCampos) { null }.ToArray();
+                        i++;
+                        aXCampos[i] = "D" + aXCampos[i-1];
                     }
                 }
+
+                //Remove o campo STATUS se existir
+                aXCampos = aXCampos.Where(x => x != "STATUS").ToArray();
 
                 if  (lTemStatus)
                 {
@@ -725,14 +733,14 @@ namespace Recursos
                 int nG = 0;
                 bool lTaEmGrupo = false;
 
-                for (int i = 0; i < list.Count; i++)
+                for (int i = 0; i < list[aXCampos[0]].Count; i++)
                 {
                     cJSon += (cJSon2 == "{" ? "" : ",");
                     cJSon2 = "{";
                     cJSon3 = "";
                     nG = 0;
 
-                    for (int j = 0; j < aCampos["CAMPO"].Count(); j++)
+                    for (int j = 0; j < aCampos["CAMPO"].Count; j++)
                     {
                         cValor = list[aCampos["CAMPO"].ElementAt(j)].ElementAt(i);
 

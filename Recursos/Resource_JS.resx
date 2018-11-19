@@ -130,6 +130,9 @@
   <data name="jquery_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\jquery_min_js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="jquery_ui_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\jquery-ui.js.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="json2_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\json2.js.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

@@ -1,6 +1,4 @@
-<!DOCTYPE html>
 <html>
-
 <head>
   <title>Tela Explicativa</title>
 
@@ -22,10 +20,10 @@
 </tr></table>
 
 <SCRIPT LANGUAGE="JavaScript">
-     parent.Frame1.hmheader.fMeudiv('>> ', 'Base de Dados > ');
-     parent.Frame1.hmheader.meutd1.innerHTML='';
-     parent.Frame1.hmheader.meutd2.innerHTML='';
-     parent.Frame1.hmheader.meutd3.innerHTML='';
+     parent.DATA.caminho('>> Principal > ');
+     //parent.Frame1.hmheader.meutd1.innerHTML='';
+     //parent.Frame1.hmheader.meutd2.innerHTML='';
+     //parent.Frame1.hmheader.meutd3.innerHTML='';
 </SCRIPT>
 
 </body>

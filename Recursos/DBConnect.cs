@@ -293,7 +293,7 @@ namespace Recursos
                     break;
                 }
 
-                xQuery = String.Format("(SELECT concat({0},'' ('',idSequencial,'')'') FROM {1} WHERE idSequencial = t1.{2}) D{3} ", list["CAMPO"].First(), cNomeTabela, cCampoOrigem, cCampoOrigem);
+                xQuery = String.Format("(SELECT concat({0},' (',idSequencial,')') FROM {1} WHERE idSequencial = t1.{2}) D{3} ", list["CAMPO"].First(), cNomeTabela, cCampoOrigem, cCampoOrigem);
 
             } while (false);
 

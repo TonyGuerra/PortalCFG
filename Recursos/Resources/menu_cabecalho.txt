@@ -1,23 +1,61 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
     <title>Cabe&ccedilalho do Menu</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+  	<meta http-equiv="Pragma" content="no-cache">
+
     <script type="text/javascript" src="jquery.min.js"></script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
+		window.onload = function () {
+		   try {
+		      parent.ko.cleanNode(document.body);
+ 	   	      parent.ko.applyBindings(parent.DATA, document.body);
+		  }
+          catch (err) {
+              console.log(err.message);
+          }
+		}
+		function fShowMenu() {
+		   parent.DATA.showMenu(!parent.DATA.showMenu());
+		}
+	</script>
 
-function fMeudiv(cTrace, cValor) {
-       if  (cTrace == '') {
-           document.form1.trace.value =  cValor;
-       } else {
-           document.form1.trace.value =  cTrace+cValor;
-      }
+	<style>
+		.footer {
+		   position: fixed;
+		   left: 0;
+		   bottom: 0;
+		   height: 20px;
+		   width: 100%;
+		   text-align: center;
+		}
 
-       meudiv.innerHTML =  document.form1.trace.value;
-}
+		html{
+		   	height: 100%;
+			overflow-y: hidden;
+			overflow-x: hidden;
+		    margin: 0;
+			padding: 0;
+		}
 
-</script>
+	   body {
+		    height: 95.3%;
+		    width: 100%;
+		    position: relative;
+			overflow: visible;
+		    margin: 0;
+		    padding: 0;
+		}
+		
+		div {
+		    position: relative;
+	 		overflow: visible;
+		    margin: 0;
+		    padding: 0;
+	        border: none;
+		}
+	</style>
 
 </head>
  
@@ -26,34 +64,19 @@ function fMeudiv(cTrace, cValor) {
 <form id="form1" method="post" name="form1" action="">
 <input id="trace" name="trace" type="hidden" value="">
 
-<table width="100%" height="10px" background="topo_fundo.png" border="0" cellpadding="0" cellspacing="0">
-     <tr align="left">
-          <td height="40" width="20"></td><td height="40"><img src="topo_logo.png" align="left" border="0" height="40" width="170"></td>
-     </tr>
-     <tr>
-         <td height="20" colspan="3" background="topo1_fundo.gif" align="left" border="0" cellpadding="0" cellspacing="0" >&nbsp;</td>
-     </tr>
-    </tbody>
-</table>
+<div style="background-image: url(topo_fundo.png); height:40px; width:100%; float:left;">&nbsp;</div>
+<div style="background-image: url(topo_logo.png); background-repeat: no-repeat; background-size: 180px 40px; height:40px; width:180px; left:20px">&nbsp;</div>
+<div style="background-image: url(topo1_fundo.gif); height:30px; width:100%;">&nbsp;</div>
 
-<b><div id="meudiv" name="meudiv" style="WIDTH: 100%; POSITION: absolute; COLOR: white; TOP: 10px" align="right">
-</div></b>
+	<div class="footer">
+		<div ALIGN="right" style="font-weight: bold;margin-right: 20px;" data-bind="text: caminho"></div>
+    	<div style="position:absolute; top:-17px;">
+			<a href="javascript:fShowMenu();">
+				<ul><li>Menu</li></ul>
+			</a>
+		</div>
+	</div>
 
-<table 
-      <tr style="background-color: white">
-        <td height="32" align="left" cellspacing="0" cellpadding="0" style="width:300px">
-          <a href="javascript:parent.Contrair('0,6,*');">
-          <ul>
-            <li>Menu</li>
-          </ul>
-          </a>
-        </td>
-        <td id="meutd1" name="meutd1" style="width:100px"></td>
-        <td id="meutd2" name="meutd2" style="width:100px"></td>
-        <td id="meutd3" name="meutd3" style="width:100px"></td>
-      </tr>
-</table>
-<hr style="position:relative;top:-20px;left:-12px;width: 110%">
 </form>
 
 </body>

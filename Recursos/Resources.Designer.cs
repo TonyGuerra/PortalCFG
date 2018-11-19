@@ -151,23 +151,26 @@ namespace Recursos {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
-        ///&lt;html&gt;
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;html&gt;
         ///&lt;head&gt;
         ///    &lt;title&gt;Cabe&amp;ccedilalho do Menu&lt;/title&gt;
-        ///    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=ISO-8859-1&quot;&gt;
+        ///
+        ///  	&lt;meta http-equiv=&quot;Pragma&quot; content=&quot;no-cache&quot;&gt;
+        ///
         ///    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
         ///
-        ///&lt;script type=&quot;text/javascript&quot;&gt;
-        ///
-        ///function fMeudiv(cTrace, cValor) {
-        ///       if  (cTrace == &apos;&apos;) {
-        ///           document.form1.trace.value =  cValor;
-        ///       } else {
-        ///           document.form1.trace.value =  cTrace+cValor;
-        ///      }
-        ///
-        ///       [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///	&lt;script type=&quot;text/javascript&quot;&gt;
+        ///		window.onload = function () {
+        ///		   try {
+        ///		      parent.ko.cleanNode(document.body);
+        /// 	   	      parent.ko.applyBindings(parent.DATA, document.body);
+        ///		  }
+        ///          catch (err) {
+        ///              console.log(err.message);
+        ///          }
+        ///		}
+        ///		function fShowMenu() {
+        ///		   parent.DATA.showMe [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         internal static string menutree_cabecalho {
             get {
@@ -176,16 +179,22 @@ namespace Recursos {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
-        ///&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;html&gt;
         ///&lt;head&gt;
-        ///&lt;meta name=&quot;robots&quot; content=&quot;all&quot; /&gt;
-        ///&lt;meta charset=&apos;UTF-8&apos;&gt;
-        ///&lt;title&gt;PortalCFG&lt;/title&gt;
-        ///&lt;link href=&quot;dcaccordion.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
-        ///&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
-        ///&lt;script type=&apos;text/javascript&apos; src=&apos;jquery.cookie.js&apos;&gt;&lt;/script&gt;
-        ///&lt;script type=&apos;text/javascript&apos; src=&apos;jquery.hoverIntent.minified.js&apos; [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///
+        ///	&lt;title&gt;PortalCFG&lt;/title&gt;
+        ///	&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
+        ///	&lt;script type=&apos;text/javascript&apos; src=&apos;jquery.cookie.js&apos;&gt;&lt;/script&gt;
+        ///	&lt;script type=&apos;text/javascript&apos; src=&apos;jquery.hoverIntent.minified.js&apos;&gt;&lt;/script&gt;
+        ///	&lt;script type=&apos;text/javascript&apos; src=&apos;jquery.dcjqaccordion.2.7.min.js&apos;&gt;&lt;/script&gt;
+        ///
+        ///	&lt;link href=&quot;dcaccordion.css&quot; rel=&quot;stylesheet&quot;/&gt;
+        ///	&lt;link href=&quot;grey.css&quot; rel=&quot;stylesheet&quot;/&gt;
+        ///
+        ///	&lt;script type=&quot;text/javascript&quot;&gt;
+        ///
+        ///		$(document).ready(function($){
+        ///			$(&apos;#acc [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         internal static string menutree_esquerdo {
             get {
@@ -194,19 +203,22 @@ namespace Recursos {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional-dtd&quot;&gt;
-        ///&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-        ///
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;html&gt;
         ///&lt;head&gt;
         ///  &lt;title&gt;Tela Explicativa&lt;/title&gt;
         ///
         ///   &lt;meta content=&quot;text/html;charset=ISO-8859-1&quot; http-equiv=&quot;Content-Type&quot;&gt;
+        ///   &lt;META HTTP-EQUIV=&quot;PRAGMA&quot; CONTENT=&quot;NO-CACHE&quot;&gt;
         ///
-        ///   &lt;link type=&quot;text/css&quot; href=&quot;default.css&quot; rel=&quot;stylesheet&quot; /&gt;
+        ///   &lt;link rel=&quot;stylesheet&quot; href=&quot;default.css&quot; /&gt;
         ///&lt;/head&gt;
         ///
         ///&lt;body style=&quot;margin:0px 0px 0px 0px; background-color:#FFFFFF;&quot; &gt;
-        ///&lt;div id=&quot;hmpopupDiv&quot; style=&quot;visibility:hidden; position:absolute; z-index:10 [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///&lt;div id=&quot;hmpopupDiv&quot; style=&quot;visibility:hidden; position:absolute; z-index:1000;&quot;&gt;&lt;/div&gt; 
+        ///
+        ///&lt;table border=&quot;0&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; style=&quot;width:100%&quot;&gt;
+        ///&lt;tr style=&quot;vertical-align:top&quot;&gt;
+        ///&lt;td styl [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         internal static string menutree_explicativo {
             get {
@@ -215,28 +227,26 @@ namespace Recursos {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;html&gt;
-        ///&lt;head&gt;
-        ///&lt;meta content=&quot;text/html;charset=ISO-8859-1&quot; http-equiv=&quot;Content-Type&quot;&gt;
-        ///&lt;META HTTP-EQUIV=&quot;PRAGMA&quot; CONTENT=&quot;NO-CACHE&quot;&gt;
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
         ///
-        ///&lt;script type=&quot;text/javascript&quot;&gt;
+        ///  &lt;head&gt;
+        ///  	&lt;meta http-equiv=&quot;Pragma&quot; content=&quot;no-cache&quot;&gt;
         ///
-        ///function Contrair(dimensao){
-        ///    if( Frame2.cols==dimensao ) {
-        ///        Frame2.cols=&quot;200,6,*&quot;;
-        ///    } else {
-        ///        Frame2.cols=dimensao;
-        ///        hmnavigation.scrolling=&quot;no&quot;;
-        ///    }
-        ///}
+        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
+        ///    &lt;script type=&apos;text/javascript&apos; src=&apos;knockout.js&apos;&gt;&lt;/script&gt;
+        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;knockout.mapping-latest.js&quot;&gt;&lt;/script&gt;
         ///
-        ///&lt;/script&gt;
         ///
-        ///&lt;/head&gt;
+        ///	    &lt;script type=&quot;text/javascript&quot;&gt;
         ///
-        ///  &lt;frameset id=&quot;Frame1&quot; name=&quot;Frame1&quot; rows=&quot;90,*&quot; frameborder=&quot;0&quot; framespacing=&quot;1&quot;&gt;
-        ///  &lt;frame id=&quot;hmheader&quot; name=&quot;hmheader&quot; [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///		  //function DATA() {
+        ///		  //  var self = this;
+        ///		//	self.showMenu= ko.observable(true);
+        ///		//	self.caminho = ko.observable(&apos;&gt;&gt; Principal&apos;);
+        ///		 // };
+        ///		 
+        ///		 var DAT [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         internal static string menutree_principal {
             get {
@@ -245,9 +255,8 @@ namespace Recursos {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html&gt;
-        ///&lt;html&gt;
-        ///  &lt;head&gt;
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;html&gt;
+        /// &lt;head&gt;
         ///    
         ///    &lt;meta name=&quot;generator&quot; content=&quot;PORTALCFG&quot;&gt;
         ///    &lt;meta name=&quot;created&quot; content=&quot;sex, 17 jun 2011 13:05:43 GMT&quot;&gt;
@@ -258,7 +267,7 @@ namespace Recursos {
         ///    &lt;script type=&quot;text/javascript&quot; src=&quot;json2.js&quot;&gt;&lt;/script&gt;
         ///    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
         ///    &lt;script type=&apos;text/javascript&apos; src=&apos;knockout.js&apos;&gt;&lt;/script&gt;
-        ///    &lt;script type=&quot;text/ja [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;kno [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         internal static string pagina_browser {
             get {
@@ -269,9 +278,9 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Permissao_png {
+        internal static System.Drawing.Bitmap permissao_png {
             get {
-                object obj = ResourceManager.GetObject("Permissao_png", resourceCulture);
+                object obj = ResourceManager.GetObject("permissao_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -382,6 +391,16 @@ namespace Recursos {
         internal static System.Drawing.Bitmap portal_mais_gif {
             get {
                 object obj = ResourceManager.GetObject("portal_mais_gif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap portal_menos_gif {
+            get {
+                object obj = ResourceManager.GetObject("portal_menos_gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

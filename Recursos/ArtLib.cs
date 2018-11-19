@@ -221,7 +221,7 @@ namespace Recursos
             string cOpcao = "";
 
             nP = cOpcoes.IndexOf(cValor+"=");
-            nP = (nP <= 0 ? cOpcoes.IndexOf(cValor+";") : nP);
+            nP = (nP < 0 ? cOpcoes.IndexOf(cValor+";") : nP);
 
             cOpcao = cOpcoes.Substring(nP, cOpcoes.Length-nP);
             nP = cOpcao.IndexOf(";");

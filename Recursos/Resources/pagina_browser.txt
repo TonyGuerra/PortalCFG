@@ -1,6 +1,5 @@
-<!DOCTYPE html>
 <html>
-  <head>
+ <head>
     
     <meta name="generator" content="PORTALCFG">
     <meta name="created" content="sex, 17 jun 2011 13:05:43 GMT">
@@ -9,11 +8,37 @@
     <meta charset='UTF-8'>
     <title>PortalCFG</title>
     <script type="text/javascript" src="json2.js"></script>
-    <script type="text/javascript" src="jquery.min.js"></script>
     <script type='text/javascript' src='knockout.js'></script>
     <script type="text/javascript" src="knockout.mapping-latest.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="jquery-ui.js"></script>
  
 	<link href="PortalCFG.css" rel="stylesheet"/>    
+
+	<style>
+		.header {
+		  grid-area: header;
+
+		  /* Stick header to top of grid */
+		  position: sticky;
+		  top: 0;
+		  padding:0;
+		  /* Ensure header appears on top of content/sidebars */
+		  z-index: 1;
+		  margin-top: -1px;
+		  margin-left:-1px;
+		}
+		.BordaDiv {
+		    border:solid #0096FF 1px;
+		    padding:0;
+		    margin:12px 12px 12px 25px;
+		}
+		.BordaDiv2 {
+		    border:solid #0096FF 1px;
+			border-bottom: none;
+			width:100%;
+		}
+	</style>
 
 </head>
 
@@ -32,42 +57,39 @@
 <input id="origem" type="hidden" value="BROWSE">
 <input name="dados" id="dados" type="hidden" value=""/>
 
-<div id="divCabecalho" name="divCabecalho" style="visibility:hidden;">
-
 <div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
-<div id="xLinhaFina" style="position:relative;width:100%;height:0.6mm;"></div>
-<div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
-
-<div style="position:relative; font-weight: bold; Left:010px;"> >> !XTRACE3! BROWSE </div>
-
-<div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
-<div id="xLinhaFina" style="position:relative;width:100%;height:0.6mm;"></div>
-<div style="position:relative;height: 15px;">&nbsp;</div>
-
-</div>
 
 <div id="divDados" name="divDados"  class="BordaDiv"  style="position:relative;float:left;visibility:hidden;">
-<div id="xTitulo" style="height:10mm; margin-top:-1mm; text-indent:3mm; line-height:10mm;">
-    <span style="font-family: Arial; font-weight: bold; font-style: normal; text-decoration: none; font-size: 11pt;">Tabelas</span>
-    <a href data-bind="click: $root.ultimoBrowse" style="font-size: 14pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal; margin-right: 20px" title="ultimo">&gt;&gt;</a> 
-    <a href data-bind="click: $root.proximoBrowse" style="font-size: 14pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal" title="proximo">&gt;</a>
-    <span style="font-size: 12pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal"> / !XPAGINAFIM!</span>
-    <span style="font-size: 12pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal" data-bind="text: nPaginaAtu"></span>
-    <a href data-bind="click: $root.anteriorBrowse" style="font-size: 14pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal" title="anterior">&lt;</a>
-    <a href data-bind="click: $root.primeiroBrowse" style="font-size: 14pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal" title="primeiro">&lt;&lt;</a>
+<div class="header" style="background-color:#FFFFFF; height:0.1mm;width:100%;">
+    <div class="BordaDiv2">
+		<div id="xTitulo" style="background-color:#FFFFFF; height:10px;">&nbsp;</div>
+		<div id="xTitulo" style="height:10mm; margin-top:-1mm; margin-left:0.5%; text-indent:3mm; line-height:10mm;width:99%;">
+			<span style="font-family: Arial; font-weight: bold; font-style: normal; text-decoration: none; font-size: 11pt;">>> !XTRACE3! BROWSE</span>
+			<a href data-bind="click: $root.ultimoBrowse" style="font-size: 14pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal; margin-right: 20px" title="ultimo">&gt;&gt;</a> 
+			<a href data-bind="click: $root.proximoBrowse" style="font-size: 14pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal" title="proximo">&gt;</a>
+			<span style="font-size: 12pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal"> / !XPAGINAFIM!</span>
+			<span style="font-size: 12pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal" data-bind="text: nPaginaAtu"></span>
+			<a href data-bind="click: $root.anteriorBrowse" style="font-size: 14pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal" title="anterior">&lt;</a>
+			<a href data-bind="click: $root.primeiroBrowse" style="font-size: 14pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal" title="primeiro">&lt;&lt;</a>
+		</div>
+		<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
+
+		<div id="xTitulo2" style="font-weight: bold; font-size: 9pt; height:16px; margin-left:0.5%; width:99%;">
+			<div  style="margin-right: 1mm; margin-left: 1mm;display: inline-block;"><strong>Operacao</strong></div>
+
+			!XCABECALHO_TABELAS!
+
+			<div style="margin-left:1mm; margin-right:1mm;display: inline-block;"><strong>Codigo</strong></div>
+		</div>
+
+		<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
+
+	</div>
+
 </div>
-<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
-<table  name="!XTABELA!" data-bind="$el: $el, with: obterDados" width="100%" border="0" cellpadding="2" cellspacing="0" bordercolor="#0096FF" style="font-weight: normal; font-style: normal; text-decoration: none; font-size: 8pt; 
+
+<table name="!XTABELA!" data-bind="$el: $el, with: obterDados" width="100%" border="0" cellpadding="2" cellspacing="0" bordercolor="#0096FF" style="font-weight: normal; font-style: normal; text-decoration: none; font-size: 8pt; 
 height:1.5mm;">
-
-  <tr id="xTitulo2" style="font-weight: bold; font-size: 9pt; height:1.5mm">
-      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
-
-     !XCABECALHO_TABELAS!
-
-     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Codigo</strong></div></td>
-  </tr>
-
      !XLINHAS_TABELAS!
 
      <tbody data-bind="if: (xbrowse!XTABELA!().length === 0)"><tr><td>
@@ -95,10 +117,10 @@ height:1.5mm;">
     var cTrace1 = document.form1.trace1.value;
     var cTrace2 = document.form1.trace2.value;
 
-     parent.Frame1.hmheader.fMeudiv(cTrace1, cTrace2);
-     parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:history.go(-1);" style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
-     parent.Frame1.hmheader.meutd2.innerHTML='';
-     parent.Frame1.hmheader.meutd3.innerHTML='';
+     parent.DATA.caminho(cTrace1+cTrace2);
+     //parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:history.go(-1);" style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
+     //parent.Frame1.hmheader.meutd2.innerHTML='';
+     //parent.Frame1.hmheader.meutd3.innerHTML='';
 
 
 //Obter informacoes direto do elemento do bind
@@ -257,7 +279,6 @@ vm.obterBrowse();
 
 $(document).ajaxComplete(function(){
 
-     divCabecalho.style.visibility = "visible";
      divDados.style.visibility = "visible";
 
 });

@@ -145,6 +145,17 @@ namespace Recursos {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*! jQuery UI - v1.12.0 - 2016-07-08
+        ///* http://jqueryui.com
+        ///* Includes: widget.js, position.js, data.js, disable-selection.js, effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-clip.js, effects/effect-drop.js, effects/effect-explode.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-size.js, effects/effect-slide.js, effects/effect-transfe [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string jquery_ui_js {
+            get {
+                return ResourceManager.GetString("jquery_ui_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a /*
         ///    http://www.JSON.org/json2.js
         ///    2011-02-23
