@@ -224,5 +224,20 @@
   <ItemGroup>
     <None Include="Resources\jquery-ui.js.js" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jquery.dataTables.min.js.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\knockout-debug.js.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dataTables.fixedColumns.js.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jquery.dataTables.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dataTables.fixedColumns.css.css" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

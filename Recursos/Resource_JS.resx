@@ -118,8 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="dataTables_fixedColumns_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\dataTables.fixedColumns.js.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="jquery_cookie_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\jquery_cookie_js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="jquery_dataTables_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\jquery.dataTables.min.js.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="jquery_dcjqaccordion_2_7_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\jquery_dcjqaccordion_2_7_min_js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -135,6 +141,9 @@
   </data>
   <data name="json2_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\json2.js.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="knockout_debug_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\knockout-debug.js.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="knockout_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\knockout_js.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

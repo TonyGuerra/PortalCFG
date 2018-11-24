@@ -8,35 +8,23 @@
     <meta charset='UTF-8'>
     <title>PortalCFG</title>
     <script type="text/javascript" src="json2.js"></script>
-    <script type='text/javascript' src='knockout.js'></script>
-    <script type="text/javascript" src="knockout.mapping-latest.js"></script>
+	<script type="text/javascript" src="knockout-debug.js"></script>
     <script type="text/javascript" src="jquery.min.js"></script>
-	<script type="text/javascript" src="jquery-ui.js"></script>
- 
-	<link href="PortalCFG.css" rel="stylesheet"/>    
+    <script type="text/javascript" src="jquery-ui.js"></script>
+    <script type="text/javascript" src="jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="dataTables.fixedColumns.js"></script>
+	<script type="text/javascript" src="knockout.mapping-latest.js"></script>
+		
+      <link rel="stylesheet" type="text/css" href="PortalCFG.css">    
+      <link rel="stylesheet" type="text/css" href="jquery.dataTables.css">
+      <link rel="stylesheet" type="text/css" href="dataTables.fixedColumns.css">
 
 	<style>
-		.header {
-		  grid-area: header;
-
-		  /* Stick header to top of grid */
-		  position: sticky;
-		  top: 0;
-		  padding:0;
-		  /* Ensure header appears on top of content/sidebars */
-		  z-index: 1;
-		  margin-top: -1px;
-		  margin-left:-1px;
-		}
-		.BordaDiv {
-		    border:solid #0096FF 1px;
-		    padding:0;
-		    margin:12px 12px 12px 25px;
-		}
-		.BordaDiv2 {
-		    border:solid #0096FF 1px;
-			border-bottom: none;
-			width:100%;
+		/* Ensure that the demo table scrolls */
+		th, td { white-space: nowrap; }
+		div.dataTables_wrapper {
+			width: 100%;
+			margin: 0 auto;
 		}
 	</style>
 
@@ -59,10 +47,11 @@
 
 <div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
 
-<div id="divDados" name="divDados"  class="BordaDiv"  style="position:relative;float:left;visibility:hidden;">
-<div class="header" style="background-color:#FFFFFF; height:0.1mm;width:100%;">
+<div id="divDados" name="divDados"  class="BordaDiv"  style="position:relative;float:left;visibility:hidden;" data-bind="allowBindings: true"></div>
+
+<div id="datatableshidden" style="display:none;" data-bind="allowBindings: false">
     <div class="BordaDiv2">
-		<div id="xTitulo" style="background-color:#FFFFFF; height:10px;">&nbsp;</div>
+		<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
 		<div id="xTitulo" style="height:10mm; margin-top:-1mm; margin-left:0.5%; text-indent:3mm; line-height:10mm;width:99%;">
 			<span style="font-family: Arial; font-weight: bold; font-style: normal; text-decoration: none; font-size: 11pt;">>> !XTRACE3! BROWSE</span>
 			<a href data-bind="click: $root.ultimoBrowse" style="font-size: 14pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal; margin-right: 20px" title="ultimo">&gt;&gt;</a> 
@@ -73,30 +62,33 @@
 			<a href data-bind="click: $root.primeiroBrowse" style="font-size: 14pt; text-decoration: none; float: right; font-weight: bold; color: #fff; font-style: normal" title="primeiro">&lt;&lt;</a>
 		</div>
 		<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
-
-		<div id="xTitulo2" style="font-weight: bold; font-size: 9pt; height:16px; margin-left:0.5%; width:99%;">
-			<div  style="margin-right: 1mm; margin-left: 1mm;display: inline-block;"><strong>Operacao</strong></div>
-
-			!XCABECALHO_TABELAS!
-
-			<div style="margin-left:1mm; margin-right:1mm;display: inline-block;"><strong>Codigo</strong></div>
-		</div>
-
-		<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
-
 	</div>
 
-</div>
+	<table class="datatable" name="!XTABELA!" width="100%" border="0" cellpadding="2" cellspacing="0" bordercolor="#0096FF" 
+	       style="font-weight: normal; font-style: normal; text-decoration: none; font-size: 8pt; height:1.5mm;">
 
-<table name="!XTABELA!" data-bind="$el: $el, with: obterDados" width="100%" border="0" cellpadding="2" cellspacing="0" bordercolor="#0096FF" style="font-weight: normal; font-style: normal; text-decoration: none; font-size: 8pt; 
-height:1.5mm;">
-     !XLINHAS_TABELAS!
+		<thead>
+			<tr id="xTitulo2" style="font-size: 9pt; height: 1.5mm; font-weight: bold">
+				<th>
+				<div style="margin-left: 1mm; margin-right: 1mm"><strong>Operacao</strong></div>
+				</th>
+				!XCABECALHO_TABELAS!
+				<th>
+				<div style="margin-left: 1mm; margin-right: 1mm"><strong>Codigo</strong></div>
+				</th>
+			</tr>
+		</thead>
 
-     <tbody data-bind="if: (xbrowse!XTABELA!().length === 0)"><tr><td>
-        <a name="!XTABELA!" href data-bind="click: $root.xinclusao, attr: {title : 'tabelas_cadastro'}"><img src="portal_mais.gif" width=18px height=16px border="0" title="Inclusao"></a>
-     </td></tr></tbody>
+		<!-- ko with: obterDados -->
 
-</table>
+			 !XLINHAS_TABELAS!
+
+			 <tbody data-bind="if: (xbrowse!XTABELA!().length === 0)"><tr><td>
+				<a name="!XTABELA!" href data-bind="click: $root.xinclusao, attr: {title : 'tabelas_cadastro'}"><img src="portal_mais.gif" width=18px height=16px border="0" title="Inclusao"></a>
+			 </td></tr></tbody>
+
+		<!-- /ko -->
+	</table>
 
 </div>
 
@@ -122,6 +114,7 @@ height:1.5mm;">
      //parent.Frame1.hmheader.meutd2.innerHTML='';
      //parent.Frame1.hmheader.meutd3.innerHTML='';
 
+window.onload=function(){
 
 //Obter informacoes direto do elemento do bind
 ko.bindingHandlers.$el = {
@@ -134,12 +127,37 @@ ko.bindingHandlers.$el = {
   }
 };
 
+ko.bindingHandlers.dataTable = {
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+	    console.log(ko.toJS(valueAccessor()));
+		console.log($(element));
+        $(element).DataTable(ko.toJS(valueAccessor()));
+    }
+}
+
+ko.bindingHandlers.fixedColumns = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+        if ($.fn.dataTable.fnIsDataTable($(element))) {
+            $(element).data("fixedColumns", new $.fn.dataTable.FixedColumns($(element).dataTable(), ko.toJS(valueAccessor())));
+        }
+    },
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+        var fc = $(element).data("fixedColumns");
+        if (fc) {
+            $.extend(fc.s, ko.toJS(valueAccessor()));
+            fc.fnRedrawLayout();
+        }
+    }
+}
+    
 
 function ViewModel() {
         var self = this;
 
+		self.fixedColumnCount = ko.observable(3);
         self.$el                = ko.observable();
-        self.obterDados = ko.observable();
+        self.obterDados = ko.observable(null);
+		self.datatableinstance  = null;
 
         self.cLogin           = '!XLOGIN!';
         self.cSessao         = '!XSESSAO!';
@@ -207,8 +225,11 @@ function ViewModel() {
 
         // Comportamento    
         self.obterBrowse = function() {
+			   
+			   var deferred = $.Deferred();
+
                jQuery.ajax("obter_browser", {
-                   data: ko.toJSON( { login: self.cLogin, sessao: self.cSessao, taborigem: self.cTabela, tabela: self.$el().attr('name'), filtro: self.cFiltro, paginaatu: self.nPaginaAtu(), paginafim: self.nPaginaFim}),
+                   data: ko.toJSON( { login: self.cLogin, sessao: self.cSessao, taborigem: self.cTabela, tabela: self.cTabela, filtro: self.cFiltro, paginaatu: self.nPaginaAtu(), paginafim: self.nPaginaFim}),
                    type: "post",   
                    contentType: "application/json",
                    success: function(result) {
@@ -219,11 +240,14 @@ function ViewModel() {
                            //console.log(cJSon);
                            xJSon = JSON.parse(cJSon);
                            self.obterDados(ko.mapping.fromJS(xJSon));
+						   deferred.resolve(1);
                    },
                    error : function(jq, st, error){
                              alert(error);
+						   deferred.resolve(2);
                    }
              });
+			 return deferred.promise();
         }
 
         self.proximoBrowse = function(){
@@ -231,7 +255,8 @@ function ViewModel() {
                    alert('Pagina final!');
                } else {
                    self.nPaginaAtu(self.nPaginaAtu() + 1);
-                   self.obterBrowse();
+                   //self.obterBrowse();
+				   self.MontaTabela();
                }
         }
 
@@ -240,18 +265,21 @@ function ViewModel() {
                    alert('Pagina inicial!');
                } else {
                    self.nPaginaAtu(self.nPaginaAtu() - 1);
-                   self.obterBrowse();
+                   //self.obterBrowse();
+				   self.MontaTabela();
                }
         }
 
         self.primeiroBrowse = function(){
                self.nPaginaAtu(1);
-               self.obterBrowse();
+               //self.obterBrowse();
+			   self.MontaTabela();
         }
 
         self.ultimoBrowse = function(){
                self.nPaginaAtu(self.nPaginaFim);
-               self.obterBrowse();
+               //self.obterBrowse();
+		       self.MontaTabela();
         }
 
         self.manutencao = function(data,geral) {
@@ -269,13 +297,54 @@ function ViewModel() {
              document.form1.submit();
        }
 
+	   self.MontaTabela = function() {
+
+			var promise = self.obterBrowse();
+
+			promise.then(function(result) {
+
+				var opcoes1 = { scrollY: '400px', scrollX: true, scrollCollapse: true, paging: false };
+				var opcoes2 = { iLeftColumns: 3 }
+				var datatablescontainer = $('#divDados');
+				var html = $('#datatableshidden').html();
+				//var meudiv = document.getElementById("divDados");
+
+				//Destroy datatable
+				if (self.datatableinstance) {
+				   self.datatableinstance.destroy();
+				   datatablescontainer.empty();
+				}
+
+				//Recreate datatable
+				datatablescontainer.html(html);
+				ko.cleanNode(datatablescontainer[0]);
+				ko.applyBindings(self, datatablescontainer[0]);
+				self.datatableinstance = datatablescontainer.find('table.datatable').DataTable(opcoes1); 
+				//self.datatableinstance = self.datatableinstance.data("fixedColumns", new $.fn.dataTable.FixedColumns(self.datatableinstance, opcoes2));
+				
+			});
+
+	   }
+
+};
+
+//Evitar a repeticao de linhas quando aplicar ko.applyBindings() novamente
+//Na div usar allowBindings false ou true para permitir que o bind funcione ou nao
+ko.bindingHandlers.allowBindings = {
+    init: function(elem, valueAccessor) {
+        // Let bindings proceed as normal *only if* my value is false
+        var shouldAllowBindings = ko.unwrap(valueAccessor());
+        return { controlsDescendantBindings: !shouldAllowBindings };
+    }
 };
 
 var vm = new ViewModel();
 
 ko.applyBindings(vm);
 
-vm.obterBrowse();
+vm.MontaTabela();
+
+}
 
 $(document).ajaxComplete(function(){
 

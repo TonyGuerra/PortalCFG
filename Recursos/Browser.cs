@@ -313,20 +313,20 @@ namespace Recursos
 
                 if (lCampoSTATUS)
                 {
-                    cCabecalho += "<div style='margin - right: 1mm; margin - left: 1mm; display: inline-block;'><strong>Sts</strong></div>";
+                    cCabecalho += "<th><strong>Sts</strong></th>";
                 }
 
                 cLinha = String.Format("<tbody id='meutab'  data-bind='foreach: xbrowse{0}'>", oLogin["tabela"]);
 
                 //Grupo Browser
                 int nColunas = (1 + (lCampoSTATUS ? 1 : 0) + aCampos.Count + 2);
-
+                /*
                 cLinha += String.Format("<tr data-bind='visible: $root.veGRUPO($index(),TR_GRUPO())'><td colspan={0} bgcolor=#CCCCFF style='padding-left: 10px;' font='bold;' data-bind='text: $root.atualGRUPO'></td></tr>", nColunas.ToString());
                 //SubGrupo Browser
                 cLinha += String.Format("<tr data-bind='visible: $root.veSUBGRUPO($index(),TR_SUBGRUPO())'><td colspan={0} bgcolor=#CCCCFF style='padding-left: 20px;' font='bold;' data-bind='text: $root.atualSUBGRUPO'></td></tr>", nColunas.ToString());
                 //MiniGrupo Browser
                 cLinha += String.Format("<tr data-bind='visible: $root.veMINIGRUPO($index(),TR_MINIGRUPO())'><td colspan={0} bgcolor=#CCCCFF style='padding-left: 30px;' font='bold;' data-bind='text: $root.atualMINIGRUPO'></td></tr>", nColunas.ToString());
-
+                */
                 cLinha += "<tr data-bind='attr: { id: TR_ID }'>";
 
                 cLinha += "   <td>";
@@ -363,7 +363,7 @@ namespace Recursos
 
                     if (!lTaEmGrupo)
                     {
-                        cCabecalho += String.Format("<div style='margin-right: 1mm; margin-left: 1mm;display: inline-block;'><strong>{0}</strong></div>", aCampos[i].ElementAt(0));
+                        cCabecalho += String.Format("<th><strong>{0}</strong></th>", aCampos[i].ElementAt(0));
 
                         cLinha += String.Format("<td data-bind=\"text: {0}\" style='margin-left:1mm; margin-right:1mm; font-weight:bold;'></td>", aCampos[i].ElementAt(1));
                     }
@@ -393,11 +393,11 @@ namespace Recursos
 
                 string cTrace1 = "";
                 int nRegs = 0;
-                int nPaginaAtu = 0;
-                int nPaginaFim = 0;
+                int nPaginaAtu = 1;
+                int nPaginaFim = 1;
 
-                /*
-                if (oLogin["paginaatu"] != null)
+                
+                if (((IDictionary<string, object>) oLogin).ContainsKey("paginaatu"))
                 {
                     nPaginaAtu = oLogin["paginaatu"];
                     nPaginaFim = oLogin["paginafim"];
@@ -405,7 +405,7 @@ namespace Recursos
                 }
                 else
                 {
-                */
+                
                     cTrace1 = oLogin["trace1"] + oLogin["trace2"];
 
                     nRegs = MeuDB.Count(String.Format("SELECT Count(idSequencial) REGS FROM {0} ", cNomeTabela));
@@ -420,7 +420,7 @@ namespace Recursos
                         nPaginaFim = (int)(nRegs / MeuLib.nTPagina);
                     }
 
-                //}
+                }
 
                 //--------------- Pagina final --------------------------------------------------
 

@@ -29,7 +29,7 @@ namespace Recursos {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource_JS() {
+        public Resource_JS() {
         }
         
         /// <summary>
@@ -61,6 +61,29 @@ namespace Recursos {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*! FixedColumns 3.2.6
+        /// * ©2010-2018 SpryMedia Ltd - datatables.net/license
+        /// */
+        ///
+        ////**
+        /// * @summary     FixedColumns
+        /// * @description Freeze columns in place on a scrolling DataTable
+        /// * @version     3.2.6
+        /// * @file        dataTables.fixedColumns.js
+        /// * @author      SpryMedia Ltd (www.sprymedia.co.uk)
+        /// * @contact     www.sprymedia.co.uk/contact
+        /// * @copyright   Copyright 2010-2018 SpryMedia Ltd.
+        /// *
+        /// * This source file is free software, available under the following license:
+        /// *   MIT license - http://datatables.net/ [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string dataTables_fixedColumns_js {
+            get {
+                return ResourceManager.GetString("dataTables_fixedColumns_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
         /// * jQuery Cookie Plugin v1.4.1
         /// * https://github.com/carhartl/jquery-cookie
@@ -86,6 +109,18 @@ namespace Recursos {
         internal static string jquery_cookie_js {
             get {
                 return ResourceManager.GetString("jquery_cookie_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*! DataTables 1.10.1
+        /// * ©2008-2014 SpryMedia Ltd - datatables.net/license
+        /// */
+        ///(function(za,O,l){var N=function(h){function T(a){var b,c,d={};h.each(a,function(e){if((b=e.match(/^([^A-Z]+?)([A-Z])/))&amp;&amp;-1!==&quot;a aa ai ao as b fn i m o s &quot;.indexOf(b[1]+&quot; &quot;))c=e.replace(b[0],b[2].toLowerCase()),d[c]=e,&quot;o&quot;===b[1]&amp;&amp;T(a[e])});a._hungarianMap=d}function G(a,b,c){a._hungarianMap||T(a);var d;h.each(b,function(e){d=a._hungarianMap[e];if(d!==l&amp;&amp;(c||b[d]===l))&quot;o&quot;===d.charAt(0)?(b[d]||(b[d]={}),h.extend(!0,b[d],b[e]),G(a[ [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string jquery_dataTables_min_js {
+            get {
+                return ResourceManager.GetString("jquery_dataTables_min_js", resourceCulture);
             }
         }
         
@@ -182,6 +217,26 @@ namespace Recursos {
         internal static string json2_js {
             get {
                 return ResourceManager.GetString("json2_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a // Knockout JavaScript library v3.0.0
+        ///// (c) Steven Sanderson - http://knockoutjs.com/
+        ///// License: MIT (http://www.opensource.org/licenses/mit-license.php)
+        ///
+        ///(function(){
+        ///var DEBUG=true;
+        ///(function(undefined){
+        ///    // (0, eval)(&apos;this&apos;) is a robust way of getting a reference to the global object
+        ///    // For details, see http://stackoverflow.com/questions/14119988/return-this-0-evalthis/14120023#14120023
+        ///    var window = this || (0, eval)(&apos;this&apos;),
+        ///        document = window[&apos;document&apos;],
+        ///        navigator = window[ [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string knockout_debug_js {
+            get {
+                return ResourceManager.GetString("knockout_debug_js", resourceCulture);
             }
         }
         

@@ -29,7 +29,7 @@ namespace Recursos {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource_CSS() {
+        public Resource_CSS() {
         }
         
         /// <summary>
@@ -57,6 +57,37 @@ namespace Recursos {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a 
+        ///
+        ////* Block out what is behind the fixed column&apos;s header and footer */
+        ///table.DTFC_Cloned thead,
+        ///table.DTFC_Cloned tfoot {
+        ///	background-color: white;
+        ///}
+        ///
+        ////* Block out the gap above the scrollbar on the right, when there is a fixed
+        /// * right column
+        /// */
+        ///div.DTFC_Blocker {
+        ///	background-color: white;
+        ///}
+        ///
+        ///div.DTFC_LeftWrapper table.dataTable,
+        ///div.DTFC_RightWrapper table.dataTable {
+        ///	margin-bottom: 0;
+        ///}
+        ///
+        ///div.DTFC_LeftWrapper table.dataTable.no-footer,
+        ///div.DTFC_RightWrapper table.dataTable.no-footer {
+        ///	border-bottom: non [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string dataTables_fixedColumns_css {
+            get {
+                return ResourceManager.GetString("dataTables_fixedColumns_css", resourceCulture);
             }
         }
         
@@ -123,6 +154,45 @@ namespace Recursos {
         internal static string grey_css {
             get {
                 return ResourceManager.GetString("grey_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*
+        /// * Table styles
+        /// */
+        ///table.dataTable {
+        ///  width: 100%;
+        ///  margin: 0 auto;
+        ///  clear: both;
+        ///  border-collapse: separate;
+        ///  border-spacing: 0;
+        ///  /*
+        ///   * Header and footer styles
+        ///   */
+        ///  /*
+        ///   * Body styles
+        ///   */
+        ///}
+        ///table.dataTable thead th,
+        ///table.dataTable tfoot th {
+        ///  font-weight: bold;
+        ///}
+        ///table.dataTable thead th,
+        ///table.dataTable thead td {
+        ///  padding: 10px 18px;
+        ///  border-bottom: 1px solid #111;
+        ///}
+        ///table.dataTable thead th:active,
+        ///table.dataTable thead td:active {
+        ///  outline: none;
+        ///}
+        ///table.dataTable tfoot th,
+        ///tabl [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        internal static string jquery_dataTables_css {
+            get {
+                return ResourceManager.GetString("jquery_dataTables_css", resourceCulture);
             }
         }
         
