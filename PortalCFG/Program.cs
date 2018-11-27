@@ -111,6 +111,8 @@ namespace PortalCFG
                                     cMensagem = " Metodo Stream: " + cNome;
                                     //cMensagem += " - " + ctx.Request.UrlReferrer.LocalPath;
 
+                                    LogFile.Log(cMensagem);
+
                                     System.Drawing.Bitmap input = ((System.Drawing.Bitmap)(Resources.ResourceManager.GetObject(cNome)));
                                     input.Save(ctx.Response.OutputStream, System.Drawing.Imaging.ImageFormat.Png);
                                     ctx.Response.OutputStream.Flush();
@@ -120,6 +122,8 @@ namespace PortalCFG
                                 {
                                     cMensagem = " Metodo String: " + cNome;
                                     //cMensagem += " - " + ctx.Request.UrlReferrer.LocalPath;
+
+                                    LogFile.Log(cMensagem);
 
                                     var rstr = _responderMethod(ctx.Request);
                                     var buf = Encoding.UTF8.GetBytes(rstr);

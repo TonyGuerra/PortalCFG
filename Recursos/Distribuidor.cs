@@ -28,7 +28,7 @@ namespace Recursos
             string[] MeuPath = request.Url.LocalPath.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
             string cMeuPath = MeuPath[MeuPath.Length - 1];
 
-            LogFile.Log(MeuPath[MeuPath.Length-1]);
+            //LogFile.Log(MeuPath[MeuPath.Length-1]);
 
             LogFile.Log(string.Format(" --- Distribuidor - {0}", DateTime.Now.ToString("dd-MM-yyyy h:mm:ss tt")));
 
@@ -66,6 +66,10 @@ namespace Recursos
                 {
                     LogFile.Log(" .");
                     cMeuPath = cMeuPath.Replace(".", "_");
+                    cMeuPath = cMeuPath.Replace("-", "_");
+                    //cMeuPath = cMeuPath.ToLower();
+                    LogFile.Log(cMeuPath);
+                    LogFile.Log(" .");
 
                     if (Resource_CSS.ResourceManager.GetObject(cMeuPath) == null)
                     {
@@ -86,6 +90,8 @@ namespace Recursos
                     LogFile.Log(" .");
                     cMeuPath = cMeuPath.Replace(".", "_");
                     cMeuPath = cMeuPath.Replace("-", "_");
+                    LogFile.Log(cMeuPath);
+                    LogFile.Log(" .");
 
                     if (Resource_JS.ResourceManager.GetObject(cMeuPath) == null)
                     {

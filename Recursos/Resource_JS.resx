@@ -169,4 +169,7 @@
   <data name="ko_reactor_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ko-reactor.js.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="portalcfg_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\portalcfg.js.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

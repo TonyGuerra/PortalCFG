@@ -274,5 +274,71 @@
   <ItemGroup>
     <None Include="Resources\bootstrap-datepicker.js.js" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\portalcfg.js.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\base.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\theme.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooltip.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tabs.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\selectmenu.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\selectable.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\spinner.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\slider.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sortable.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dialog.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\progressbar.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\resizable.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\draggable.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\autocomplete.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\checkboxradio.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\datepicker.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\controlgroup.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\menu.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\accordion.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\core.css.css" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

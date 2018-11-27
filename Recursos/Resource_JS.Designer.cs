@@ -394,5 +394,30 @@ namespace Recursos {
                 return ResourceManager.GetString("ko_reactor_js", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a //--------------- PortalCFG ---------------
+        /////--------- Antonio C Ferreira ------------
+        ///
+        ///function Init () {
+        ///  var all = document.getElementsByTagName(&quot;*&quot;);
+        ///
+        ///  for (var i=0, max=all.length; i &lt; max; i++) {
+        ///     // Do something with the element here
+        /// if ((all[i].title) &amp;&amp; (all[i].title == &apos;data&apos;)) {
+        ///        all[i].addEventListener( &apos;keypress&apos;, fdata, false );
+        ///        all[i].addEventListener( &apos;change&apos;, vdata, false );
+        ///     }
+        ///  }
+        ///
+        ///}
+        ///
+        ///if (document.all || document.getElementById){sender=&quot;event.src [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string portalcfg_js {
+            get {
+                return ResourceManager.GetString("portalcfg_js", resourceCulture);
+            }
+        }
     }
 }

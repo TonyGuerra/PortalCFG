@@ -154,4 +154,67 @@
   <data name="style_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\style.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="accordion_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\accordion.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="autocomplete_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\autocomplete.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="base_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\base.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="button_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\button.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="checkboxradio_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\checkboxradio.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="controlgroup_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\controlgroup.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="core_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\core.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="datepicker_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\datepicker.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="dialog_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\dialog.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="draggable_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\draggable.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="menu_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\menu.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="progressbar_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\progressbar.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="resizable_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\resizable.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="selectable_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\selectable.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="selectmenu_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\selectmenu.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="slider_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\slider.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="sortable_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\sortable.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="spinner_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\spinner.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="tabs_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tabs.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="theme_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\theme.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="tooltip_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tooltip.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

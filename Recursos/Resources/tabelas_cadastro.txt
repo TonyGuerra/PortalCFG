@@ -24,6 +24,11 @@
 
 <script type='text/javascript'>
 
+function fVoltar() { 
+   document.form1.action = "tabelas_browse";
+   document.form1.submit()
+}
+
 function fFiltro(cTabela) { 
 
     document.form1.action = cTabela+"_filtro?cMenu=!XMENU!";
@@ -50,7 +55,7 @@ function Right(str, n){
 
 </head>
 
-<body style="color:#0080FF; margin-left:10px; font-family: Arial; font-style: normal; text-decoration: none; font-size: 10pt;width:98%;">
+<body style="color:#0080FF; margin-left:10px; font-family: Arial; font-style: normal; text-decoration: none; font-size: 10pt;width:98%;" onload="Init()">
 
 <form name="form1" id="form1" method="post" action="">
 <input name="cTrace1" id="cTrace1" type="hidden" value="!XTRACE1!">
@@ -65,6 +70,9 @@ function Right(str, n){
 <input name="cItem" id="cItem" type="hidden" value="!XITEM!">
 <input name="cItensExcluidos" id="cItensExcluidos" type="hidden" value="">
 <input name="cOperacao" id="cOperacao" type="hidden" value="!XOPERACAO!">
+<input name="cXFiltro" id="cXFiltro" type="hidden" value="!XFILTRO!">
+<input name="nXPaginaAtu" id="nXPaginaAtu" type="hidden" value=!XPAGINAATU!>
+<input name="nXPaginaFim" id="nXPaginaFim" type="hidden" value=!XPAGINAFIM!>
 
 <input type="hidden" id="dados" name="dados" value=""/>
 
@@ -131,19 +139,93 @@ function Right(str, n){
 
 
               <!-- ko if: (config().substr(0,1) === "6") -->
-                     <div style="height:10px;">&nbsp;</div>
-                     <div><label  style="margin-left:10px;" data-bind="text: titulo2">
-                             </label>&nbsp;<input type="checkbox" id="tdCheck" data-bind="value: valor, click: $root.checkTdClick, checked: ((valor() == '1') ? true : false), attr: {name: campo, maxlength: tamanho, disabled: $root.editCampo(editcond(), config(), '', 
-[])}" style="vertical-align:-4px; height: 16px;">&nbsp;<label data-bind="text: titulo"></label></div>
-                             <div style="height:1px;">&nbsp;</div>
-                             <div style="width:100%;border: 1px solid rgb(214, 206, 206);float:left;" data-bind="foreach: checks">
-                             <div  style="width:24%;height:30px;float:left;margin-left:5px;">
-                                     <input type="checkbox" data-bind="value: idSequencial, click: $root.checkClick, checked: ((selecao() == '1') ? true : false)" style="vertical-align:-7px;float:left;"><label style="width:90%;vertical-align:-6px;margin-left:5px;" 
-data-bind="text: descricao"></label>
-                             </div>
-                    </div>
+                  <!-- ko if: ($parentContext.$index() > 0) -->
+                       <hr style="margin-top: 10px; margin-bottom: 10px; border-top: 1px solid rgb(214, 206, 206);">
+                  <!-- /ko -->
+                  <div><label  style="margin-left:10px;" data-bind="text: titulo2"></label>
+ &nbsp;
+ <input type="checkbox" id="tdCheck" data-bind="value: valor, click: $root.checkTdClick, checked: ((valor() == '1') ? true : false), 
+              attr: {name: campo, maxlength: tamanho, disabled: $root.editCampo(editcond(), config(), '', [])}" style="vertical-align:-4px; height: 16px;">
+ &nbsp;
+ <label data-bind="text: titulo"></label>
+  </div>
+                  <div style="height:1px;">&nbsp;</div>
+                  <div style="width:100%;border: 1px solid rgb(214, 206, 206);float:left;" data-bind="foreach: checks">
+                       <div style="width:24%;height:30px;float:left;margin-left:5px;">
+                            <input type="checkbox" data-bind="value: idSequencial, click: function(data, event) { return $root.checkClick($element, data, event, $parent) }, checked: ((selecao() == '1') ? true : false)" style="vertical-align:-7px;float:left;">
+            <label style="width:90%;vertical-align:-6px;margin-left:5px;" data-bind="text: descricao"></label>
+                       </div>
+                  </div>
               <!-- /ko -->
 
+             <!-- ko if: (config().substr(0,1) === "7") -->
+                <!-- ko if: $root.momento($parentContext.$index()) -->
+                     <hr style="margin-top: 10px;margin-bottom: 10px; border-top: 1px solid rgb(214, 206, 206);">
+                <!-- /ko -->
+                <div style="height:20px;"><label style="margin-left:10px;" data-bind="text: titulo2"></label></div>
+                <div style="height:01px;">&nbsp;</div>
+                <table style="margin-left:20px;border: 1px solid rgb(214, 206, 206);float:left;">
+                    <tr bgcolor=#DDDDDD>
+                             <td>&nbsp;Per&#237;odo&nbsp;</td>
+                             <td>&nbsp;Domingo&nbsp;</td>
+                             <td>&nbsp;Segunda&nbsp;</td>
+                             <td>&nbsp;Ter&#231;a&nbsp;</td>
+                             <td>&nbsp;Quarta&nbsp;</td>
+                             <td>&nbsp;Quinta&nbsp;</td>
+                             <td>&nbsp;Sexta&nbsp;</td>
+                             <td>&nbsp;S&#225;bado&nbsp;</td>
+                    </tr>
+                    <tr><td bgcolor=#DDDDDD>&nbsp;Manh&#227;&nbsp;</td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(00, $element, data, event) }, checked: ((valor().substr(00,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(01, $element, data, event) }, checked: ((valor().substr(01,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(02, $element, data, event) }, checked: ((valor().substr(02,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(03, $element, data, event) }, checked: ((valor().substr(03,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(04, $element, data, event) }, checked: ((valor().substr(04,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(05, $element, data, event) }, checked: ((valor().substr(05,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(06, $element, data, event) }, checked: ((valor().substr(06,1) == '1') ? true : false)"></td>
+                    </tr>
+                    <tr><td bgcolor=#DDDDDD>&nbsp;Tarde&nbsp;</td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(07, $element, data, event) }, checked: ((valor().substr(07,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(08, $element, data, event) }, checked: ((valor().substr(08,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(09, $element, data, event) }, checked: ((valor().substr(09,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(10, $element, data, event) }, checked: ((valor().substr(10,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(11, $element, data, event) }, checked: ((valor().substr(11,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(12, $element, data, event) }, checked: ((valor().substr(12,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(13, $element, data, event) }, checked: ((valor().substr(13,1) == '1') ? true : false)"></td>
+                    </tr>
+                    <tr><td bgcolor=#DDDDDD>&nbsp;Noite&nbsp;</td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(14, $element, data, event) }, checked: ((valor().substr(14,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(15, $element, data, event) }, checked: ((valor().substr(15,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(16, $element, data, event) }, checked: ((valor().substr(16,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(17, $element, data, event) }, checked: ((valor().substr(17,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(18, $element, data, event) }, checked: ((valor().substr(18,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(19, $element, data, event) }, checked: ((valor().substr(19,1) == '1') ? true : false)"></td>
+                    <td align="center"><input type="checkbox" data-bind="click: function(data, event) { return $root.PeriodoClick(20, $element, data, event) }, checked: ((valor().substr(20,1) == '1') ? true : false)"></td>
+                    </tr>
+                 </table>
+             <!-- /ko -->
+   
+             <!-- ko if: (config().substr(0,1) === "8") -->
+                   <!-- ko if: $root.momento($parentContext.$index()) -->
+                         <hr style="margin-top: 10px;margin-bottom: 10px; border-top: 1px solid rgb(214, 206, 206);">
+                  <!-- /ko -->
+                  <div style="height:20px;">
+                                <label style="margin-left:10px;" data-bind="text: titulo2"></label>
+                                &nbsp;
+                               <input type="checkbox" id="tdCheck" 
+                                             data-bind="checked: ((valor() == '1') ? true : false), click: $root.checkTdClick, attr: {name: campo, maxlength: tamanho, disabled: $root.editCampo(editcond(), config(), '', [])}" style="vertical-align:-4px; height: 16px;">
+                                            &nbsp;
+                               <label data-bind="text: titulo"></label>
+                  </div>
+                  <div style="height:01px;">&nbsp;</div>
+                  <div style="width:100%;border: 1px solid rgb(214, 206, 206);float:left;" data-bind="foreach: checks">
+                              <div  style="width:4%;height:40px;float:left;margin-left:1px;border: 1px solid rgb(214, 206, 206);" data-bind="attr: {title: descricao}">
+                                        <label style="width:100%;text-align:center;margin-top:3px;" data-bind="text: titsequencia"></label>
+                                        <br>
+                                        <input style="margin-left:17px;margin-top:-10px;" type="checkbox" data-bind="click: function(data, event) { return $root.checkClick($element, data, event, $parent) }, checked: ((selecao() == '1') ? true : false)">
+                              </div>
+                 </div>
+              <!-- /ko -->
 
               <!-- ko if: (config().substr(0,1) === "9") -->
                   <div id="xcolunaesquerda1" data-bind="text: titulo, attr: {style:'font-weight: ' + ((config().substr(3,1) == '1') ? 'bold' : 'normal')}"></div>
@@ -241,7 +323,7 @@ data-bind="text: descricao"></label>
 <div id="SemCordefundo" style="width:100%; height: 15px;">&nbsp;</div>
 
 <div class="leftTitulo" style="position:relative;width:27%;Top:1mm;text-align:right;">
-<Input TYPE=button NAME="XVoltar" VALUE="Voltar" style="border-color:#808080;border-width:thin;" SIZE=10 onclick="javascript:history.go(-1);" />
+<Input TYPE=button NAME="XVoltar" VALUE="Voltar" style="border-color:#808080;border-width:thin;" SIZE=10 onclick="javascript:fVoltar();" />
 </div>
 <div class="leftTitulo" style="position:relative; width: 68px;Top:1mm;left:020px;">
 <Input TYPE=button NAME="XFiltrar" VALUE="Filtro" style="border-color:#808080;border-width:thin;" SIZE=10 onclick="javascript:fFiltro('!XCHAVE!');" />
@@ -270,9 +352,9 @@ data-bind="text: descricao"></label>
     var aXLinhas = [];
     var cPasta   = '';
 
-	parent.DATA.caminho(cTrace1 + cTrace2);
+	parent.DATA.caminho(cTrace1+cTrace2);
     //parent.Frame1.hmheader.fMeudiv(cTrace1, cTrace2);
-    //parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:history.go(-1);" style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
+    //parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:parent.Frame2.hmcontent.fVoltar();" style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
     //parent.Frame1.hmheader.meutd2.innerHTML='<a href=javascript:parent.Frame2.hmcontent.fFiltro("!XCHAVE!"); style="text-decoration: none;"><ul><li>Filtro</li></ul></a>';
     //parent.Frame1.hmheader.meutd3.innerHTML='<a href=javascript:parent.Frame2.hmcontent.vm.validaCadastro(); style="text-decoration: none;"><ul><li>Gravar</li></ul></a>';
 
@@ -448,7 +530,6 @@ function ViewModel() {
     self.cTabOrigem   = '!XTABORIGEM!';
     self.cOperacao     = '!XOPERACAO!';
     self.aLinhas           = ko.observableArray([{id: "ok", valor: "ok"}]);
-    self.lTodos             = false;
 
     // Comportamento    
 //        self.obterCadastro = function() {
@@ -476,27 +557,49 @@ function ViewModel() {
         });
     };
 
-    self.checkClick = function(element, valueAccessor, allBindings) {
+    self.checkClick = function(element, dados, allBindings, parent) {
 
-          if( !self.lTodos ) {
-               element.selecao((element.selecao() == 1) ? '0' : '1');
+          if( parent.valor() == "0" ) {
+               dados.selecao((dados.selecao() == 1) ? '0' : '1');
           }
 
-          return(!self.lTodos);
+          return(parent.valor() == "0");
      }
 
      self.checkTdClick = function(element, valueAccessor, allBindings) {
 
           element.valor((element.valor() == 1) ? '0' : '1');
 
-          self.lTodos = (element.valor() == 1);
-
           for (var i=0; i < element.checks().length; i++){
-element.checks()[i].selecao(element.valor());
+                element.checks()[i].selecao(element.valor());
          }
 
          return(true);
     }
+
+
+    self.momento = function(nValor) {
+           self.nLinha = nValor;
+           console.log('momento()');
+           console.log(self.nLinha);
+
+           return(self.nLinha > 0);
+     }
+
+
+     self.PeriodoClick = function(nPos, element, dados, allBindings) {
+
+             var cValor  = dados.valor(); 
+             var cDigito = ((cValor.substr(nPos,1) == '1') ? '0' : '1');
+
+             cValor = cValor.split('');
+             cValor[nPos] = cDigito;
+             cValor = cValor.join('');
+
+             dados.valor(cValor);
+
+             return(true);
+     }
 
 
     self.opGravar = ko.computed(function() {
@@ -915,12 +1018,7 @@ $(document).ajaxComplete(function(){
                     for (j = 0; j < nTamJ; j++) {
                         //alert(vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].campo());
                         if(vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].campo() == meuAlvo) {
-                             //console.log('encontrou: ' + vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].campo());
-
-                             //Tenho que salvar nestas variaveis pois antes do result, ele processa o for ate o final, mudando as variaveis e gerando erro.
-                             var nH = h;
-                             var nI = i;
-                             var nJ = j;
+                             alert('encontrou: ' + vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].campo());
 
                              //var xJSon = [{"id": "01","name": "Teste01"},{"id": "02","name": "Teste02"},{"id": "03","name": "Teste03"}];
                              //vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].option(xJSon);
@@ -930,12 +1028,12 @@ $(document).ajaxComplete(function(){
                                                 type: "post",   
                                                 contentType: "application/json",
                                                 success: function(result) {
-                                                         vm.aDados().xconteudo()[nH].xcampos()[nI].xlinha()[nJ].option(result);
+                                                         vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].option(result);
                                               }
                              });
 
-                             //lBreak = true;
-                             //break;
+                             lBreak = true;
+                             break;
                          }
 
                     }/*for j*/

@@ -62,6 +62,38 @@ namespace Recursos {
         
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Accordion @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/accordion/#theming
+        /// */
+        ///.ui-accordion .ui-accordion-header {
+        ///	display: block;
+        ///	cursor: pointer;
+        ///	position: relative;
+        ///	margin: 2px 0 0 0;
+        ///	padding: .5em .5em .5em .7em;
+        ///	font-size: 100%;
+        ///}
+        ///.ui-accordion .ui-accordion-content {
+        ///	padding: 1em 2.2em;
+        ///	border-top: 0;
+        ///	overflow: auto;
+        ///}
+        ///.
+        /// </summary>
+        public static string accordion_css {
+            get {
+                return ResourceManager.GetString("accordion_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
         /// * jQuery UI CSS Framework @VERSION
         /// * http://jqueryui.com
         /// *
@@ -78,6 +110,60 @@ namespace Recursos {
         public static string all_css {
             get {
                 return ResourceManager.GetString("all_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Autocomplete @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/autocomplete/#theming
+        /// */
+        ///.ui-autocomplete {
+        ///	position: absolute;
+        ///	top: 0;
+        ///	left: 0;
+        ///	cursor: default;
+        ///}
+        ///.
+        /// </summary>
+        public static string autocomplete_css {
+            get {
+                return ResourceManager.GetString("autocomplete_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI CSS Framework @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/category/theming/
+        /// */
+        ///@import url(&quot;core.css&quot;);
+        ///
+        ///@import url(&quot;accordion.css&quot;);
+        ///@import url(&quot;autocomplete.css&quot;);
+        ///@import url(&quot;button.css&quot;);
+        ///@import url(&quot;checkboxradio.css&quot;);
+        ///@import url(&quot;controlgroup.css&quot;);
+        ///@import url(&quot;datepicker.css&quot;);
+        ///@import url(&quot;dialog.css&quot;);
+        ///@import url(&quot;draggable.css&quot;);
+        ///@impo [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string base_css {
+            get {
+                return ResourceManager.GetString("base_css", resourceCulture);
             }
         }
         
@@ -136,6 +222,138 @@ namespace Recursos {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Button @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/button/#theming
+        /// */
+        ///.ui-button {
+        ///	padding: .4em 1em;
+        ///	display: inline-block;
+        ///	position: relative;
+        ///	line-height: normal;
+        ///	margin-right: .1em;
+        ///	cursor: pointer;
+        ///	vertical-align: middle;
+        ///	text-align: center;
+        ///	-webkit-user-select: none;
+        ///	-moz-user-select: none;
+        ///	-ms-user-select: none;
+        ///	user-select: none;
+        ///
+        ///	/ [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string button_css {
+            get {
+                return ResourceManager.GetString("button_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Checkboxradio @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/checkboxradio/#theming
+        /// */
+        ///
+        ///.ui-checkboxradio-label .ui-icon-background {
+        ///	box-shadow: inset 1px 1px 1px #ccc;
+        ///	border-radius: .12em;
+        ///	border: none;
+        ///}
+        ///.ui-checkboxradio-radio-label .ui-icon-background {
+        ///	width: 16px;
+        ///	height: 16px;
+        ///	border-radius: 1em;
+        ///	overflow: visible;
+        ///	border: none;
+        ///}
+        ///.ui-chec [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string checkboxradio_css {
+            get {
+                return ResourceManager.GetString("checkboxradio_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Controlgroup @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/controlgroup/#theming
+        /// */
+        ///
+        ///.ui-controlgroup {
+        ///	vertical-align: middle;
+        ///	display: inline-block;
+        ///}
+        ///.ui-controlgroup &gt; .ui-controlgroup-item {
+        ///	float: left;
+        ///	margin-left: 0;
+        ///	margin-right: 0;
+        ///}
+        ///.ui-controlgroup &gt; .ui-controlgroup-item:focus,
+        ///.ui-controlgroup &gt; .ui-controlgroup-item.ui-visual-focus {
+        ///	 [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string controlgroup_css {
+            get {
+                return ResourceManager.GetString("controlgroup_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI CSS Framework @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/category/theming/
+        /// */
+        ///
+        ////* Layout helpers
+        ///----------------------------------*/
+        ///.ui-helper-hidden {
+        ///	display: none;
+        ///}
+        ///.ui-helper-hidden-accessible {
+        ///	border: 0;
+        ///	clip: rect(0 0 0 0);
+        ///	height: 1px;
+        ///	margin: -1px;
+        ///	overflow: hidden;
+        ///	padding: 0;
+        ///	position: absolute;
+        ///	width: 1px;
+        ///}
+        ///.ui-helper-reset {
+        ///	 [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string core_css {
+            get {
+                return ResourceManager.GetString("core_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a 
         ///
         ////* Block out what is behind the fixed column&apos;s header and footer */
@@ -163,6 +381,41 @@ namespace Recursos {
         public static string dataTables_fixedColumns_css {
             get {
                 return ResourceManager.GetString("dataTables_fixedColumns_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * Datepicker for Bootstrap
+        /// *
+        /// * Copyright 2012 Stefan Petre
+        /// * Licensed under the Apache License v2.0
+        /// * http://www.apache.org/licenses/LICENSE-2.0
+        /// *
+        /// */
+        ///.datepicker {
+        ///  top: 0;
+        ///  left: 0;
+        ///  padding: 4px;
+        ///  margin-top: 1px;
+        ///  -webkit-border-radius: 4px;
+        ///  -moz-border-radius: 4px;
+        ///  border-radius: 4px;
+        ///  /*.dow {
+        ///    border-top: 1px solid #ddd !important;
+        ///  }*/
+        ///
+        ///}
+        ///.datepicker:before {
+        ///  content: &apos;&apos;;
+        ///  display: inline-block;
+        ///  border-left: 7px solid transparent;
+        ///  border-right: 7px solid transparent;
+        ///  [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string datepicker_css {
+            get {
+                return ResourceManager.GetString("datepicker_css", resourceCulture);
             }
         }
         
@@ -217,6 +470,63 @@ namespace Recursos {
         public static string default_css {
             get {
                 return ResourceManager.GetString("default_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Dialog @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/dialog/#theming
+        /// */
+        ///.ui-dialog {
+        ///	position: absolute;
+        ///	top: 0;
+        ///	left: 0;
+        ///	padding: .2em;
+        ///	outline: 0;
+        ///}
+        ///.ui-dialog .ui-dialog-titlebar {
+        ///	padding: .4em 1em;
+        ///	position: relative;
+        ///}
+        ///.ui-dialog .ui-dialog-title {
+        ///	float: left;
+        ///	margin: .1em 0;
+        ///	white-space: nowrap;
+        ///	width: 90%;
+        ///	overflow: hidden;
+        ///	text-over [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string dialog_css {
+            get {
+                return ResourceManager.GetString("dialog_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Draggable @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// */
+        ///.ui-draggable-handle {
+        ///	-ms-touch-action: none;
+        ///	touch-action: none;
+        ///}
+        ///.
+        /// </summary>
+        public static string draggable_css {
+            get {
+                return ResourceManager.GetString("draggable_css", resourceCulture);
             }
         }
         
@@ -309,6 +619,39 @@ namespace Recursos {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Menu @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/menu/#theming
+        /// */
+        ///.ui-menu {
+        ///	list-style: none;
+        ///	padding: 0;
+        ///	margin: 0;
+        ///	display: block;
+        ///	outline: 0;
+        ///}
+        ///.ui-menu .ui-menu {
+        ///	position: absolute;
+        ///}
+        ///.ui-menu .ui-menu-item {
+        ///	margin: 0;
+        ///	cursor: pointer;
+        ///	/* support: IE10, see #8844 */
+        ///	list-style-image: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///y [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string menu_css {
+            get {
+                return ResourceManager.GetString("menu_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a body {
         ///       background: #FFFFFF;
         ///    }
@@ -324,6 +667,219 @@ namespace Recursos {
         public static string PortalCFG_css {
             get {
                 return ResourceManager.GetString("PortalCFG_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Progressbar @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/progressbar/#theming
+        /// */
+        ///.ui-progressbar {
+        ///	height: 2em;
+        ///	text-align: left;
+        ///	overflow: hidden;
+        ///}
+        ///.ui-progressbar .ui-progressbar-value {
+        ///	margin: -1px;
+        ///	height: 100%;
+        ///}
+        ///.ui-progressbar .ui-progressbar-overlay {
+        ///	background: url(&quot;data:image/gif;base64,R0lGODlhKAAoAIABAAAAAP///yH/C05FVFNDQVBFMi4wAwEAA [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string progressbar_css {
+            get {
+                return ResourceManager.GetString("progressbar_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Resizable @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// */
+        ///.ui-resizable {
+        ///	position: relative;
+        ///}
+        ///.ui-resizable-handle {
+        ///	position: absolute;
+        ///	font-size: 0.1px;
+        ///	display: block;
+        ///	-ms-touch-action: none;
+        ///	touch-action: none;
+        ///}
+        ///.ui-resizable-disabled .ui-resizable-handle,
+        ///.ui-resizable-autohide .ui-resizable-handle {
+        ///	display: none;
+        ///}
+        ///.ui-resizable-n {
+        ///	cursor: n-resize;
+        ///	height: 7px;
+        ///	 [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string resizable_css {
+            get {
+                return ResourceManager.GetString("resizable_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Selectable @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// */
+        ///.ui-selectable {
+        ///	-ms-touch-action: none;
+        ///	touch-action: none;
+        ///}
+        ///.ui-selectable-helper {
+        ///	position: absolute;
+        ///	z-index: 100;
+        ///	border: 1px dotted black;
+        ///}
+        ///.
+        /// </summary>
+        public static string selectable_css {
+            get {
+                return ResourceManager.GetString("selectable_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Selectmenu @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/selectmenu/#theming
+        /// */
+        ///.ui-selectmenu-menu {
+        ///	padding: 0;
+        ///	margin: 0;
+        ///	position: absolute;
+        ///	top: 0;
+        ///	left: 0;
+        ///	display: none;
+        ///}
+        ///.ui-selectmenu-menu .ui-menu {
+        ///	overflow: auto;
+        ///	overflow-x: hidden;
+        ///	padding-bottom: 1px;
+        ///}
+        ///.ui-selectmenu-menu .ui-menu .ui-selectmenu-optgroup {
+        ///	font-size: 1em;
+        ///	font-w [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string selectmenu_css {
+            get {
+                return ResourceManager.GetString("selectmenu_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Slider @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/slider/#theming
+        /// */
+        ///.ui-slider {
+        ///	position: relative;
+        ///	text-align: left;
+        ///}
+        ///.ui-slider .ui-slider-handle {
+        ///	position: absolute;
+        ///	z-index: 2;
+        ///	width: 1.2em;
+        ///	height: 1.2em;
+        ///	cursor: default;
+        ///	-ms-touch-action: none;
+        ///	touch-action: none;
+        ///}
+        ///.ui-slider .ui-slider-range {
+        ///	position: absolute;
+        ///	z-index: 1;
+        ///	fon [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string slider_css {
+            get {
+                return ResourceManager.GetString("slider_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Sortable @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// */
+        ///.ui-sortable-handle {
+        ///	-ms-touch-action: none;
+        ///	touch-action: none;
+        ///}
+        ///.
+        /// </summary>
+        public static string sortable_css {
+            get {
+                return ResourceManager.GetString("sortable_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Spinner @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/spinner/#theming
+        /// */
+        ///.ui-spinner {
+        ///	position: relative;
+        ///	display: inline-block;
+        ///	overflow: hidden;
+        ///	padding: 0;
+        ///	vertical-align: middle;
+        ///}
+        ///.ui-spinner-input {
+        ///	border: none;
+        ///	background: none;
+        ///	color: inherit;
+        ///	padding: .222em 0;
+        ///	margin: .2em 0;
+        ///	vertical-align: middle;
+        ///	margin-left: .4em;
+        ///	margin-righ [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string spinner_css {
+            get {
+                return ResourceManager.GetString("spinner_css", resourceCulture);
             }
         }
         
@@ -345,6 +901,92 @@ namespace Recursos {
         public static string style_css {
             get {
                 return ResourceManager.GetString("style_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Tabs @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/tabs/#theming
+        /// */
+        ///.ui-tabs {
+        ///	position: relative;/* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as &quot;fixed&quot;) */
+        ///	padding: .2em;
+        ///}
+        ///.ui-tabs .ui-tabs-nav {
+        ///	margin: 0;
+        ///	padding: .2em .2em 0;
+        ///}
+        ///.ui-tabs .ui-tabs-nav li {
+        ///	list-style: no [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string tabs_css {
+            get {
+                return ResourceManager.GetString("tabs_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI CSS Framework @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/category/theming/
+        /// *
+        /// * To view and modify this theme, visit http://jqueryui.com/themeroller/
+        /// */
+        ///
+        ///
+        ////* Component containers
+        ///----------------------------------*/
+        ///.ui-widget {
+        ///	font-family: Arial,Helvetica,sans-serif/*{ffDefault}*/;
+        ///	font-size: 1em/*{fsDefault}*/;
+        ///}
+        ///.ui-widget .ui-widget {
+        ///	font-siz [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string theme_css {
+            get {
+                return ResourceManager.GetString("theme_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI Tooltip @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/tooltip/#theming
+        /// */
+        ///.ui-tooltip {
+        ///	padding: 8px;
+        ///	position: absolute;
+        ///	z-index: 9999;
+        ///	max-width: 300px;
+        ///}
+        ///body .ui-tooltip {
+        ///	border-width: 2px;
+        ///}
+        ///.
+        /// </summary>
+        public static string tooltip_css {
+            get {
+                return ResourceManager.GetString("tooltip_css", resourceCulture);
             }
         }
     }
