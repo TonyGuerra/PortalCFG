@@ -29,7 +29,7 @@ namespace Recursos {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public Resource_CSS() {
+        internal Resource_CSS() {
         }
         
         /// <summary>
@@ -61,6 +61,81 @@ namespace Recursos {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery UI CSS Framework @VERSION
+        /// * http://jqueryui.com
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license.
+        /// * http://jquery.org/license
+        /// *
+        /// * http://api.jqueryui.com/category/theming/
+        /// */
+        ///@import &quot;base.css&quot;;
+        ///@import &quot;theme.css&quot;;
+        ///.
+        /// </summary>
+        public static string all_css {
+            get {
+                return ResourceManager.GetString("all_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * Datepicker for Bootstrap v1.6.1 (https://github.com/eternicode/bootstrap-datepicker)
+        /// *
+        /// * Copyright 2012 Stefan Petre
+        /// * Improvements by Andrew Rowls
+        /// * Licensed under the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+        /// */
+        ///.datepicker {
+        ///  padding: 4px;
+        ///  -webkit-border-radius: 4px;
+        ///  -moz-border-radius: 4px;
+        ///  border-radius: 4px;
+        ///  direction: ltr;
+        ///}
+        ///.datepicker-inline {
+        ///  width: 220px;
+        ///}
+        ///.datepicker.datepicker-rtl {
+        ///  direction: rtl;
+        ///}
+        ///.datepicker.datepicker-rtl table tr td span {
+        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string bootstrap_datepicker_css {
+            get {
+                return ResourceManager.GetString("bootstrap_datepicker_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a {&quot;version&quot;:3,&quot;sources&quot;:[&quot;less/datepicker.less&quot;,&quot;build/build.less&quot;],&quot;names&quot;:[],&quot;mappings&quot;:&quot;AAAA;EACC,YAAA;ECsBC,0BAAA;EACG,uBAAA;EACK,kBAAA;EDnBT,cAAA;;AAHA,WAAC;EACA,YAAA;;AAGD,WAAC,WAAC;EACD,cAAA;;AADD,WAAC,WAAC,IAED,MAAM,GAAG,GAAG;EACX,YAAA;;AAGF,WAAC;EACA,MAAA;EACA,OAAA;;AACA,WAHA,SAGC;EACA,SAAS,EAAT;EACA,qBAAA;EACA,kCAAA;EACA,mCAAA;EACA,gCAAA;EACA,aAAA;EACA,uCAAA;EACA,kBAAA;;AAED,WAbA,SAaC;EACA,SAAS,EAAT;EACA,qBAAA;EACA,kCAAA;EACA,mCAAA;EACA,gCAAA;EACA,aAAA;EACA,kBAAA;;AAED,WAtBA,SAsBC,uBAAuB;EAAY,SAAA; [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string bootstrap_datepicker_css_map {
+            get {
+                return ResourceManager.GetString("bootstrap_datepicker_css_map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * Bootstrap v3.0.3 (http://getbootstrap.com)
+        /// * Copyright 2013 Twitter, Inc.
+        /// * Licensed under http://www.apache.org/licenses/LICENSE-2.0
+        /// */
+        ///
+        ////*! normalize.css v2.1.3 | MIT License | git.io/normalize */article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{ [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string bootstrap_min_css {
+            get {
+                return ResourceManager.GetString("bootstrap_min_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a 
         ///
         ////* Block out what is behind the fixed column&apos;s header and footer */
@@ -85,7 +160,7 @@ namespace Recursos {
         ///div.DTFC_RightWrapper table.dataTable.no-footer {
         ///	border-bottom: non [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string dataTables_fixedColumns_css {
+        public static string dataTables_fixedColumns_css {
             get {
                 return ResourceManager.GetString("dataTables_fixedColumns_css", resourceCulture);
             }
@@ -103,7 +178,7 @@ namespace Recursos {
         ///.demo-container {padding: 0px; float: left; width: 260px;}
         ///.demo-cont [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string dcaccordion_css {
+        public static string dcaccordion_css {
             get {
                 return ResourceManager.GetString("dcaccordion_css", resourceCulture);
             }
@@ -139,7 +214,7 @@ namespace Recursos {
         ///}
         ///span.f_Conttópicos /* Cont tópicos [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string default_css {
+        public static string default_css {
             get {
                 return ResourceManager.GetString("default_css", resourceCulture);
             }
@@ -151,7 +226,7 @@ namespace Recursos {
         ///.grey .accordion a {padding: 10px 10px 10px 50px; background: #00a3e7; text-decoration:none; display: block; color: #ffffcc; border-bottom: 1px solid #33ccff; border-top: 1px solid #fff; position: relative;}
         ///.grey .accordion a.dcjq-parent, .grey .accordion a.dcjq-parent:hover {backg [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string grey_css {
+        public static string grey_css {
             get {
                 return ResourceManager.GetString("grey_css", resourceCulture);
             }
@@ -190,9 +265,46 @@ namespace Recursos {
         ///table.dataTable tfoot th,
         ///tabl [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string jquery_dataTables_css {
+        public static string jquery_dataTables_css {
             get {
                 return ResourceManager.GetString("jquery_dataTables_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a .loader {
+        ///  border: 10px solid #f3f3f3;
+        ///  border-radius: 50%;
+        ///  border-top: 10px solid #3498db;
+        ///  width: 30px;
+        ///  height: 30px;
+        ///  -webkit-animation: spin 2s linear infinite;
+        ///  animation: spin 2s linear infinite;
+        ///  position: absolute;
+        ///  top: 250px;
+        ///  left: 550px;
+        ///  z-index: 600;
+        ///}
+        ///
+        ///.loading {
+        ///width: 100%;
+        ///height: 100%;
+        ///top: 0px;
+        ///left: 0px;
+        ///position: fixed;
+        ///display: block;
+        ///opacity: .9;
+        ///background-color: #fff;
+        ///z-index: 99;
+        ///text-align: center;
+        ///}
+        ///
+        ///@-webkit-keyframes spin {
+        ///  0% { -webk [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string loading_css {
+            get {
+                return ResourceManager.GetString("loading_css", resourceCulture);
             }
         }
         
@@ -209,9 +321,30 @@ namespace Recursos {
         ///                                                  This mis-behavior screws up modern    
         ///         [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string PortalCFG_css {
+        public static string PortalCFG_css {
             get {
                 return ResourceManager.GetString("PortalCFG_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a body {
+        ///	font-family: Arial, Helvetica, sans-serif;
+        ///}
+        ///
+        ///
+        ///table {
+        ///	font-size: 1em;
+        ///}
+        ///
+        ///.ui-draggable, .ui-droppable {
+        ///	background-position: top;
+        ///}
+        ///.
+        /// </summary>
+        public static string style_css {
+            get {
+                return ResourceManager.GetString("style_css", resourceCulture);
             }
         }
     }

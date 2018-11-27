@@ -33,17 +33,8 @@
 <body style="color:#0080FF; font-family: Arial; font-style: normal; text-decoration: none; font-size: 10pt;">
 
 <Form name="form1" id="form1" method="post" action="">
-<input id="trace1" type="hidden" value="!XTRACE1!">
-<input id="trace2" type="hidden" value="!XTRACE2! Browse > ">
-<input id="login" type="hidden" value="!XLOGIN!">
-<input id="sessao" type="hidden" value="!XSESSAO!">
-<input id="menu" type="hidden" value="!XMENU!">
-<input id="tabela" type="hidden" value="!XTABELA!">
-<input id="nometabela" type="hidden" value="!XNOMETABELA!">
-<input id="tipotabela" type="hidden" value="!XTRACE2!">
-<input id="tabpasta" type="hidden" value="!XTABPASTA!">
-<input id="origem" type="hidden" value="BROWSE">
-<input name="dados" id="dados" type="hidden" value=""/>
+
+<input name="dados"  id="dados"  type="hidden" value=""/>
 
 <div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
 
@@ -70,7 +61,7 @@
 		<thead>
 			<tr id="xTitulo2" style="font-size: 9pt; height: 1.5mm; font-weight: bold">
 				<th>
-				<div style="margin-left: 1mm; margin-right: 1mm"><strong>Operacao</strong></div>
+				<div style="margin-left: 1mm; margin-right: 1mm"><strong>Operação</strong></div>
 				</th>
 				!XCABECALHO_TABELAS!
 				<th>
@@ -106,251 +97,267 @@
 
 <script type='text/javascript'>
 
-    var cTrace1 = document.form1.trace1.value;
-    var cTrace2 = document.form1.trace2.value;
+	window.onload=function(){
 
-     parent.DATA.caminho(cTrace1+cTrace2);
-     //parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:history.go(-1);" style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
-     //parent.Frame1.hmheader.meutd2.innerHTML='';
-     //parent.Frame1.hmheader.meutd3.innerHTML='';
+		//Obter informacoes direto do elemento do bind
+		ko.bindingHandlers.$el = {
+		  init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+			var value = valueAccessor();
+			//here we first create a jQuery object by using $(myelem)
+			//before updating observable value
+			value($(element).first());
+			//console.log($(element).attr('name'));
+		  }
+		};
 
-window.onload=function(){
+		//Nao usado
+		ko.bindingHandlers.dataTable = {
+			update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+				console.log(ko.toJS(valueAccessor()));
+				console.log($(element));
+				$(element).DataTable(ko.toJS(valueAccessor()));
+			}
+		}
 
-//Obter informacoes direto do elemento do bind
-ko.bindingHandlers.$el = {
-  init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-    var value = valueAccessor();
-    //here we first create a jQuery object by using $(myelem)
-    //before updating observable value
-    value($(element).first());
-    //console.log($(element).attr('name'));
-  }
-};
-
-ko.bindingHandlers.dataTable = {
-    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-	    console.log(ko.toJS(valueAccessor()));
-		console.log($(element));
-        $(element).DataTable(ko.toJS(valueAccessor()));
-    }
-}
-
-ko.bindingHandlers.fixedColumns = {
-    init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-        if ($.fn.dataTable.fnIsDataTable($(element))) {
-            $(element).data("fixedColumns", new $.fn.dataTable.FixedColumns($(element).dataTable(), ko.toJS(valueAccessor())));
-        }
-    },
-    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-        var fc = $(element).data("fixedColumns");
-        if (fc) {
-            $.extend(fc.s, ko.toJS(valueAccessor()));
-            fc.fnRedrawLayout();
-        }
-    }
-}
+		//Nao usado
+		ko.bindingHandlers.fixedColumns = {
+			init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+				if ($.fn.dataTable.fnIsDataTable($(element))) {
+					$(element).data("fixedColumns", new $.fn.dataTable.FixedColumns($(element).dataTable(), ko.toJS(valueAccessor())));
+				}
+			},
+			update: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+				var fc = $(element).data("fixedColumns");
+				if (fc) {
+					$.extend(fc.s, ko.toJS(valueAccessor()));
+					fc.fnRedrawLayout();
+				}
+			}
+		}
     
 
-function ViewModel() {
-        var self = this;
+		function ViewModel() {
+				var self = this;
 
-		self.fixedColumnCount = ko.observable(3);
-        self.$el                = ko.observable();
-        self.obterDados = ko.observable(null);
-		self.datatableinstance  = null;
+				self.fixedColumnCount   = ko.observable(3);
+				self.$el                = ko.observable();
+				self.obterDados         = ko.observable(null);
+				self.datatableinstance  = null;
 
-        self.cLogin           = '!XLOGIN!';
-        self.cSessao         = '!XSESSAO!';
-        self.cTabela         = '!XTABELA!';
-        self.cFiltro            = '!XVIEWFILTRO!';
-        self.nPaginaAtu   = ko.observable(!XPAGINAATU!);
-        self.nPaginaFim   = !XPAGINAFIM!;
+				self.cLogin       = '!XLOGIN!';
+				self.cSessao      = '!XSESSAO!';
+				self.cTabela      = '!XTABELA!';
+				self.cFiltro      = '!XVIEWFILTRO!';
+				self.nPaginaAtu   = ko.observable(!XPAGINAATU!);
+				self.nPaginaFim   = !XPAGINAFIM!;
+				self.cTrace1      = '!XTRACE1!';
+				self.cTrace2      = '!XTRACE2! Browse > ';
+				self.cMenu        = '!XMENU!';
+				self.cNometabela  = '!XNOMETABELA!';
+				self.cTipoTabela  = '!XTRACE2!';
+				self.cTabPasta    = '!XTABPASTA!';
+				self.cOrigem      = 'BROWSE';
 
-        self.atualGRUPO = 'xxxxx';
-        self.indiceGRUPO = -1;
+				self.atualGRUPO = 'xxxxx';
+				self.indiceGRUPO = -1;
 
-        self.atualSUBGRUPO = 'xxxxx';
-        self.indiceSUBGRUPO = -1;
+				self.atualSUBGRUPO = 'xxxxx';
+				self.indiceSUBGRUPO = -1;
 
-        self.atualMINIGRUPO = 'xxxxx';
-        self.indiceMINIGRUPO = -1;
+				self.atualMINIGRUPO = 'xxxxx';
+				self.indiceMINIGRUPO = -1;
 
-        self.veGRUPO = function(indice, TR_GRUPO) {
+				//Nao usado
+				self.veGRUPO = function(indice, TR_GRUPO) {
 
-                  if  (self.indiceGRUPO >= indice) {return false;}
+						  if  (self.indiceGRUPO >= indice) {return false;}
 
-                  if  (TR_GRUPO == "") {return false;}
-                  if  (self.atualGRUPO == TR_GRUPO)  {return false;}
+						  if  (TR_GRUPO == "") {return false;}
+						  if  (self.atualGRUPO == TR_GRUPO)  {return false;}
 
-                  self.indiceGRUPO = indice;
-                  self.atualGRUPO = TR_GRUPO;
+						  self.indiceGRUPO = indice;
+						  self.atualGRUPO = TR_GRUPO;
 
-                  self.atualSUBGRUPO = 'xxxxx';
-                  self.indiceSUBGRUPO = -1;
+						  self.atualSUBGRUPO = 'xxxxx';
+						  self.indiceSUBGRUPO = -1;
 
-                  self.atualMINIGRUPO = 'xxxxx';
-                  self.indiceMINIGRUPO = -1;
+						  self.atualMINIGRUPO = 'xxxxx';
+						  self.indiceMINIGRUPO = -1;
 
-                  return true;
-        }
-
-        self.veSUBGRUPO = function(indice, TR_SUBGRUPO) {
-
-                  if  (self.indiceSUBGRUPO >= indice) {return false;}
-
-                  if  (TR_SUBGRUPO == "") {return false;}
-                  if  (self.atualSUBGRUPO == TR_SUBGRUPO)  {return false;}
-
-                  self.indiceSUBGRUPO = indice;
-                  self.atualSUBGRUPO = TR_SUBGRUPO;
-
-                  self.atualMINIGRUPO = 'xxxxx';
-                  self.indiceMINIGRUPO = -1;
-
-                  return true;
-        }
-
-        self.veMINIGRUPO = function(indice, TR_MINIGRUPO) {
-
-                  if  (self.indiceMINIGRUPO >= indice) {return false;}
-
-                  if  (TR_MINIGRUPO == "") {return false;}
-                  if  (self.atualMINIGRUPO == TR_MINIGRUPO)  {return false;}
-
-                  self.indiceMINIGRUPO = indice;
-                  self.atualMINIGRUPO = TR_MINIGRUPO;
-
-                  return true;
-        }
-
-        // Comportamento    
-        self.obterBrowse = function() {
-			   
-			   var deferred = $.Deferred();
-
-               jQuery.ajax("obter_browser", {
-                   data: ko.toJSON( { login: self.cLogin, sessao: self.cSessao, taborigem: self.cTabela, tabela: self.cTabela, filtro: self.cFiltro, paginaatu: self.nPaginaAtu(), paginafim: self.nPaginaFim}),
-                   type: "post",   
-                   contentType: "application/json",
-                   success: function(result) {
-                           var xJSon = ko.toJSON(result);
-                           //var cJSon = JSON.stringify(xJSon);
-                           //cJSon = cJSon.replace(/!!x/g,'\\x');
-                           cJSon = eval(xJSon);  //Executa a acentuacao no token \x, nao delimitar com apostrofe pois resulta em erro no parse();
-                           //console.log(cJSon);
-                           xJSon = JSON.parse(cJSon);
-                           self.obterDados(ko.mapping.fromJS(xJSon));
-						   deferred.resolve(1);
-                   },
-                   error : function(jq, st, error){
-                             alert(error);
-						   deferred.resolve(2);
-                   }
-             });
-			 return deferred.promise();
-        }
-
-        self.proximoBrowse = function(){
-               if (self.nPaginaAtu() >= self.nPaginaFim) {
-                   alert('Pagina final!');
-               } else {
-                   self.nPaginaAtu(self.nPaginaAtu() + 1);
-                   //self.obterBrowse();
-				   self.MontaTabela();
-               }
-        }
-
-        self.anteriorBrowse = function(){
-               if (self.nPaginaAtu() <= 1) {
-                   alert('Pagina inicial!');
-               } else {
-                   self.nPaginaAtu(self.nPaginaAtu() - 1);
-                   //self.obterBrowse();
-				   self.MontaTabela();
-               }
-        }
-
-        self.primeiroBrowse = function(){
-               self.nPaginaAtu(1);
-               //self.obterBrowse();
-			   self.MontaTabela();
-        }
-
-        self.ultimoBrowse = function(){
-               self.nPaginaAtu(self.nPaginaFim);
-               //self.obterBrowse();
-		       self.MontaTabela();
-        }
-
-        self.manutencao = function(data,geral) {
-             //console.log(geral.currentTarget.name) ;
-             document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: self.cSessao, operacao:  geral.currentTarget.name, codigo: data.idSequencial, taborigem: self.cTabela, tabela: data.tabela})
-             document.form1.action = geral.currentTarget.title;
-             document.form1.submit();
-       }
- 
-        //--------- Opcao de inclusao -------
-        self.xinclusao = function(data,geral) {
-             //console.log(geral.currentTarget.title) ;
-             document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: self.cSessao, operacao:  3, codigo: 0, taborigem: self.cTabela, tabela: geral.currentTarget.name});
-             document.form1.action = geral.currentTarget.title;
-             document.form1.submit();
-       }
-
-	   self.MontaTabela = function() {
-
-			var promise = self.obterBrowse();
-
-			promise.then(function(result) {
-
-				var opcoes1 = { scrollY: '400px', scrollX: true, scrollCollapse: true, paging: false };
-				var opcoes2 = { iLeftColumns: 3 }
-				var datatablescontainer = $('#divDados');
-				var html = $('#datatableshidden').html();
-				//var meudiv = document.getElementById("divDados");
-
-				//Destroy datatable
-				if (self.datatableinstance) {
-				   self.datatableinstance.destroy();
-				   datatablescontainer.empty();
+						  return true;
 				}
 
-				//Recreate datatable
-				datatablescontainer.html(html);
-				ko.cleanNode(datatablescontainer[0]);
-				ko.applyBindings(self, datatablescontainer[0]);
-				self.datatableinstance = datatablescontainer.find('table.datatable').DataTable(opcoes1); 
-				//self.datatableinstance = self.datatableinstance.data("fixedColumns", new $.fn.dataTable.FixedColumns(self.datatableinstance, opcoes2));
+				//Nao usado
+				self.veSUBGRUPO = function(indice, TR_SUBGRUPO) {
+
+						  if  (self.indiceSUBGRUPO >= indice) {return false;}
+
+						  if  (TR_SUBGRUPO == "") {return false;}
+						  if  (self.atualSUBGRUPO == TR_SUBGRUPO)  {return false;}
+
+						  self.indiceSUBGRUPO = indice;
+						  self.atualSUBGRUPO = TR_SUBGRUPO;
+
+						  self.atualMINIGRUPO = 'xxxxx';
+						  self.indiceMINIGRUPO = -1;
+
+						  return true;
+				}
+
+				//Nao usado
+				self.veMINIGRUPO = function(indice, TR_MINIGRUPO) {
+
+						  if  (self.indiceMINIGRUPO >= indice) {return false;}
+
+						  if  (TR_MINIGRUPO == "") {return false;}
+						  if  (self.atualMINIGRUPO == TR_MINIGRUPO)  {return false;}
+
+						  self.indiceMINIGRUPO = indice;
+						  self.atualMINIGRUPO = TR_MINIGRUPO;
+
+						  return true;
+				}
+
+				// Comportamento    
+				self.obterBrowse = function() {
+			   
+					   var deferred = $.Deferred();
+
+					   jQuery.ajax("obter_browser", {
+						   data: ko.toJSON( { login: self.cLogin, sessao: self.cSessao, taborigem: self.cTabela, tabela: self.cTabela, filtro: self.cFiltro, paginaatu: self.nPaginaAtu(), paginafim: self.nPaginaFim}),
+						   type: "post",   
+						   contentType: "application/json",
+						   success: function(result) {
+								   var xJSon = ko.toJSON(result);
+								   //var cJSon = JSON.stringify(xJSon);
+								   //cJSon = cJSon.replace(/!!x/g,'\\x');
+								   cJSon = eval(xJSon);  //Executa a acentuacao no token \x, nao delimitar com apostrofe pois resulta em erro no parse();
+								   //console.log(cJSon);
+								   xJSon = JSON.parse(cJSon);
+								   self.obterDados(ko.mapping.fromJS(xJSon));
+								   deferred.resolve(1);
+						   },
+						   error : function(jq, st, error){
+									 alert(error);
+								   deferred.resolve(2);
+						   }
+					 });
+					 return deferred.promise();
+				}
+
+				self.proximoBrowse = function(){
+					   if (self.nPaginaAtu() >= self.nPaginaFim) {
+						   alert('Pagina final!');
+					   } else {
+						   self.nPaginaAtu(self.nPaginaAtu() + 1);
+						   //self.obterBrowse();
+						   self.MontaTabela();
+					   }
+				}
+
+				self.anteriorBrowse = function(){
+					   if (self.nPaginaAtu() <= 1) {
+						   alert('Pagina inicial!');
+					   } else {
+						   self.nPaginaAtu(self.nPaginaAtu() - 1);
+						   //self.obterBrowse();
+						   self.MontaTabela();
+					   }
+				}
+
+				self.primeiroBrowse = function(){
+					   self.nPaginaAtu(1);
+					   //self.obterBrowse();
+					   self.MontaTabela();
+				}
+
+				self.ultimoBrowse = function(){
+					   self.nPaginaAtu(self.nPaginaFim);
+					   //self.obterBrowse();
+					   self.MontaTabela();
+				}
+
+				self.manutencao = function(data,geral) {
+					 //console.log(geral.currentTarget.name) ;
+					 document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: self.cSessao, operacao:  geral.currentTarget.name, 
+					                                          codigo: data.idSequencial, taborigem: self.cTabela, tabela: data.TABELA(), 
+															  origem: self.cOrigem, tipotabela: self.cTipoTabela, paginaatu: self.nPaginaAtu,
+															  paginafim: self.nPaginaFim, trace1: self.cTrace1, trace2: self.cTrace2, 
+															  menu: self.cMenu, filtro: self.cFiltro})
+					 document.form1.action = geral.currentTarget.title;
+					 document.form1.submit();
+			   }
+ 
+				//--------- Opcao de inclusao -------
+				self.xinclusao = function(data,geral) {
+					 //console.log(geral.currentTarget.title) ;
+					 document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: self.cSessao, operacao:  3, codigo: 0, taborigem: self.cTabela, 
+					                                          tabela: geral.currentTarget.name, origem: self.cOrigem, tipotabela: self.cTipotabela, 
+															  paginaatu: self.nPaginaAtu, paginafim: self.nPaginaFim, trace1: self.cTrace1, trace2: self.cTrace2, 
+															  menu: self.cMenu, filtro: self.cFiltro});
+					 document.form1.action = geral.currentTarget.title;
+					 document.form1.submit();
+			   }
+
+			   self.MontaTabela = function() {
+
+					var promise = self.obterBrowse();
+
+					promise.then(function(result) {
+
+						var opcoes1 = { scrollY: '400px', scrollX: true, scrollCollapse: true, paging: false };
+						var opcoes2 = { iLeftColumns: 3 }
+						var datatablescontainer = $('#divDados');
+						var html = $('#datatableshidden').html();
+						//var meudiv = document.getElementById("divDados");  //Equivale ao datatablescontainer[0]
+
+						//Destroy datatable
+						if (self.datatableinstance) {
+						   self.datatableinstance.destroy();
+						   datatablescontainer.empty();
+						}
+
+						//Recreate datatable
+						datatablescontainer.html(html);
+						ko.cleanNode(datatablescontainer[0]);
+						ko.applyBindings(self, datatablescontainer[0]);
+						self.datatableinstance = datatablescontainer.find('table.datatable').DataTable(opcoes1); 
+						//self.datatableinstance = self.datatableinstance.data("fixedColumns", new $.fn.dataTable.FixedColumns(self.datatableinstance, opcoes2));
 				
-			});
+					});
 
-	   }
+			   }
 
-};
+		};
 
-//Evitar a repeticao de linhas quando aplicar ko.applyBindings() novamente
-//Na div usar allowBindings false ou true para permitir que o bind funcione ou nao
-ko.bindingHandlers.allowBindings = {
-    init: function(elem, valueAccessor) {
-        // Let bindings proceed as normal *only if* my value is false
-        var shouldAllowBindings = ko.unwrap(valueAccessor());
-        return { controlsDescendantBindings: !shouldAllowBindings };
-    }
-};
+		//Evitar a repeticao de linhas quando aplicar ko.applyBindings() novamente
+		//Na div usar allowBindings (true ou false) para permitir que o bind funcione ou nao
+		ko.bindingHandlers.allowBindings = {
+			init: function(elem, valueAccessor) {
+				// Let bindings proceed as normal *only if* my value is false
+				var shouldAllowBindings = ko.unwrap(valueAccessor());
+				return { controlsDescendantBindings: !shouldAllowBindings };
+			}
+		};
 
-var vm = new ViewModel();
+		var vm = new ViewModel();
 
-ko.applyBindings(vm);
+		ko.applyBindings(vm);
 
-vm.MontaTabela();
+		vm.MontaTabela();
 
-}
+		parent.DATA.caminho(vm.cTrace1+vm.cTrace2);
+		//parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:history.go(-1);" style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
+		//parent.Frame1.hmheader.meutd2.innerHTML='';
+		//parent.Frame1.hmheader.meutd3.innerHTML='';
 
-$(document).ajaxComplete(function(){
+	}
 
-     divDados.style.visibility = "visible";
+	$(document).ajaxComplete(function(){
 
-});
+		 divDados.style.visibility = "visible";
+
+	});
    
 </script>
 </body>

@@ -219,7 +219,7 @@ namespace PortalCFG
             //LogFile.Log(request.Cookies);
             LogFile.Log(".");
 
-            return Distribuidor.Pagina(request, "portalcfg", cRaiz);
+            return Distribuidor.Pagina(request, cRaiz, cRaiz);
         }
 
         private static void Main(string[] args)

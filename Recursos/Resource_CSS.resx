@@ -136,4 +136,22 @@
   <data name="jquery_dataTables_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\jquery.dataTables.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="all_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\all.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="bootstrap_datepicker_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bootstrap-datepicker.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="bootstrap_datepicker_css_map" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bootstrap-datepicker.css.map.map;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="bootstrap_min_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bootstrap.min.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="loading_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\loading.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="style_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\style.css.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

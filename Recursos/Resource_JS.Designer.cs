@@ -29,7 +29,7 @@ namespace Recursos {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public Resource_JS() {
+        internal Resource_JS() {
         }
         
         /// <summary>
@@ -61,6 +61,40 @@ namespace Recursos {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * Datepicker for Bootstrap v1.6.1 (https://github.com/eternicode/bootstrap-datepicker)
+        /// *
+        /// * Copyright 2012 Stefan Petre
+        /// * Improvements by Andrew Rowls
+        /// * Licensed under the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+        /// */(function(factory){
+        ///    if (typeof define === &quot;function&quot; &amp;&amp; define.amd) {
+        ///        define([&quot;jquery&quot;], factory);
+        ///    } else if (typeof exports === &apos;object&apos;) {
+        ///        factory(require(&apos;jquery&apos;));
+        ///    } else {
+        ///        factory(jQuery);
+        ///    }
+        ///}(function($, undefined){
+        ///
+        /// [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string bootstrap_datepicker_js {
+            get {
+                return ResourceManager.GetString("bootstrap_datepicker_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a !function(a){a.fn.datepicker.dates[&quot;pt-BR&quot;]={days:[&quot;Domingo&quot;,&quot;Segunda&quot;,&quot;Terça&quot;,&quot;Quarta&quot;,&quot;Quinta&quot;,&quot;Sexta&quot;,&quot;Sábado&quot;],daysShort:[&quot;Dom&quot;,&quot;Seg&quot;,&quot;Ter&quot;,&quot;Qua&quot;,&quot;Qui&quot;,&quot;Sex&quot;,&quot;Sáb&quot;],daysMin:[&quot;Do&quot;,&quot;Se&quot;,&quot;Te&quot;,&quot;Qu&quot;,&quot;Qu&quot;,&quot;Se&quot;,&quot;Sa&quot;],months:[&quot;Janeiro&quot;,&quot;Fevereiro&quot;,&quot;Março&quot;,&quot;Abril&quot;,&quot;Maio&quot;,&quot;Junho&quot;,&quot;Julho&quot;,&quot;Agosto&quot;,&quot;Setembro&quot;,&quot;Outubro&quot;,&quot;Novembro&quot;,&quot;Dezembro&quot;],monthsShort:[&quot;Jan&quot;,&quot;Fev&quot;,&quot;Mar&quot;,&quot;Abr&quot;,&quot;Mai&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Ago&quot;,&quot;Set&quot;,&quot;Out&quot;,&quot;Nov&quot;,&quot;Dez&quot;],today:&quot;Hoje&quot;,monthsTitle:&quot;Meses&quot;,clear:&quot;Limpar&quot;,format:&quot;dd/mm/yyyy&quot;}}(jQuery);.
+        /// </summary>
+        public static string bootstrap_datepicker_pt_BR_min_js {
+            get {
+                return ResourceManager.GetString("bootstrap_datepicker_pt_BR_min_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a /*! FixedColumns 3.2.6
         /// * ©2010-2018 SpryMedia Ltd - datatables.net/license
         /// */
@@ -77,9 +111,37 @@ namespace Recursos {
         /// * This source file is free software, available under the following license:
         /// *   MIT license - http://datatables.net/ [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string dataTables_fixedColumns_js {
+        public static string dataTables_fixedColumns_js {
             get {
                 return ResourceManager.GetString("dataTables_fixedColumns_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*!
+        /// * jQuery JavaScript Library v1.12.4
+        /// * http://jquery.com/
+        /// *
+        /// * Includes Sizzle.js
+        /// * http://sizzlejs.com/
+        /// *
+        /// * Copyright jQuery Foundation and other contributors
+        /// * Released under the MIT license
+        /// * http://jquery.org/license
+        /// *
+        /// * Date: 2016-05-20T17:17Z
+        /// */
+        ///
+        ///(function( global, factory ) {
+        ///
+        ///	if ( typeof module === &quot;object&quot; &amp;&amp; typeof module.exports === &quot;object&quot; ) {
+        ///		// For CommonJS and CommonJS-like environments where a proper `window`
+        ///		// is present, execute the factory and get jQuery.
+        ///		// For env [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string jquery_1_12_4_js {
+            get {
+                return ResourceManager.GetString("jquery_1_12_4_js", resourceCulture);
             }
         }
         
@@ -106,7 +168,7 @@ namespace Recursos {
         ///
         ///	var plu [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string jquery_cookie_js {
+        public static string jquery_cookie_js {
             get {
                 return ResourceManager.GetString("jquery_cookie_js", resourceCulture);
             }
@@ -118,7 +180,7 @@ namespace Recursos {
         /// */
         ///(function(za,O,l){var N=function(h){function T(a){var b,c,d={};h.each(a,function(e){if((b=e.match(/^([^A-Z]+?)([A-Z])/))&amp;&amp;-1!==&quot;a aa ai ao as b fn i m o s &quot;.indexOf(b[1]+&quot; &quot;))c=e.replace(b[0],b[2].toLowerCase()),d[c]=e,&quot;o&quot;===b[1]&amp;&amp;T(a[e])});a._hungarianMap=d}function G(a,b,c){a._hungarianMap||T(a);var d;h.each(b,function(e){d=a._hungarianMap[e];if(d!==l&amp;&amp;(c||b[d]===l))&quot;o&quot;===d.charAt(0)?(b[d]||(b[d]={}),h.extend(!0,b[d],b[e]),G(a[ [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string jquery_dataTables_min_js {
+        public static string jquery_dataTables_min_js {
             get {
                 return ResourceManager.GetString("jquery_dataTables_min_js", resourceCulture);
             }
@@ -146,7 +208,7 @@ namespace Recursos {
         ///			classArrow	 : &apos;dcjq-icon&apos;,
         ///			classCount	 : &apos;dcjq-count [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string jquery_dcjqaccordion_2_7_min_js {
+        public static string jquery_dcjqaccordion_2_7_min_js {
             get {
                 return ResourceManager.GetString("jquery_dcjqaccordion_2_7_min_js", resourceCulture);
             }
@@ -163,28 +225,28 @@ namespace Recursos {
         ///*/
         ///(function($){$.fn.hoverIntent=function(f,g){var cfg={sensitivity:7,interval:100,timeout:0};cfg=$.extend(cfg,g?{over:f,out:g}:f);var cX,cY,pX,pY;var track=function(ev){cX=ev.pageX;cY=ev.pag [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string jquery_hoverIntent_minified_js {
+        public static string jquery_hoverIntent_minified_js {
             get {
                 return ResourceManager.GetString("jquery_hoverIntent_minified_js", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a /*! jQuery v1.7.1 jquery.com | jquery.org/license */
-        ///(function(a,b){function cy(a){return f.isWindow(a)?a:a.nodeType===9?a.defaultView||a.parentWindow:!1}function cv(a){if(!ck[a]){var b=c.body,d=f(&quot;&lt;&quot;+a+&quot;&gt;&quot;).appendTo(b),e=d.css(&quot;display&quot;);d.remove();if(e===&quot;none&quot;||e===&quot;&quot;){cl||(cl=c.createElement(&quot;iframe&quot;),cl.frameBorder=cl.width=cl.height=0),b.appendChild(cl);if(!cm||!cl.createElement)cm=(cl.contentWindow||cl.contentDocument).document,cm.write((c.compatMode===&quot;CSS1Compat&quot;?&quot;&lt;!doctype html&gt;&quot;:&quot;&quot;)+&quot;&lt;html&gt;&lt;body&gt; [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*! jQuery v2.1.1 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
+        ///!function(a,b){&quot;object&quot;==typeof module&amp;&amp;&quot;object&quot;==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error(&quot;jQuery requires a window with a document&quot;);return b(a)}:b(a)}(&quot;undefined&quot;!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l=a.document,m=&quot;2.1.1&quot;,n=function(a,b){return new n.fn.init(a,b)},o=/^ [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string jquery_min_js {
+        public static string jquery_min_js {
             get {
                 return ResourceManager.GetString("jquery_min_js", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a /*! jQuery UI - v1.12.0 - 2016-07-08
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*! jQuery UI - v1.10.4 - 2014-01-17
         ///* http://jqueryui.com
-        ///* Includes: widget.js, position.js, data.js, disable-selection.js, effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-clip.js, effects/effect-drop.js, effects/effect-explode.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-size.js, effects/effect-slide.js, effects/effect-transfe [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///* Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.draggable.js, jquery.ui.droppable.js, jquery.ui.resizable.js, jquery.ui.selectable.js, jquery.ui.sortable.js, jquery.ui.effect.js, jquery.ui.accordion.js, jquery.ui.autocomplete.js, jquery.ui.button.js, jquery.ui.datepicker.js, jquery.ui.dialog.js, jquery.ui.effect-blind.js, jquery.ui.effect-bounce.js, jquery.ui.effect-clip.js, jquery.ui.effect-drop.js, jquery.ui.eff [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string jquery_ui_js {
+        public static string jquery_ui_js {
             get {
                 return ResourceManager.GetString("jquery_ui_js", resourceCulture);
             }
@@ -214,7 +276,7 @@ namespace Recursos {
         ///
         ///        JSON.stringify(value, replacer, space) [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string json2_js {
+        public static string json2_js {
             get {
                 return ResourceManager.GetString("json2_js", resourceCulture);
             }
@@ -234,9 +296,37 @@ namespace Recursos {
         ///        document = window[&apos;document&apos;],
         ///        navigator = window[ [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string knockout_debug_js {
+        public static string knockout_debug_js {
             get {
                 return ResourceManager.GetString("knockout_debug_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a /*! knockout-jqueryui - v2.2.2 - 1/20/2015
+        ///* https://gvas.github.io/knockout-jqueryui/
+        ///* Copyright (c) 2015 Vas Gabor &lt;gvas.munka@gmail.com&gt; Licensed MIT */
+        ////*jslint browser:true*/
+        ///
+        ///window.kojqui = { version: &apos;2.2.2&apos; };
+        ///
+        ///(function (root, factory) {
+        ///
+        ///    &apos;use strict&apos;;
+        ///
+        ///    root.kojqui.utils = factory(root.jQuery, root.ko, root.jQuery.ui.core);
+        ///}(this,
+        ///    function ($, ko) {
+        ///
+        ///        &apos;use strict&apos;;
+        ///
+        ///        var match, uiVersion, descendantControllingBindings, createObject, register;
+        ///
+        ///        /*jslint regexp:tr [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string knockout_jqueryui_js {
+            get {
+                return ResourceManager.GetString("knockout_jqueryui_js", resourceCulture);
             }
         }
         
@@ -249,7 +339,7 @@ namespace Recursos {
         ///
         ///(function() {(function(n){var x=this||(0,eval)(&quot;this&quot;),u=x.document,M=x.navigator,v=x.jQuery,F=x.JSON;(function(n){&quot;function&quot;===typeof define&amp;&amp;define.amd?define([&quot;exports&quot;,&quot;require&quot;],n):&quot;object&quot;===typeof exports&amp;&amp;&quot;object&quot;===typeof module?n(module.exports||exports):n(x.ko={})})(function(N,O){function J(a,c){return null===a||typeof a in T?a===c:!1 [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string knockout_js {
+        public static string knockout_js {
             get {
                 return ResourceManager.GetString("knockout_js", resourceCulture);
             }
@@ -268,7 +358,7 @@ namespace Recursos {
         ///	} else if (typeof define === &quot;function&quot; &amp;&amp; define[&quot;amd&quot;]) {
         ///		// AMD anonymous [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string knockout_mapping_latest_debug_js {
+        public static string knockout_mapping_latest_debug_js {
             get {
                 return ResourceManager.GetString("knockout_mapping_latest_debug_js", resourceCulture);
             }
@@ -280,9 +370,28 @@ namespace Recursos {
         ////// License: MIT (http://www.opensource.org/licenses/mit-license.php)
         ///(function(e){&quot;function&quot;===typeof require&amp;&amp;&quot;object&quot;===typeof exports&amp;&amp;&quot;object&quot;===typeof module?e(require(&quot;knockout&quot;),exports):&quot;function&quot;===typeof define&amp;&amp;define.amd?define([&quot;knockout&quot;,&quot;exports&quot;],e):e(ko,ko.mapping={})})(function(e,f){function y(b,c){var a,d;for(d in c)if(c.hasOwnProperty(d)&amp;&amp;c[d])if(a=f.getType(b[d]),d&amp;&amp;b[d]&amp;&amp;&quot;array&quot;!==a&amp;&amp; [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string knockout_mapping_latest_js {
+        public static string knockout_mapping_latest_js {
             get {
                 return ResourceManager.GetString("knockout_mapping_latest_js", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a // Deep observer plugin for Knockout http://knockoutjs.com/
+        ///// (c) Ziad Jeeroburkhan
+        ///// License: MIT (http://www.opensource.org/licenses/mit-license.php)
+        ///// Version 1.3.6
+        ///
+        ///ko.subscribable.fn[&apos;watch&apos;] = function (targetOrCallback, options, evaluatorCallback, context) {
+        ///    /// &lt;summary&gt;
+        ///    ///     Track and manage changes within the chained observable down to any given level. 
+        ///    /// &lt;/summary&gt;
+        ///    /// &lt;param name=&quot;targetOrCallback&quot;&gt;
+        ///    ///      The subscription callback function or an object co [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string ko_reactor_js {
+            get {
+                return ResourceManager.GetString("ko_reactor_js", resourceCulture);
             }
         }
     }

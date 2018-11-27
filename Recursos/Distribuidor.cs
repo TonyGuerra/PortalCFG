@@ -20,6 +20,7 @@ namespace Recursos
             DBConnect MeuDB = new DBConnect(cDataBase);
             ArtLib MeuLib = new ArtLib();
             Browser MeuBrowser = new Browser();
+            Cadastro MeuCadastro = new Cadastro();
             string cHtml = "ERRO: Html nao atribuido";
             string cDados = "";
 
@@ -35,6 +36,17 @@ namespace Recursos
             {
                 if (request.HttpMethod == "POST")
                 {
+                    using (var reader = new StreamReader(request.InputStream,
+                                                         request.ContentEncoding))
+                    {
+                        cDados = reader.ReadToEnd();
+
+                        if ((cDados.IndexOf("dados=") >= 0) && (cDados.IndexOf("dados=") <= 1))
+                        {
+                            cDados = HttpUtility.UrlDecode(cDados);
+                        }
+                    }
+                    /*
                     int nTam = 1024;
                     byte[] formData = new byte[nTam];
                     request.InputStream.Read(formData, 0, nTam);
@@ -47,7 +59,7 @@ namespace Recursos
                     {
                         cDados =cDados.Replace("\0", "");
                     }
-                    
+                    */
                 }
 
                 if (cMeuPath.Contains(".css"))
@@ -120,6 +132,10 @@ namespace Recursos
                 else if (cMeuPath == "obter_browser")
                 {
                     cHtml = MeuBrowser.Obter_Browser(request, MeuDB, MeuLib, cMeuPath, cDados);
+                }
+                else if (cMeuPath == "tabelas_cadastro")
+                {
+                    cHtml = MeuCadastro.Tabelas_Cadastro(request, MeuDB, MeuLib, cMeuPath, cDados);
                 }
                 else if (Resources.ResourceManager.GetObject(cMeuPath) != null)
                 {

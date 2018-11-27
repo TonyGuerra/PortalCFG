@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="ArtLib.cs" />
     <Compile Include="Browser.cs" />
+    <Compile Include="Cadastro.cs" />
     <Compile Include="DBConnect.cs" />
     <Compile Include="Distribuidor.cs" />
     <Compile Include="LogFile.cs" />
@@ -73,20 +74,21 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource_CSS.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource_CSS.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resource_JS.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource_JS.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\bootstrap-datepicker.css.map.map" />
     <None Include="Resources\topo_fundo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +240,39 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\dataTables.fixedColumns.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tabelas_cadastro.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\all.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\style.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bootstrap.min.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bootstrap-datepicker.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.css.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jquery-1.12.4.js.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\knockout-jqueryui.js.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bootstrap-datepicker.pt-BR.min.js.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ko-reactor.js.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bootstrap-datepicker.js.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

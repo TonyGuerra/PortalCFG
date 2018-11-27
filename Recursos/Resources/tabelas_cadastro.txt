@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PORTALCFG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" href="all.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap-datepicker.css">
+    <link rel="stylesheet" href="loading.css">
+    <link rel="stylesheet" href="PortalCFG.css" type="text/css" />
+    <script type="text/javascript" src="knockout.js"></script>
+    <script type="text/javascript" src="json2.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="jquery-ui.js"></script>
+    <script type="text/javascript" src="knockout-jqueryui.js"></script>
+    <script type="text/javascript" src="knockout.mapping-latest.js"></script>
+    <script type="text/javascript" src="bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="bootstrap-datepicker.pt-BR.min.js"></script>
+    <script type="text/javascript" src="portalcfg.js"></script>
+    <script type="text/javascript" src="ko-reactor.js"></script>
+
+<script type='text/javascript'>
+
+function fFiltro(cTabela) { 
+
+    document.form1.action = cTabela+"_filtro?cMenu=!XMENU!";
+    document.form1.submit();
+         
+}
+
+function Right(str, n){
+    if (n <= 0)
+       return "";
+    else if (n > String(str).length)
+       return str;
+    else {
+       var iLen = String(str).length;
+       return String(str).substring(iLen, iLen - n);
+    }
+}
+
+//$( window ).load(function() {
+       //DivGeral.style.visibility = "visible";
+//});
+
+</script>
+
+</head>
+
+<body style="color:#0080FF; margin-left:10px; font-family: Arial; font-style: normal; text-decoration: none; font-size: 10pt;width:98%;">
+
+<form name="form1" id="form1" method="post" action="">
+<input name="cTrace1" id="cTrace1" type="hidden" value="!XTRACE1!">
+<input name="cTrace2" id="cTrace2" type="hidden" value="!XTRACE2!">
+<input name="cLogin" id="cLogin" type="hidden" value="!XLOGIN!">
+<input name="cSessao" id="cSessao" type="hidden" value="!XSESSAO!">
+<input name="cMenu" id="cMenu" type="hidden" value="!XMENU!">
+<input name="cTabela" id="cTabela" type="hidden" value="!XTABELA!">
+<input name="cNomeTabela" id="cNomeTabela" type="hidden" value="!XNOMETABELA!">
+<input name="cRegistro" id="cRegistro" type="hidden" value="!XREGISTRO!">
+<input name="cOrigem" id="cOrigem" type="hidden" value="!XORIGEM!">
+<input name="cItem" id="cItem" type="hidden" value="!XITEM!">
+<input name="cItensExcluidos" id="cItensExcluidos" type="hidden" value="">
+<input name="cOperacao" id="cOperacao" type="hidden" value="!XOPERACAO!">
+
+<input type="hidden" id="dados" name="dados" value=""/>
+
+<div id="DivGeral" name="DivGeral" style="visibility: hidden">
+
+<div id="SemCordefundo" style="width:100%; height: 05px;">&nbsp;</div>
+
+    <div data-bind="tabs: { refreshOn: items }"  style="width:100%; display: inline-table;">
+        <ul data-bind="foreach: items">
+           <li data-bind="attr: { 'aria-controls': id }">
+               <a data-bind="attr: { title: title, href: href }, text: title"></a>
+           </li>  
+        </ul>
+
+        <!-- ko with: $root.aDados -->
+
+        <!-- ko foreach: xconteudo -->
+
+      <div data-bind="attr: {id: xpasta,  style: xdisplay}">
+
+          <div id="xTitulo3" style="position:relative; width:100%; height: 15px;">&nbsp;</div>
+
+          <div data-bind="foreach: xcampos">
+
+          <div data-bind="foreach: xlinha, attr: {id: nome, class: ((classe() === '0') ? 'SemCordefundo' : 'Cordefundo')}, visible: ($root.aLinhas.asPosicao({dados: $data, pasta: $parents[0].xpasta}) >= 0)">
+
+              <!-- ko if: (config().substr(0,1) === "1") -->
+                  <div id="xcolunaesquerda1" data-bind="text: titulo, attr: {style:'font-weight: ' + ((config().substr(3,1) == '1') ? 'bold' : 'normal')}"></div>
+                  <div id="xcolunaesquerda2" data-bind="attr:{style:'width: ' + ((tamanho() > 70) ? '85%;' : '35%;')}">
+                     <Input type=text data-bind="value: $root.cmpTexto(valor, campo, config().substr(4,1)), 
+                                                 attr: {name: campo, maxlength: tamanho, size: tamanho, disabled: $root.editCampo(editcond(), config(), '', []), 
+                                                        style:((tamanho() > 70) ? 'width:98%;' : '')+'text-transform:'+((config().substr(4,1)=='2') ? 'uppercase;' : ((config().substr(4,1)=='3') ? 'lowercase;' : 'none;'))}" />
+                     </div>
+              <!-- /ko -->
+
+              <!-- ko if: (config().substr(0,1) === "2") -->
+                  <div id="xcolunaesquerda1" data-bind="text: titulo, attr: {style:'font-weight: ' + ((config().substr(3,1) == '1') ? 'bold' : 'normal')}"></div>
+                  <div id="xcolunaesquerda2" style="width:35%;">
+                      <select data-bind="value: valor, options: option, optionsText: 'name', optionsValue: 'id', attr: {disabled: $root.editCampo(editcond(), config(), '', []), id: campo, class: gatilhoclasse, xalvo: gatilhoid, xcampo: gatilhocampo, xrevela: config
+().substr(2,1)}"></select>
+                  </div>
+              <!-- /ko -->
+
+              <!-- ko if: (config().substr(0,1) === "3") -->
+                  <div id="xcolunaesquerda1" data-bind="text: titulo, attr: {style:'font-weight: ' + ((config().substr(3,1) == '1') ? 'bold' : 'normal')}"></div>
+                  <div id="xcolunaesquerda3">
+                      <TEXTAREA data-bind="value: $root.cmpMemo(valor, campo, config), attr: {name: campo, disabled: $root.editCampo(editcond(), config(), '', [])}, style: {width: '98%', height: altura}"  ></TEXTAREA>
+                  </div>
+              <!-- /ko -->
+
+              <!-- ko if: (config().substr(0,1) === "4") -->
+                  <div id="xcolunaesquerda1" data-bind="text: titulo, attr: {style:'font-weight: ' + ((config().substr(3,1) == '1') ? 'bold' : 'normal')}"></div>
+                  <div id="xcolunaesquerda2" style="width:35%;">
+                        <Input type=password data-bind="value: valor, attr: {name: campo, maxlength: tamanho, size: tamanho, disabled: $root.editCampo(editcond(), config(), '', [])}" />
+                  </div>
+              <!-- /ko -->
+
+              <!-- ko if: (config().substr(0,1) === "5") -->
+                  <div id="xcolunaesquerda1" data-bind="text: titulo, attr: {style:'font-weight: ' + ((config().substr(3,1) == '1') ? 'bold' : 'normal')}"></div>
+                  <div id="xcolunaesquerda2" style="width:35%;">
+                         <Input type="date" data-bind="datePicker: valor, attr: {name: campo, disabled: $root.editCampo(editcond(), config(), '', [])}" />
+                  </div>
+              <!-- /ko -->
+
+
+              <!-- ko if: (config().substr(0,1) === "6") -->
+                     <div style="height:10px;">&nbsp;</div>
+                     <div><label  style="margin-left:10px;" data-bind="text: titulo2">
+                             </label>&nbsp;<input type="checkbox" id="tdCheck" data-bind="value: valor, click: $root.checkTdClick, checked: ((valor() == '1') ? true : false), attr: {name: campo, maxlength: tamanho, disabled: $root.editCampo(editcond(), config(), '', 
+[])}" style="vertical-align:-4px; height: 16px;">&nbsp;<label data-bind="text: titulo"></label></div>
+                             <div style="height:1px;">&nbsp;</div>
+                             <div style="width:100%;border: 1px solid rgb(214, 206, 206);float:left;" data-bind="foreach: checks">
+                             <div  style="width:24%;height:30px;float:left;margin-left:5px;">
+                                     <input type="checkbox" data-bind="value: idSequencial, click: $root.checkClick, checked: ((selecao() == '1') ? true : false)" style="vertical-align:-7px;float:left;"><label style="width:90%;vertical-align:-6px;margin-left:5px;" 
+data-bind="text: descricao"></label>
+                             </div>
+                    </div>
+              <!-- /ko -->
+
+
+              <!-- ko if: (config().substr(0,1) === "9") -->
+                  <div id="xcolunaesquerda1" data-bind="text: titulo, attr: {style:'font-weight: ' + ((config().substr(3,1) == '1') ? 'bold' : 'normal')}"></div>
+                  <div id="xcolunaesquerda2" style="width:35%;">
+                        <Input type=hidden data-bind="value: valor, attr: {name: campo, maxlength: tamanho, size: tamanho, disabled: $root.editCampo(editcond(), config(), '', [])}" />
+                  </div>
+              <!-- /ko -->
+
+            </div>
+
+            <!-- ko if: ($index() === ($parent.xcampos().length-1)) -->
+                <div data-bind="attr : {class : ((classe() === '1') ? 'SemCordefundo' : 'Cordefundo')}" style="width:100%; height: 15px;">&nbsp;</div>
+            <!-- /ko -->
+
+        </div> <!-- campo -->
+
+
+         <!-- ko if: (xtititem().length > 0) -->
+             <table border="0" bordercolor="#0096FF" style="border-left:0.1mm;border-top:0.1mm;border-bottom:0.1mm;border-right:0.1mm;border:0.1mm solid #0096FF;width:99%;">
+                 <th id="xTitulo" colspan="20" style="height:10mm; font-family: Arial; font-weight: bold; font-style: normal; text-decoration: none; font-size: 11pt;">
+                     &nbsp;Itens
+                 </th>
+                 <tbody data-bind="foreach: xitens">
+                 <!-- ko if: ($index() === 0) -->
+                     <tr id="xTitulo2" style="font-weight: bold; font-size: 9pt; height:1.5mm" data-bind="foreach: $parent.xtititem">
+                         <td nowrap="true" data-bind="text: '&nbsp;'+titulo(),attr:{style: 'margin-right:2mm; margin-left:2mm;font-weight:'+(($index()===0)||($parents[1].xitens()[0].xitem()[$index()-1].config().substr(2,1)==='1') ? 'bold' : 
+'normal')}"></td>
+                         <!-- ko if: ($index() === $parents[1].xtititem().length-1) -->
+                             <td style="width:90%;"><div>&nbsp;</div></td>
+                         <!-- /ko -->
+                      </tr>
+                  <!-- /ko -->
+
+                  <tr data-bind="attr: {class: ((xitemsts() === 9) ? 'CorExclinha' : ((($index()%2) === 0) ? 'SemCordelinha' : 'Cordelinha'))}, foreach: xitem">
+                      <!-- ko if: ($index() === 0) -->
+                          <td>
+                              <div>
+                                   <a href data-bind="click: $root.incluiritem, attr:{itemid: $parent.xitemid}"><img src="/imagens/portal_mais.gif" border="0" title="Incluir"></a>
+                                   &nbsp;
+                                   <a href data-bind="click: $root.excluiritem, attr:{itemid: $parent.xitemid}"><img src="/imagens/portal_menos.gif" border="0" title="Excluir"></a>
+                                   &nbsp;
+                               </div>
+                          </td>
+                       <!-- /ko -->
+
+                       <!-- ko if: (config().substr(0,1) === "6") -->
+                            <td>
+                                <img data-bind="attr:{src:valor2, title:valor}">
+                            </td>
+                        <!-- /ko -->
+
+                        <!-- ko if: (config().substr(0,1) === "1") -->
+                            <td>
+                                <input type="text" data-bind="value: $root.cmpTexto(valor, campo, config().substr(3,1)), 
+                                                              attr: {name: campo, maxlength: tamanho, size: tamanho, disabled: $root.editCampo(editcond(), config(), $parent.xitemsts(), $parent.xitem()), 
+                                                                     style:'text-transform:'+((config().substr(3,1)=='2') ? 'uppercase;' : ((config().substr(3,1)=='3') ? 'lowercase;' : 'none;'))}" >
+                            </td>
+                         <!-- /ko -->
+
+                         <!-- ko if: (config().substr(0,1) === "5") -->
+                             <td>
+                                 <div style="width:150px">
+                                       <Input type="date" data-bind="datePicker: valor, attr: {name: campo, disabled: $root.editCampo(editcond(), config(), $parent.xitemsts(), $parent.xitem())}" />
+                                 </div>
+                             </td>
+                         <!-- /ko -->
+
+                         <!-- ko if: (config().substr(0,1) === "2") -->
+                             <td>
+                                 <select data-bind="value: valor, options: option, optionsText: 'name', optionsValue: 'id', attr: {disabled: $root.editCampo(editcond(), config(), $parent.xitemsts(), $parent.xitem())}"></select>
+                             </td>
+                         <!-- /ko -->
+
+                          <!-- ko if: ($index() === $parent.xitem().length-1) -->
+                              <td>&nbsp;</td>
+                          <!-- /ko -->
+                       </tr>
+                  </tbody>
+            </table>
+         <!-- /ko -->  
+         <!-- ko ifnot: (xtititem().length > 0) -->
+            <div style="position:relative;margin-top:-20px;visibility:hidden;">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div>
+         <!-- /ko -->
+
+         </div> <!-- pasta -->
+
+         <div id="divespaco" style="position:relative;height:20px;display:none;">&nbsp;</div>
+
+         <!-- /ko -->
+         <!-- /ko -->
+    </div> <!-- tabs -->
+
+<div style="position:absolute; width:35%; font-weight: bold; Top:024px; Left:60%; text-align:right; color:white;"> >> !XCADASTRO! </div>
+  
+<div id="SemCordefundo" style="width:100%; height: 15px;">&nbsp;</div>
+
+<div class="leftTitulo" style="position:relative;width:27%;Top:1mm;text-align:right;">
+<Input TYPE=button NAME="XVoltar" VALUE="Voltar" style="border-color:#808080;border-width:thin;" SIZE=10 onclick="javascript:history.go(-1);" />
+</div>
+<div class="leftTitulo" style="position:relative; width: 68px;Top:1mm;left:020px;">
+<Input TYPE=button NAME="XFiltrar" VALUE="Filtro" style="border-color:#808080;border-width:thin;" SIZE=10 onclick="javascript:fFiltro('!XCHAVE!');" />
+</div>
+<div id='divgravar' class="leftTitulo" style="position:relative; width: 68px;Top:1mm;left:012px;" data-bind="visible: opGravar">
+<Input TYPE=button NAME="XGravar" VALUE="Gravar" style="border-color:#808080;border-width:thin;" SIZE=10 data-bind="click: validaCadastro" />
+</div>
+<div id='divexcluir' class="leftTitulo" style="position:relative; width: 68px;Top:1mm;left:012px" data-bind="visible: opExcluir">
+<Input TYPE=button NAME="XExcluir" VALUE="Excluir" style="border-color:#808080;border-width:thin;" SIZE=10 data-bind="click: validaCadastro" />
+</div>
+
+</div>
+
+<div id='divload' class="loading" style="display:none">
+<div class="loader"></div>
+</div>
+
+</form>
+
+<script type='text/javascript'>
+
+    var cTrace1  = document.form1.cTrace1.value;
+    var cTrace2  = document.form1.cTrace2.value;
+    var node;
+    var contador = 0;
+    var aXLinhas = [];
+    var cPasta   = '';
+
+	parent.DATA.caminho(cTrace1 + cTrace2);
+    //parent.Frame1.hmheader.fMeudiv(cTrace1, cTrace2);
+    //parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:history.go(-1);" style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
+    //parent.Frame1.hmheader.meutd2.innerHTML='<a href=javascript:parent.Frame2.hmcontent.fFiltro("!XCHAVE!"); style="text-decoration: none;"><ul><li>Filtro</li></ul></a>';
+    //parent.Frame1.hmheader.meutd3.innerHTML='<a href=javascript:parent.Frame2.hmcontent.vm.validaCadastro(); style="text-decoration: none;"><ul><li>Gravar</li></ul></a>';
+
+
+    var ItemViewModel = function(title) {
+        contador  += 1;
+        this.id    = 'tab' + contador.toString();
+        this.href  = '#tab' + contador.toString();
+        this.title = title;
+    };
+
+
+ko.bindingHandlers.datePicker = {
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel) {                    
+        // Register change callbacks to update the model
+        // if the control changes.       
+        ko.utils.registerEventHandler(element, "change", function () {            
+            var value = valueAccessor();
+            value(new Date(element.value));            
+        });
+    },
+    // Update the control whenever the view model changes
+    update: function (element, valueAccessor, allBindingsAccessor, viewModel) {        
+          var value =  valueAccessor();
+          var data = new Date(value()); 
+
+          if  (data != 'Invalid Date') {
+               element.value = data.toISOString().substring(0, 10);
+          } else {
+               if  (value() != 'Invalid Date') {  
+                   element.value = value().substr(6, 4)+'-'+value().substr(3, 2)+'-'+value().substr(0, 2);
+               }
+         }     
+    }
+};
+
+//-------------- Definir antes do Modelo.
+
+ko.observableArray.fn.asPosicao = function (key) {
+   return ko.computed(function () {
+      var list         = this() || [];    // the internal array
+      var nIndice = -1;                // a place for key/value
+
+      //console.log(key.pasta());
+
+      if (key.dados.nome() == 'xlinha01') {
+          aXLinhas  = []; //zera o vetor;
+          cPasta   = '';
+      }
+
+      if  (key.pasta() != cPasta) {
+          contador = 0;  //zera a contagem no primeiro item
+          cPasta   = key.pasta();
+      }
+
+      ko.utils.arrayForEach(list, function (v, index) {
+          if ((v.id == key.dados.rev1()) && (key.dados.rev2().indexOf(v.valor)>=0)) {          // if there is a key
+               nIndice = index; 
+          }
+      });
+
+      if (nIndice >= 0) {
+
+          if (aXLinhas.indexOf(key.dados.nome()) < 0) {
+               contador += 1;
+               key.dados.classe((contador%2)==0 ? '1' : '0');
+              //console.log(' Linha: ' + key.dados.nome() + ' - cor: ' + key.dados.classe());
+
+              aXLinhas.push(key.dados.nome());
+          }
+      }
+
+      //console.log(nIndice);
+       return nIndice;
+   }, this)();
+};
+
+
+//vm.aDados().xconteudo()[h].campos()[i].xlinha()[j].opcoes(xJSon);
+
+$(function () {
+
+ //------------------------ GATILHOS ------------------------------
+      $('.xgatilho').change(function (event) {
+          //alert('mudou!');
+          //console.log(event);
+          if (event.originalEvent) { //user changed
+              //alert('mudou 1'); 
+          } else { // program changed
+              //alert('mudou 2!');
+          }
+          var meuID      = event.currentTarget.id;
+          var meuValor   = event.currentTarget.value;
+          var meuAlvo    = event.currentTarget.attributes.xcampo.value;
+          var meuRevela  = event.currentTarget.attributes.xrevela.value;
+          var lBreak     = false;
+
+ //------------------------ GATILHO LINHA ------------------------------
+          if (meuRevela == '1') {    
+             vm.aLinhas.remove( function (item) { return item.id == meuID; } )
+
+             vm.aLinhas.push({id: meuID, valor: meuValor});  //Adiciona o elemento e o valor esperado
+
+             //var nTam    = vm.aLinhas().length;
+
+             //for (i = 0; i < nTam; i++) {
+             //    alert('Valores: id: ' + vm.aLinhas()[i].id + ' - valor: ' + vm.aLinhas()[i].valor);
+             //}
+          }
+
+ //------------------------ GATILHO CONSULTA ------------------------------
+          if (meuAlvo != 'ok') {    
+             //alert('Meu id: ' + meuID + ' - meu valor: ' + meuValor + ' - meu alvo: ' + meuAlvo);
+
+             var nTamH    = vm.aDados().xconteudo().length;
+
+             for (h = 0; h < nTamH; h++) {
+  
+                 var nTamI    = vm.aDados().xconteudo()[h].xcampos().length;
+
+                 for (i = 0; i < nTamI; i++) {
+
+                     var nTamJ    = vm.aDados().xconteudo()[h].xcampos()[i].xlinha().length;
+
+                     for (j = 0; j < nTamJ; j++) {
+                         //alert(vm.aDados().xconteudo[h].xcampos[i].xlinha[j].campo);
+                         if(vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].campo() == meuAlvo) {
+                             //alert('encontrou: ' + vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].campo());
+                             var xJSon = [{"id": "01","name": "Teste01"},{"id": "02","name": "Teste02"},{"id": "03","name": "Teste03"}];
+                             vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].option(xJSon);
+                             lBreak = true;
+                             break;
+                         }
+
+                     }/*for j*/
+                     if (lBreak) { break }
+                 }/*for i*/
+                 if (lBreak) { break }
+             }/*for h*/
+
+             //$(this).unbind('change'); //Resolve problema de multi chamada no click do combobox.
+
+          }
+
+     });
+
+});
+
+
+//-------------- Modelo
+function ViewModel() {
+
+    var self = this;
+    self.xJSon = ko.observable();
+
+    self.items = ko.observableArray();
+    !XJSPASTAS!
+
+    //self.items.push(new ItemViewModel('JavaScript'));
+
+    self.dateOptions = { format: 'dd/mm/yyyy',
+                         language: 'pt-BR',
+                         todayBtn: 'linked',
+                         autoclose: true,
+                         todayHighlight: true };
+
+    self.aDados   = ko.observable();
+
+    self.cLogin             = '!XLOGIN!';
+    self.cSessao           = '!XSESSAO!';
+    self.cTabela           = '!XTABELA!';
+    self.cCodigo         = '!XCODIGO!';
+    self.cTabOrigem   = '!XTABORIGEM!';
+    self.cOperacao     = '!XOPERACAO!';
+    self.aLinhas           = ko.observableArray([{id: "ok", valor: "ok"}]);
+    self.lTodos             = false;
+
+    // Comportamento    
+//        self.obterCadastro = function() {
+//               jQuery.get("tabelas_obter", { login: self.cLogin, sessao: self.cSessao, tabela: self.cTabela, codigo: self.cCodigo, operacao: self.cOperacao }, self.xJSon);  
+//        }
+
+    self.obterCadastro = function () {
+        jQuery.ajax("tabelas_obter", {
+            data: ko.toJSON( { login: self.cLogin, sessao: self.cSessao, tabela: self.cTabela, codigo: self.cCodigo, taborigem: self.cTabOrigem, operacao: self.cOperacao }),
+            type: "post",   
+            contentType: "application/json",
+            success: function(result) {
+                var xJSon = ko.toJSON(result);
+                var cJSon = JSON.stringify(xJSon);
+                cJSon = cJSon.replace(/!!x/g,'\\x');
+                cJSon = eval(cJSon);  //Executa a acentuacao no token \x, nao delimitar com apostrofe pois resulta em erro no parse();
+                //console.log(cJSon);
+                xJSon = JSON.parse(cJSon);
+                var oDados = ko.mapping.fromJS(xJSon);
+                self.aDados(oDados);   //databind em value
+            },
+            error:function(jq, st, error){
+                alert(error);
+            }
+        });
+    };
+
+    self.checkClick = function(element, valueAccessor, allBindings) {
+
+          if( !self.lTodos ) {
+               element.selecao((element.selecao() == 1) ? '0' : '1');
+          }
+
+          return(!self.lTodos);
+     }
+
+     self.checkTdClick = function(element, valueAccessor, allBindings) {
+
+          element.valor((element.valor() == 1) ? '0' : '1');
+
+          self.lTodos = (element.valor() == 1);
+
+          for (var i=0; i < element.checks().length; i++){
+element.checks()[i].selecao(element.valor());
+         }
+
+         return(true);
+    }
+
+
+    self.opGravar = ko.computed(function() {
+         return ((self.cOperacao === '3') || (self.cOperacao === '4'));
+    });
+
+
+    self.opExcluir = ko.computed(function() {
+         return (self.cOperacao === '5');
+    });
+
+
+    //Trata o campo texto: maiuscula / minuscula.
+    self.cmpTexto = function(valor, campo, charcase) {
+         return ko.computed({
+                read: function () {
+                      //console.log(valor());
+                      return (valor());
+                },
+                write: function (xvalor) {
+                       if      (charcase=='2') { xvalor = xvalor.toUpperCase(); }
+                       else if (charcase=='3') { xvalor = xvalor.toLowerCase(); };
+                       valor(xvalor);
+                },
+                owner: self
+         });
+    }
+
+
+    //Trata o campo memo: maiuscula / minuscula.
+    self.cmpMemo = function(valor, campo, config) {
+         return ko.computed({
+                read: function () {
+                      //console.log(valor());
+                      return atob(valor());
+                },
+                write: function (xvalor) {
+                       if      (config().substr(4,1)=='2') { xvalor = xvalor.toUpperCase(); }
+                       else if (config().substr(4,1)=='3') { xvalor = xvalor.toLowerCase(); };
+                       valor(btoa(xvalor));
+                },
+                owner: self
+         });
+    }
+
+
+    self.validaCadastro = function() {
+
+         divload.style.display = 'block';
+
+         var aCpDados = self.aDados();
+         aCpDados = ko.toJS(aCpDados);
+         delete aCpDados.__ko_mapping__;  //Retira a propriedade de mapeamente para validar/gravar os dados;
+
+         jQuery.ajax("tabelas_valida", {
+              data: ko.toJSON( { login: self.cLogin, sessao: self.cSessao, tabela: self.cTabela, codigo: self.cCodigo, operacao: self.cOperacao, taborigem: self.cTabOrigem, dados: aCpDados }),
+              type: "post", contentType: "application/json",
+              success: function(result) {
+                       if( result.indexOf('ERRO') >= 0 ){
+                            divload.style.display = 'none';
+                            alert(result) ;
+                       } else {
+                              jQuery.ajax("tabelas_gravar", {
+                                    data: ko.toJSON( { login: self.cLogin, sessao: self.cSessao, tabela: self.cTabela, codigo: self.cCodigo, operacao: self.cOperacao, taborigem: self.cTabOrigem, dados: aCpDados }),
+                                    type: "post", contentType: "application/json",
+                                    success: function(result) {
+                                           if( result.indexOf('ERRO') >= 0 ){
+                                                   divload.style.display = 'none';
+                                                   alert(result) ;
+                                           } else {
+                                                   document.form1.dados.value = result;
+                                                   document.form1.action = "tabelas_sucesso";
+                                                   document.form1.submit();
+                                           }
+                                   }
+                             });
+                       }
+               },
+               error:function(jq, st, error){
+                      alert(error);
+               }
+        });
+
+    };
+
+
+    self.editCampo = function(cValores, cConfig, cStatus, xItem) {
+
+           var nTamH   = self.aDados().xconteudo().length;
+           var nTamI   = xItem.length;
+           var aVal    = cValores.split(',');
+
+           var aXVal = new Array(1);   
+           var a     = 0;
+           var b     = 0;
+           var t     = 0;
+
+           if((cConfig.substr(1,1) == '1') || (cStatus == 9)) {
+                   return(true);
+           }
+
+           if(cValores==''){
+                   return(null);
+           } 
+
+           //"editcond" : "c1,TESTELINHA,>=,2,c1,TABITENS,<=,1,c2,TESTELINHA,==,3,c3,TABITENS,==,4"
+           //{{0,false,{{'campo1','==',valor1},{'campo2','==',valor2}}},
+          // {1,false,{{'campo3','==',valor3}}},
+          // {2,false,{{'campo3','==',valor3}}}}
+
+          while (t < aVal.length) {
+
+                if (b==0) {
+                      aXVal[a] = new Array(3);
+                      aXVal[a][0] = a;
+                      aXVal[a][1] = false;
+                      aXVal[a][2] = new Array(1);
+                }
+
+                aXVal[a][2][b] = new Array(4);
+                aXVal[a][2][b][0] = false;
+                aXVal[a][2][b][1] = aVal[t+1];
+                aXVal[a][2][b][2] = aVal[t+2];
+                aXVal[a][2][b][3] = aVal[t+3];
+
+                if (((aVal.length-1) > t+4) && (aVal[t] != aVal[t+4])) {
+                      ++a;
+                      b = 0;
+                } else {
+                      ++b;
+                }
+
+                t += 4;
+
+         }
+
+          //--- ITENS ---
+
+          for (i = 0; i < nTamI; i++) {
+                for (l = 0; l < aXVal.length; l++) {
+                     var lValor  = false;
+                     var lXValor = false;
+                     for (m = 0; m < aXVal[l][2].length; m++){
+                             if (xItem[i].campo() == aXVal[l][2][m][1]) {
+                                     if(aXVal[l][2][m][0]) {
+                                            lValor = aXVal[l][2][m][0];
+                                     } else if(aXVal[l][2][m][2] == '==') {
+                                            lValor = (xItem[i].valor() == aXVal[l][2][m][3]);  
+                                     } else if(aXVal[l][2][m][2] == '>=') {
+                                            lValor = (xItem[i].valor() >= aXVal[l][2][m][3]);  
+                                     } else if(aXVal[l][2][m][2] == '<=') {
+                                            lValor = (xItem[i].valor() <= aXVal[l][2][m][3]);  
+                                     } else if(aXVal[l][2][m][2] == '>') {
+                                            lValor = (xItem[i].valor() > aXVal[l][2][m][3]);  
+                                     } else if(aXVal[l][2][m][2] == '<') {
+                                            lValor = (xItem[i].valor() < aXVal[l][2][m][3]);  
+                                     } else if(aXVal[l][2][m][2] == '!=') {
+                                            lValor = (xItem[i].valor() != aXVal[l][2][m][3]);  
+                                     }
+
+                                     if(lValor){
+                                           aXVal[l][2][m][0] = lValor;
+                                     }
+
+                             }
+
+                        }/*for m*/
+                }/*for l*/
+          }/*for i*/
+
+          //--- CABECALHO ---
+
+          for (h = 0; h < nTamH; h++) {
+                  var nTamI    = vm.aDados().xconteudo()[h].xcampos().length;
+                  for (i = 0; i < nTamI; i++) {
+                          var nTamJ    = vm.aDados().xconteudo()[h].xcampos()[i].xlinha().length;
+                          for (j = 0; j < nTamJ; j++) {
+                                  for (l = 0; l < aXVal.length; l++) {
+                                         var lValor  = false;
+                                         var lXValor = false;
+                                         for (m = 0; m < aXVal[l][2].length; m++){
+                                                   if (vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].campo() == aXVal[l][2][m][1]) {
+                                                           if(aXVal[l][2][m][0]) {
+                                                                   lValor = aXVal[l][2][m][0];
+                                                           } else if(aXVal[l][2][m][2] == '==') {
+                                                                   lValor = (vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].valor() == aXVal[l][2][m][3]);  
+                                                           } else if(aXVal[l][2][m][2] == '>=') {
+                                                                   lValor = (vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].valor() >= aXVal[l][2][m][3]);  
+                                                           } else if(aXVal[l][2][m][2] == '<=') {
+                                                                   lValor = (vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].valor() <= aXVal[l][2][m][3]);  
+                                                           } else if(aXVal[l][2][m][2] == '>') {
+                                                                   lValor = (vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].valor() > aXVal[l][2][m][3]);  
+                                                           } else if(aXVal[l][2][m][2] == '<') {
+                                                                   lValor = (vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].valor() < aXVal[l][2][m][3]);  
+                                                           } else if(aXVal[l][2][m][2] == '!=') {
+                                                                   lValor = (vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].valor() != aXVal[l][2][m][3]);  
+                                                           }
+
+                                                           if(lValor){
+                                                                     aXVal[l][2][m][0] = lValor;
+                                                            }
+
+                                                   }
+ 
+                                          }/*for m*/
+                                 }/*for l*/
+                        }/*for j*/
+                }/*for i*/
+        }/*for h*/
+
+         for (l = 0; l < aXVal.length; l++) {
+              var lXValor = false;
+              for (m = 0; m < aXVal[l][2].length; m++){
+                    if(m == 0){
+                            lXValor = aXVal[l][2][m][0];
+                    } else {
+                            lXValor = lXValor && aXVal[l][2][m][0];
+                    }
+                   //console.log(l+' | '+m+' | '+aXVal[l][2][m][0]+' | '+lXValor);
+             }/*for m*/
+
+             if(lXValor){
+                   return(null);
+             }
+       }/*for l*/
+
+       return(true);
+   }
+
+
+    self.incluiritem = function(data,geral) {
+        //console.log(geral);
+        //console.log(ko.toJSON(data)); //Dados do icone de status
+        //console.log(geral.currentTarget.attributes.itemid.value);
+        var nItem   = geral.currentTarget.attributes.itemid.value;
+        var lBreak  = false;
+        var nTamH   = self.aDados().xconteudo().length;
+        var lObriga = false;  //verifica obrigatorios vazios
+        var nP      = -1;     //posicao do item da grid selecionada
+
+        //console.log('nItem: ' + nItem);
+        for (h = 0; h < nTamH; h++) {
+
+            var aItens      = self.aDados().xconteudo()[h].xitens();
+            var aTitItem  = self.aDados().xconteudo()[h].xtititem();
+            var nTamI     = aItens.length;
+
+            for (i = 0; i < nTamI; i++) {
+
+                //console.log('aItens[i].xitemid(): ' + aItens[i].xitemid());
+                //console.log(aItens[i].xitemid() == nItem);
+                if (aItens[i].xitemid() == nItem) {
+                    nP = i; //localizada o item de determinada grid
+                }
+
+                var aCampos = aItens[i].xitem();
+                var nTamJ   = aCampos.length;
+
+                for (j = 0; j < nTamJ; j++) {
+                    if  ((aCampos[j].config().substr(2,1) == '1') && ((aCampos[j].valor().trim() == '') || (aCampos[j].valor().trim() == '0'))) {
+                        alert('Campo ' + aTitItem[j+1].titulo() + ' \xE9 obrigat\xF3rio e est\xE1 vazio!');
+                        lObriga = true;
+                        break;
+                    }
+                }
+
+                if  ( lObriga ) { break }
+
+             }/*for i*/
+
+             if  ( lObriga ) { break }
+
+             if  (nP > -1) {
+                 //console.log('Achou - ' + self.aDados().xconteudo()[h].xitens()[nP].xitemid());
+
+                 var cJSon     = ko.toJSON(self.aDados().xconteudo()[h].xitemvazio)
+                 var itemvazio = ko.mapping.fromJSON(cJSon);
+                 var nID       = parseInt(self.aDados().xconteudo()[h].xitens()[nTamI-1].xitem()[1].valor())+1;
+                 var ordem     = '00' + nID;
+
+                 ordem = ordem.substring(ordem.length-3,ordem.length); 
+
+                 self.aDados().xconteudo()[h].xitens.push(itemvazio);
+                 self.aDados().xconteudo()[h].xitens()[nTamI].xitemid(nID);
+                 self.aDados().xconteudo()[h].xitens()[nTamI].xitem()[1].valor(ordem);
+
+                 //console.log('id: ' + self.aDados().xconteudo()[h].xitens()[nTamI].xitemid());
+                 break;
+            }
+
+        }/*for h*/
+
+    }
+
+    self.excluiritem = function(data,geral) {
+
+        var nItem  = geral.currentTarget.attributes.itemid.value;
+        var lBreak = false;
+             var nTamH  = self.aDados().xconteudo().length;
+ 
+             for (h = 0; h < nTamH; h++) {
+                 var nTamI    = self.aDados().xconteudo()[h].xitens().length;
+                 for (i = 0; i < nTamI; i++) {
+                     if (self.aDados().xconteudo()[h].xitens()[i].xitemid() == nItem) {
+                        //console.log('Achou - ' + self.aDados().xconteudo()[h].xitens()[i].xitemid());
+
+                        if (self.aDados().xconteudo()[h].xitens()[i].xitemsts() == 8) {
+                             //Excluido logicamente
+                             if( confirm('Confirme a exclusao deste item?') ) {
+                                  self.aDados().xconteudo()[h].xitens()[i].xitemsts(9);
+                             } 
+                        } else if (self.aDados().xconteudo()[h].xitens()[i].xitemsts() == 9) {
+                             //Excluido logicamente
+                             if( confirm('Confirme a recuperacao deste item?') ) {
+                                  self.aDados().xconteudo()[h].xitens()[i].xitemsts(8);
+                             } 
+                        } else {
+                            //Excluido fisicamente
+                            self.aDados().xconteudo()[h].xitens.remove( function (item) { return item.xitemid() == nItem; } )
+                        }
+
+                        lBreak = true;
+                        break;
+ }
+                 }/*for i*/
+                 if (lBreak) { break }
+             }/*for h*/
+
+    }
+
+    self.filteredItens = function(itens) {
+        //console.log(itens);
+        //console.log(itens());
+        return ko.utils.arrayFilter(itens(), function(item) {
+              return (item.xitemsts() < 9);
+        });
+    };
+
+    self.totalItens = function(itens) {
+        //console.log(itens);
+        //console.log(itens());
+        var nItens = 0;
+        var nTamI  = itens().length;
+
+        for (i = 0; i < nTamI; i++) {
+            if (itens()[i].xitemsts() < 9) {
+                ++nItens;
+            }
+        }
+
+        return nItens;
+
+    };
+
+}
+
+vm = new ViewModel();
+
+ko.applyBindings(vm);
+
+// Executa a obtencao dos dados para o bind:with
+vm.obterCadastro();
+
+//------------ Ajax
+$(document).ajaxComplete(function(){
+
+    DivGeral.style.visibility = "visible";
+
+    $(function () {
+
+ //------------------------ GATILHOS ------------------------------
+      $('.xgatilho').change(function (event) {
+             //alert('mudou!');
+             console.log(event);
+             if (event.originalEvent) { //user changed
+                  //alert('mudou 1'); 
+             } else { // program changed
+                  //alert('mudou 2!');
+             }
+             var meuID      = event.currentTarget.id;
+             var meuValor   = event.currentTarget.value;
+             var meuAlvo    = event.currentTarget.attributes.xcampo.value;
+             var meuAlvoID  = event.currentTarget.attributes.xalvo.value;
+             var meuRevela  = event.currentTarget.attributes.xrevela.value;
+             var lBreak     = false;
+
+ //------------------------ GATILHO LINHA ------------------------------
+  //vm.aDados().xconteudo()[h].campos()[i].xlinha()[j].opcoes(xJSon);
+
+         if (meuRevela == '1') {    
+                vm.aLinhas.remove( function (item) { return item.id == meuID; } )
+  
+                 vm.aLinhas.push({id: meuID, valor: meuValor});  //Adiciona o elemento e o valor esperado
+  
+                 //var nTam    = vm.aLinhas().length;
+  
+                 //for (i = 0; i < nTam; i++) {
+                //     alert('Valores: id: ' + vm.aLinhas()[i].id + ' - valor: ' + vm.aLinhas()[i].valor);
+               //}
+         }
+  
+ //------------------------ GATILHO CONSULTA ------------------------------
+         if (meuAlvo != 'ok') {    
+            //alert('Meu id: ' + meuID + ' - meu valor: ' + meuValor + ' - meu alvo: ' + meuAlvo);
+
+            var nTamH    = vm.aDados().xconteudo().length;
+
+            for (h = 0; h < nTamH; h++) {
+
+                var nTamI    = vm.aDados().xconteudo()[h].xcampos().length;
+
+                for (i = 0; i < nTamI; i++) {
+
+                    var nTamJ    = vm.aDados().xconteudo()[h].xcampos()[i].xlinha().length;
+
+                    for (j = 0; j < nTamJ; j++) {
+                        //alert(vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].campo());
+                        if(vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].campo() == meuAlvo) {
+                             //console.log('encontrou: ' + vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].campo());
+
+                             //Tenho que salvar nestas variaveis pois antes do result, ele processa o for ate o final, mudando as variaveis e gerando erro.
+                             var nH = h;
+                             var nI = i;
+                             var nJ = j;
+
+                             //var xJSon = [{"id": "01","name": "Teste01"},{"id": "02","name": "Teste02"},{"id": "03","name": "Teste03"}];
+                             //vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].option(xJSon);
+
+                             jQuery.ajax("consulta_combo", {
+                             data: ko.toJSON( { login: vm.cLogin, sessao: vm.cSessao, alvoid: meuAlvoID, valororigem:  meuValor }),
+                                                type: "post",   
+                                                contentType: "application/json",
+                                                success: function(result) {
+                                                         vm.aDados().xconteudo()[nH].xcampos()[nI].xlinha()[nJ].option(result);
+                                              }
+                             });
+
+                             //lBreak = true;
+                             //break;
+                         }
+
+                    }/*for j*/
+                    if (lBreak) { break }
+                }/*for i*/
+                if (lBreak) { break }
+           }/*for h*/
+
+           $(this).unbind('change'); //Resolve problema de multi chamada no click do combobox.
+
+        }
+
+    }); //$('.xgatilho').change()
+
+   }); //$(function ()
+
+   //Inicializa vm.aLinhas() para que a tela apareca corretamente
+   var nTamH = vm.aDados().xconteudo().length;
+
+   for (h = 0; h < nTamH; h++) {
+       var nTamI    = vm.aDados().xconteudo()[h].xcampos().length;
+       for (i = 0; i < nTamI; i++) {
+           var nTamJ    = vm.aDados().xconteudo()[h].xcampos()[i].xlinha().length;
+           for (j = 0; j < nTamJ; j++) {
+               //alert(vm.aDados().xconteudo[h].xcampos[i].xlinha[j].campo);
+               if(vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].config().substr(2,1) == '1') {
+                    //Adiciona o elemento e o valor inicial
+                    vm.aLinhas.push({id: vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].campo(), 
+                    valor: vm.aDados().xconteudo()[h].xcampos()[i].xlinha()[j].valor()});  
+               }
+           }/*for j*/
+       }/*for i*/
+    }/*for h*/
+
+}); //$(document).ajaxComplete()
+
+</script>
+
+</body>
+</html>

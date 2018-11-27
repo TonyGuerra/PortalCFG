@@ -63,7 +63,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap arrow_grey_down_png {
+        public static System.Drawing.Bitmap arrow_grey_down_png {
             get {
                 object obj = ResourceManager.GetObject("arrow_grey_down_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +73,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap arrow_grey_right_png {
+        public static System.Drawing.Bitmap arrow_grey_right_png {
             get {
                 object obj = ResourceManager.GetObject("arrow_grey_right_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -95,7 +95,7 @@ namespace Recursos {
         ///&lt;/body&gt;
         ///&lt;/html&gt;.
         /// </summary>
-        internal static string autentica_login {
+        public static string autentica_login {
             get {
                 return ResourceManager.GetString("autentica_login", resourceCulture);
             }
@@ -104,7 +104,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap bg_grey_png {
+        public static System.Drawing.Bitmap bg_grey_png {
             get {
                 object obj = ResourceManager.GetObject("bg_grey_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -114,7 +114,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap estrutura_png {
+        public static System.Drawing.Bitmap estrutura_png {
             get {
                 object obj = ResourceManager.GetObject("estrutura_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -144,7 +144,7 @@ namespace Recursos {
         ///
         ///    &lt;table widt [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string Login {
+        public static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
             }
@@ -172,7 +172,7 @@ namespace Recursos {
         ///		function fShowMenu() {
         ///		   parent.DATA.showMe [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string menutree_cabecalho {
+        public static string menutree_cabecalho {
             get {
                 return ResourceManager.GetString("menutree_cabecalho", resourceCulture);
             }
@@ -196,7 +196,7 @@ namespace Recursos {
         ///		$(document).ready(function($){
         ///			$(&apos;#acc [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string menutree_esquerdo {
+        public static string menutree_esquerdo {
             get {
                 return ResourceManager.GetString("menutree_esquerdo", resourceCulture);
             }
@@ -220,7 +220,7 @@ namespace Recursos {
         ///&lt;tr style=&quot;vertical-align:top&quot;&gt;
         ///&lt;td styl [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string menutree_explicativo {
+        public static string menutree_explicativo {
             get {
                 return ResourceManager.GetString("menutree_explicativo", resourceCulture);
             }
@@ -248,7 +248,7 @@ namespace Recursos {
         ///		 
         ///		 var DAT [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string menutree_principal {
+        public static string menutree_principal {
             get {
                 return ResourceManager.GetString("menutree_principal", resourceCulture);
             }
@@ -265,11 +265,11 @@ namespace Recursos {
         ///    &lt;meta charset=&apos;UTF-8&apos;&gt;
         ///    &lt;title&gt;PortalCFG&lt;/title&gt;
         ///    &lt;script type=&quot;text/javascript&quot; src=&quot;json2.js&quot;&gt;&lt;/script&gt;
+        ///	&lt;script type=&quot;text/javascript&quot; src=&quot;knockout-debug.js&quot;&gt;&lt;/script&gt;
         ///    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
-        ///    &lt;script type=&apos;text/javascript&apos; src=&apos;knockout.js&apos;&gt;&lt;/script&gt;
-        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;kno [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///    &lt;script type=&quot;text/javascript&quot; src=&quot; [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string pagina_browser {
+        public static string pagina_browser {
             get {
                 return ResourceManager.GetString("pagina_browser", resourceCulture);
             }
@@ -278,7 +278,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap permissao_png {
+        public static System.Drawing.Bitmap permissao_png {
             get {
                 object obj = ResourceManager.GetObject("permissao_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -288,7 +288,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_edit_gif {
+        public static System.Drawing.Bitmap portal_edit_gif {
             get {
                 object obj = ResourceManager.GetObject("portal_edit_gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -298,7 +298,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_led_amarelo_png {
+        public static System.Drawing.Bitmap portal_led_amarelo_png {
             get {
                 object obj = ResourceManager.GetObject("portal_led_amarelo_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -308,7 +308,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_led_azul_png {
+        public static System.Drawing.Bitmap portal_led_azul_png {
             get {
                 object obj = ResourceManager.GetObject("portal_led_azul_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -318,7 +318,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_led_bege_png {
+        public static System.Drawing.Bitmap portal_led_bege_png {
             get {
                 object obj = ResourceManager.GetObject("portal_led_bege_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -328,7 +328,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_led_laranja_png {
+        public static System.Drawing.Bitmap portal_led_laranja_png {
             get {
                 object obj = ResourceManager.GetObject("portal_led_laranja_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -338,7 +338,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_led_marrom_png {
+        public static System.Drawing.Bitmap portal_led_marrom_png {
             get {
                 object obj = ResourceManager.GetObject("portal_led_marrom_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -348,7 +348,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_led_preto_png {
+        public static System.Drawing.Bitmap portal_led_preto_png {
             get {
                 object obj = ResourceManager.GetObject("portal_led_preto_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -358,7 +358,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_led_roxo_png {
+        public static System.Drawing.Bitmap portal_led_roxo_png {
             get {
                 object obj = ResourceManager.GetObject("portal_led_roxo_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -368,7 +368,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_led_verde_png {
+        public static System.Drawing.Bitmap portal_led_verde_png {
             get {
                 object obj = ResourceManager.GetObject("portal_led_verde_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -378,7 +378,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_led_vermelho_png {
+        public static System.Drawing.Bitmap portal_led_vermelho_png {
             get {
                 object obj = ResourceManager.GetObject("portal_led_vermelho_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -388,7 +388,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_mais_gif {
+        public static System.Drawing.Bitmap portal_mais_gif {
             get {
                 object obj = ResourceManager.GetObject("portal_mais_gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -398,7 +398,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_menos_gif {
+        public static System.Drawing.Bitmap portal_menos_gif {
             get {
                 object obj = ResourceManager.GetObject("portal_menos_gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -408,10 +408,30 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap portal_visualizar_gif {
+        public static System.Drawing.Bitmap portal_visualizar_gif {
             get {
                 object obj = ResourceManager.GetObject("portal_visualizar_gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///&lt;head&gt;
+        ///    &lt;title&gt;PORTALCFG&lt;/title&gt;
+        ///    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        ///    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=ISO-8859-1&quot;&gt;
+        ///    &lt;link rel=&quot;stylesheet&quot; href=&quot;all.css&quot;&gt;
+        ///    &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;
+        ///    &lt;link rel=&quot;stylesheet&quot; href=&quot;bootstrap.min.css&quot;&gt;
+        ///    &lt;link rel=&quot;stylesheet&quot; href=&quot;bootstrap-datepicker.css&quot;&gt;
+        ///    &lt;link rel=&quot;stylesheet&quot; href=&quot;loading.css&quot;&gt;
+        ///    &lt;link rel=&quot;stylesheet&quot; href=&quot;PortalCFG.c [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string tabelas_cadastro {
+            get {
+                return ResourceManager.GetString("tabelas_cadastro", resourceCulture);
             }
         }
         
@@ -433,7 +453,7 @@ namespace Recursos {
         ///				var element = elements[i];
         ///				var name = element.id;  //Obtem pelo id, retirar a pro [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string tabelas_filtro {
+        public static string tabelas_filtro {
             get {
                 return ResourceManager.GetString("tabelas_filtro", resourceCulture);
             }
@@ -442,7 +462,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap topo_fundo_png {
+        public static System.Drawing.Bitmap topo_fundo_png {
             get {
                 object obj = ResourceManager.GetObject("topo_fundo_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -452,7 +472,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap topo_logo_png {
+        public static System.Drawing.Bitmap topo_logo_png {
             get {
                 object obj = ResourceManager.GetObject("topo_logo_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -462,7 +482,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap topo1_fundo_gif {
+        public static System.Drawing.Bitmap topo1_fundo_gif {
             get {
                 object obj = ResourceManager.GetObject("topo1_fundo_gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -472,7 +492,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tree_pagina_gif {
+        public static System.Drawing.Bitmap tree_pagina_gif {
             get {
                 object obj = ResourceManager.GetObject("tree_pagina_gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -482,7 +502,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tree_pasta_aberta_gif {
+        public static System.Drawing.Bitmap tree_pasta_aberta_gif {
             get {
                 object obj = ResourceManager.GetObject("tree_pasta_aberta_gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -492,7 +512,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tree_pasta_fechada_gif {
+        public static System.Drawing.Bitmap tree_pasta_fechada_gif {
             get {
                 object obj = ResourceManager.GetObject("tree_pasta_fechada_gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -502,7 +522,7 @@ namespace Recursos {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ui_bg_highlight_soft_75_azul_1x100_png {
+        public static System.Drawing.Bitmap ui_bg_highlight_soft_75_azul_1x100_png {
             get {
                 object obj = ResourceManager.GetObject("ui_bg_highlight_soft_75_azul_1x100_png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
