@@ -15,8 +15,9 @@ namespace Recursos
 {
     public class Distribuidor
     {
-        public static string Pagina(HttpListenerRequest request, string cDataBase, string cRaiz)
+        public static string Pagina(HttpListenerRequest request, string cDataBaseCFG, string cDataBase)
         {
+            DBConnect MeuDBP = new DBConnect(cDataBaseCFG);  //fixo
             DBConnect MeuDB = new DBConnect(cDataBase);
             ArtLib MeuLib = new ArtLib();
             Browser MeuBrowser = new Browser();
@@ -28,9 +29,11 @@ namespace Recursos
             string[] MeuPath = request.Url.LocalPath.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
             string cMeuPath = MeuPath[MeuPath.Length - 1];
 
-            //LogFile.Log(MeuPath[MeuPath.Length-1]);
-
-            LogFile.Log(string.Format(" --- Distribuidor - {0}", DateTime.Now.ToString("dd-MM-yyyy h:mm:ss tt")));
+            if (!cMeuPath.Contains(".css") && !cMeuPath.Contains(".js"))
+            {
+                LogFile.Log(string.Format(" --- Distribuidor - {0} - {1}", DateTime.Now.ToString("dd-MM-yyyy h:mm:ss tt"), cMeuPath));
+            }
+                
 
             do
             {
@@ -64,15 +67,15 @@ namespace Recursos
 
                 if (cMeuPath.Contains(".css"))
                 {
-                    LogFile.Log(" .");
                     cMeuPath = cMeuPath.Replace(".", "_");
                     cMeuPath = cMeuPath.Replace("-", "_");
                     //cMeuPath = cMeuPath.ToLower();
-                    LogFile.Log(cMeuPath);
-                    LogFile.Log(" .");
+                    //LogFile.Log(cMeuPath);
+                    //LogFile.Log(" .");
 
                     if (Resource_CSS.ResourceManager.GetObject(cMeuPath) == null)
                     {
+                        LogFile.Log(" .");
                         LogFile.Log(" CSS nao encontrado! - " + cMeuPath);
                         break;
                     }
@@ -81,20 +84,21 @@ namespace Recursos
 
                     if (cHtml.Length <= 0)
                     {
+                        LogFile.Log(" .");
                         LogFile.Log(" CSS nao encontrado! - " + cMeuPath);
                         break;
                     }
                 }
                 else if (cMeuPath.Contains(".js"))
                 {
-                    LogFile.Log(" .");
                     cMeuPath = cMeuPath.Replace(".", "_");
                     cMeuPath = cMeuPath.Replace("-", "_");
-                    LogFile.Log(cMeuPath);
-                    LogFile.Log(" .");
+                    //LogFile.Log(cMeuPath);
+                    //LogFile.Log(" .");
 
                     if (Resource_JS.ResourceManager.GetObject(cMeuPath) == null)
                     {
+                        LogFile.Log(" .");
                         LogFile.Log(" JavaScript nao encontrado! - " + cMeuPath);
                         break;
                     }
@@ -103,17 +107,14 @@ namespace Recursos
 
                     if (cHtml.Length <= 0)
                     {
+                        LogFile.Log(" .");
                         LogFile.Log(" JavaScript nao encontrado! - " + cMeuPath);
                         break;
                     }
                 }
                 else if (request.Url.LocalPath.Contains("/login"))
                 {
-                    LogFile.Log(" .");
-
                     cHtml = Resources.ResourceManager.GetObject("Login").ToString();
-
-                    LogFile.Log(" .");
                 }
                 else if ((cMeuPath == "valida_login") && !(String.IsNullOrEmpty(cDados)))
                 {
@@ -142,6 +143,10 @@ namespace Recursos
                 else if (cMeuPath == "tabelas_cadastro")
                 {
                     cHtml = MeuCadastro.Tabelas_Cadastro(request, MeuDB, MeuLib, cMeuPath, cDados);
+                }
+                else if (cMeuPath == "tabelas_obter")
+                {
+                    cHtml = MeuCadastro.Tabelas_Obter(request, MeuDBP, MeuDB, MeuLib, cMeuPath, cDados);
                 }
                 else if (Resources.ResourceManager.GetObject(cMeuPath) != null)
                 {
@@ -420,7 +425,7 @@ namespace Recursos
             string cQueryString = HttpUtility.UrlDecode(request.Url.Query);
             dynamic oLogin = serializer.Deserialize<dynamic>(cDados.Replace("dados=", ""));
 
-            LogFile.Log(" --- Generico:");
+            //LogFile.Log(" --- Generico:");
 
 
             if (!String.IsNullOrEmpty(cQueryString))
@@ -458,7 +463,7 @@ namespace Recursos
 
             } while (false);
 
-            LogFile.Log(" --- Fim Generico!");
+            //LogFile.Log(" --- Fim Generico!");
 
             return cHtml;
         }
@@ -469,10 +474,10 @@ namespace Recursos
 
             do
             {
-                LogFile.Log(" --- Cookies: ");
+                //LogFile.Log(" --- Cookies: ");
                 if  (request.Cookies.Count < 2)
                 {
-                    LogFile.Log(" sem Cookies!");
+                    //LogFile.Log(" sem Cookies!");
                 } else
                 {
                     LogFile.Log(request.Cookies[0].Name + " - " + request.Cookies[0].Value);
@@ -506,11 +511,15 @@ namespace Recursos
 
                 var diff = DateTime.Now.Subtract(dTempo);
 
-                LogFile.Log("Diferenca de tempo: " + String.Format("{0}:{1}:{2}", diff.Hours, diff.Minutes, diff.Seconds));
+                //LogFile.Log("Diferenca de tempo: " + String.Format("{0}:{1}:{2}", diff.Hours, diff.Minutes, diff.Seconds));
 
                 if ((diff.Hours > 0) || (diff.Minutes > 5))
                 {
+                    LogFile.Log(".");
                     LogFile.Log(string.Format("Check_Sessao: Sessao expirou! Login: {0}", cLogin));
+                    LogFile.Log(".");
+                    LogFile.Log("Diferenca de tempo: " + String.Format("{0}:{1}:{2}", diff.Hours, diff.Minutes, diff.Seconds));
+                    LogFile.Log(".");
                     break;
                 }
 

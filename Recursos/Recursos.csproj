@@ -55,7 +55,6 @@
     <Compile Include="LogFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Program.cs" />
-    <Compile Include="Recursos.cs" />
     <Compile Include="Resource_CSS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

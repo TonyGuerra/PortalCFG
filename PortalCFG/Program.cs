@@ -10,18 +10,14 @@ using Recursos;
 
 namespace PortalCFG
 {
-    public class WebServer
+    public class WebXServer
     {
         private readonly HttpListener _listener = new HttpListener();
         private readonly Func<HttpListenerRequest, string> _responderMethod;
 
         static bool ContainsLoop(string value)
         {
-            List<string> list = new List<string>();
-            list.Add(".gif");
-            list.Add(".jpeg");
-            list.Add(".jpg");
-            list.Add(".png");
+            List<string> list = new List<string> { ".gif", ".jpeg", ".jpg", ".png" };
 
             for (int i = 0; i < list.Count; i++)
             {
@@ -33,7 +29,7 @@ namespace PortalCFG
             return false;
         }
 
-        public WebServer(IReadOnlyCollection<string> prefixes, Func<HttpListenerRequest, string> method)
+        public WebXServer(IReadOnlyCollection<string> prefixes, Func<HttpListenerRequest, string> method)
         {
             if (!HttpListener.IsSupported)
             {
@@ -60,7 +56,7 @@ namespace PortalCFG
             _listener.Start();
         }
 
-        public WebServer(Func<HttpListenerRequest, string> method, params string[] prefixes)
+        public WebXServer(Func<HttpListenerRequest, string> method, params string[] prefixes)
            : this(prefixes, method)
         {
         }
@@ -73,10 +69,11 @@ namespace PortalCFG
                 LogFile.Log(" .");
                 LogFile.Log(" PortalCFG ");
                 LogFile.Log(" .");
-                LogFile.Log(" criado em 16/10/2018");
+                LogFile.Log(" criado em 16/10/2018 em C#");
+                LogFile.Log("        em 26/05/2015 em Lazarus");
                 LogFile.Log(" autor Antonio C Ferreira");
                 LogFile.Log(" .");
-                LogFile.Log(" Objetivo: pai dos portais de negócios.");
+                LogFile.Log(" Objetivo: Pai dos portais de negócio.");
                 LogFile.Log(" .");
                 LogFile.Log(" Portal executando...");
                 LogFile.Log(" .");
@@ -111,7 +108,7 @@ namespace PortalCFG
                                     cMensagem = " Metodo Stream: " + cNome;
                                     //cMensagem += " - " + ctx.Request.UrlReferrer.LocalPath;
 
-                                    LogFile.Log(cMensagem);
+                                    //LogFile.Log(cMensagem);
 
                                     System.Drawing.Bitmap input = ((System.Drawing.Bitmap)(Resources.ResourceManager.GetObject(cNome)));
                                     input.Save(ctx.Response.OutputStream, System.Drawing.Imaging.ImageFormat.Png);
@@ -123,7 +120,7 @@ namespace PortalCFG
                                     cMensagem = " Metodo String: " + cNome;
                                     //cMensagem += " - " + ctx.Request.UrlReferrer.LocalPath;
 
-                                    LogFile.Log(cMensagem);
+                                    //LogFile.Log(cMensagem);
 
                                     var rstr = _responderMethod(ctx.Request);
                                     var buf = Encoding.UTF8.GetBytes(rstr);
@@ -168,6 +165,7 @@ namespace PortalCFG
     {
         public static readonly string cPorta = "9000";
         public static readonly string cRaiz = "portalcfg";
+        public static readonly string cRaizCFG = "portalcfg";
 
         //static bool exitSystem = false;
 
@@ -208,9 +206,9 @@ namespace PortalCFG
 
         public static string SendResponse(HttpListenerRequest request)
         {
-            LogFile.Log(".");
+            //LogFile.Log(".");
             //LogFile.Log(request.Url);
-            LogFile.Log(request.Url.LocalPath);
+            //LogFile.Log(request.Url.LocalPath);
             //LogFile.Log(request.Url.AbsolutePath);
             //LogFile.Log(request.UrlReferrer.LocalPath);
             //LogFile.Log(request.Url.Query);
@@ -221,15 +219,15 @@ namespace PortalCFG
             //LogFile.Log(request.Headers);
             //LogFile.Log(request.ContentType);
             //LogFile.Log(request.Cookies);
-            LogFile.Log(".");
+            //LogFile.Log(".");
 
-            return Distribuidor.Pagina(request, cRaiz, cRaiz);
+            return Distribuidor.Pagina(request, cRaizCFG, cRaiz);
         }
 
         private static void Main(string[] args)
         {
             var URL = string.Format("http://localhost:{0}/{1}/", cPorta, cRaiz);
-            var ws = new WebServer(SendResponse, URL);
+            WebXServer ws = new WebXServer(SendResponse, URL);
             string cKey = "";
 
             // Some biolerplate to react to close window event, CTRL-C, kill, etc

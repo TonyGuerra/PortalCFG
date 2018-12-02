@@ -219,13 +219,13 @@ namespace PortalCFG
             //LogFile.Log(request.Cookies);
             LogFile.Log(".");
 
-            return Distribuidor.Pagina(request, "portalcfg", cRaiz);
+            return Distribuidor.Pagina(request, cRaiz);
         }
 
         private static void Main(string[] args)
         {
             var URL = string.Format("http://localhost:{0}/{1}/", cPorta, cRaiz);
-            var ws = new WebServer(SendResponse, URL);
+            WebServer ws = new WebServer(SendResponse, URL);
             string cKey = "";
 
             // Some biolerplate to react to close window event, CTRL-C, kill, etc
