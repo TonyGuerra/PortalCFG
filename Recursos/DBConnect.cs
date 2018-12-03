@@ -301,6 +301,247 @@ namespace Recursos
 
         }
 
+        public string FConsultaCombo(DBConnect MeuDB, string cTabela, int nCodConsulta, int nCmpConsulta, string cCondConsulta)
+        {
+
+            string cCmpOpcoes = "0=Nenhum";
+
+            do
+            {
+
+            //---------------------- Obtem o nome da tabela de consulta
+                string cQuery = string.Format("SELECT TABELA FROM aa40tabelas WHERE idSequencial = {0} ", cTabela);
+
+                List<string> campos = new List<string>(new string[] { "TABELA" });
+
+                MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
+
+                if ((list.Count < campos.Count) || (list["TABELA"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("DBConnect: FConsultaCombo: Problema para obter o nome da tabela! Tabela: {0}", cTabela));
+                    break;
+                }
+
+                string cNomeTabela = Convert.ToString(list["TABELA"].First());
+
+            //---------------------- Obtem a tabela de consulta
+                cQuery = string.Format("SELECT TABELA FROM aa40tabelas WHERE idSequencial = {0} ", nCodConsulta.ToString());
+
+                campos = new List<string>(new string[] { "TABELA" });
+
+                list = MeuDB.Select(cQuery, campos);
+
+                if ((list.Count < campos.Count) || (list["TABELA"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("DBConnect: FConsultaCombo: Problema para obter o nome da tabela da consulta! Tabela: {0}", cTabela));
+                    break;
+                }
+
+                string cTabConsulta = Convert.ToString(list["TABELA"].First());
+
+            //---------------------- Obtem o campo de consulta
+                cQuery = string.Format("SELECT CAMPO FROM aa41campos WHERE idSequencial = {0} ", nCmpConsulta.ToString());
+
+                campos = new List<string>(new string[] { "CAMPO" });
+
+                list = MeuDB.Select(cQuery, campos);
+
+                if ((list.Count < campos.Count) || (list["CAMPO"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("DBConnect: FConsultaCombo: Problema para obter o campo da tabela da consulta! Tabela: {0}", cTabela));
+                    break;
+                }
+
+                string cCmpConsulta = Convert.ToString(list["CAMPO"].First());
+
+            //---------------------- Monta os itens do combobox
+                cCondConsulta = (cCondConsulta.Trim() == "" ? "" : " And " + cCondConsulta);
+                cCondConsulta = cCondConsulta.Replace("|||XTABORIGEM|||", cTabela);
+                cCondConsulta = cCondConsulta.Replace("|||XNMTABORIGEM|||", cNomeTabela);
+
+                cQuery = string.Format("SELECT idSequencial, {0} FROM {1} WHERE idSequencial > 0 {2} Order by {3} ", cCmpConsulta, cTabConsulta, cCondConsulta, cCmpConsulta);
+
+                campos = new List<string>(new string[] { "idSequencial", cCmpConsulta });
+
+                list = MeuDB.Select(cQuery, campos);
+
+                if ((list.Count < campos.Count) || (list["idSequencial"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("DBConnect: FConsultaCombo: Problema para obter os dados da tabela da consulta! Tabela: {0}", cTabela));
+                    break;
+                }
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    cCmpOpcoes += list["idSequencial"].ElementAt(i) + "=" + list[cCmpConsulta].ElementAt(i);
+                }
+
+            } while (false);
+
+            return cCmpOpcoes;
+
+        }
+
+        public string FMacro(DBConnect MeuDB, string cMacro, string cTabela)
+        {
+            string[] aMacro = cMacro.Split('|');
+            string cRetorno = "0000000001";
+
+            do
+            {
+                if (aMacro[0] == "MAXIMO")  //MAXIMO|92 -> sequencial do campo
+                {
+
+                    string cQuery = string.Format("SELECT CAMPO, TAMANHO, (SELECT TABELA FROM aa40Tabelas WHERE idSequencial = aa41.id0aa40tabelas) AS TABELA FROM aa41campos aa41 WHERE idSequencial = {0} ", aMacro[1]);
+
+                    List<string> campos = new List<string>(new string[] { "TABELA", "CAMPO", "TAMANHO" });
+
+                    MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
+
+                    if ((list.Count < campos.Count) || (list["CAMPO"].Count <= 0)) { break; }
+
+                    string cCampo = list["CAMPO"].First();
+                    int nTamanho = Int32.Parse(list["TAMANHO"].First());
+
+                    cRetorno = "1".PadLeft(nTamanho, '0');
+
+                    cQuery = string.Format("SELECT MAX({0}) AS {1} FROM {2} ", cCampo, cCampo, list["TABELA"].First());
+
+                    campos = new List<string>(new string[] { cCampo });
+
+                    list = MeuDB.Select(cQuery, campos);
+
+                    if ((list.Count < campos.Count) || (list[cCampo].Count <= 0)) { break; }
+
+                    int nValor = Int32.Parse(list[cCampo].First()) + 1;
+
+                    cRetorno = nValor.ToString().PadLeft(nTamanho, '0');
+
+                }
+                else if (aMacro[0] == "ORDEM")
+                {
+
+                    cRetorno = "00010";
+
+                    string cQuery = string.Format("SELECT MAX(ORDEM) AS ORDEM FROM {0} WHERE id0aa40tabelas = {1} ", aMacro[1], cTabela);
+
+                    List<string> campos = new List<string>(new string[] { "ORDEM" });
+
+                    MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
+
+                    if ((list.Count < campos.Count) || (list["ORDEM"].Count <= 0)) { break; }
+
+                    int nOrdem = Int32.Parse(list["ORDEM"].First());
+
+                    nOrdem = (((nOrdem / 10) + 1) * 10);
+
+                    cRetorno = nOrdem.ToString().PadLeft(5, '0');
+
+                }
+                else if (aMacro[0] == "DATA")
+                {
+
+                    cRetorno = DateTime.Now.Date.ToString("dd/MM/yyyy");
+
+                }
+                else if (aMacro[0] == "HORA")
+                {
+
+                    cRetorno = DateTime.Now.ToString("HH:mm:ss");
+
+                }
+
+            } while (false);
+
+            return cRetorno;
+        }
+
+        public string FVerCheck(DBConnect MeuDB, string cNomeTabOrigem, string cCodigo, string cTabCheckBox, string cCmpCheckBox, string cCondCheckBox, string cDestCheckBox)
+        {
+
+            string cChecks = "";
+
+            do
+            {
+
+            //---------------------- Origem dos dados
+                string cQuery = string.Format("SELECT * FROM aa40tabelas WHERE idSequencial = {0} ", cTabCheckBox);
+                List<string> campos = new List<string>(new string[] { "TABELA" });
+                MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
+
+                if ((list.Count < campos.Count) || (list["TABELA"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("DBConnect: FConsultaCombo: Problema para obter o nome da tabela do checkbox! Tabela: {0}", cTabCheckBox));
+                    break;
+                }
+                string cNomeTabela = list["TABELA"].First();
+
+                cQuery = string.Format("SELECT * FROM aa41campos WHERE idSequencial = {0} ", cCmpCheckBox);
+                campos = new List<string>(new string[] { "CAMPO" });
+                list = MeuDB.Select(cQuery, campos);
+
+                if ((list.Count < campos.Count) || (list["CAMPO"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("DBConnect: FConsultaCombo: Problema para obter o campo da tabela do checkbox! Campo: {0}", cCmpCheckBox));
+                    break;
+                }
+                string cNomeCampo = list["CAMPO"].First();
+
+                if (!String.IsNullOrEmpty(cCondCheckBox))
+                {
+                    cCondCheckBox = (cCondCheckBox.Contains("WHERE") ? "" : " WHERE ") + cCondCheckBox;
+                }
+
+                cQuery = string.Format("SELECT idSequencial, {0} FROM {1} {2} ", cNomeCampo, cNomeTabela, cCondCheckBox);
+                campos = new List<string>(new string[] { cNomeCampo, "idSequencial" });
+                MultiValueDictionary<string, string> lsCheck = MeuDB.Select(cQuery, campos);
+
+                if ((lsCheck.Count < campos.Count) || (lsCheck["idSequencial"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("DBConnect: FConsultaCombo: Problema para obter os dados da tabela do checkbox! Tabela: {0}", cTabCheckBox));
+                    break;
+                }
+
+            //---------------------- Destino dos dados
+                cQuery = string.Format("SELECT TABELA FROM aa40tabelas WHERE idSequencial = {0} ", cDestCheckBox);
+                campos = new List<string>(new string[] { "TABELA" });
+                list = MeuDB.Select(cQuery, campos);
+
+                if ((list.Count < campos.Count) || (list["TABELA"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("DBConnect: FConsultaCombo: Problema para obter o nome da tabela destino! Tabela: {0}", cDestCheckBox));
+                    break;
+                }
+                string cNomeTabDestino = list["TABELA"].First();
+
+                string cIdCampo = "id0" + cNomeTabOrigem;
+                cQuery = string.Format("SELECT * FROM {0} WHERE {1} = {2} ", cNomeTabDestino, cIdCampo, cCodigo);
+                campos = new List<string>(new string[] { "TABELA" });
+                list = MeuDB.Select(cQuery, campos);
+
+                if ((list.Count < campos.Count) || (list["TABELA"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("DBConnect: FConsultaCombo: Problema para obter os dados da tabela destino! Tabela: {0}", cNomeTabDestino));
+                    break;
+                }
+
+            //---------------------- Monta os checks
+                
+                for (int i = 0; i < lsCheck.Count; i++)
+                {
+                    string cTem = (list.Contains(cIdCampo, lsCheck["idSequencial"].ElementAt(i)) ? "1" : "0");
+
+                    cChecks += (String.IsNullOrEmpty(cChecks) ? "" : ",") + "{" + 
+                                String.Format("\"idSequencial\" : {0}, \"descricao\" : \"{1}\"        , \"selecao\" : \"{2}\"} ", 
+                                              lsCheck["idSequencial"].ElementAt(i), lsCheck[cNomeCampo].ElementAt(i).Replace("\"","\x27"), cTem);
+                }
+
+            } while (false);
+
+            return cChecks;
+
+        }
+
         //Backup
         public void Backup()
         {

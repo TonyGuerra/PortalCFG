@@ -238,5 +238,22 @@ namespace Recursos
                 return cOpcao.Substring(nP + 1, cOpcao.Length - (nP+1));
             }
         }
+
+        public MultiValueDictionary<int, string> FMatriz(string cMatriz, char cSep1 = ';', char cSep2 = '=') //"0=Nenhum;1=Direita;2=Esquerda", ";", "="
+        {
+            MultiValueDictionary<int, string> aMatriz = new MultiValueDictionary<int, string>();
+
+            var aMatriz1 = cMatriz.Split(cSep1);
+            string[] aMatriz2 = { };
+
+            for (int i = 0; i < aMatriz1.Length; i++)
+            {
+                aMatriz2 = aMatriz1[i].Split(cSep2);
+                aMatriz.Add(i, aMatriz2[0]);
+                aMatriz.Add(i, aMatriz2[1]);
+            }
+
+            return aMatriz;
+        }
     }
 }
