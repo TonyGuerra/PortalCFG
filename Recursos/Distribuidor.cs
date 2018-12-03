@@ -456,10 +456,13 @@ namespace Recursos
                     break;
                 }
 
-                cHtml = Resources.ResourceManager.GetObject(cMeuPath).ToString();
+                if (!cMeuPath.Contains("_obter"))
+                {
+                    cHtml = Resources.ResourceManager.GetObject(cMeuPath).ToString();
 
-                cHtml = cHtml.Replace("!XLOGIN!", oLogin["login"]);
-                cHtml = cHtml.Replace("!XSESSAO!", oLogin["sessao"]);
+                    cHtml = cHtml.Replace("!XLOGIN!", oLogin["login"]);
+                    cHtml = cHtml.Replace("!XSESSAO!", oLogin["sessao"]);
+                }
 
             } while (false);
 

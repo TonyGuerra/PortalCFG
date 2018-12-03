@@ -523,13 +523,15 @@ function ViewModel() {
 
     self.aDados   = ko.observable();
 
-    self.cLogin             = '!XLOGIN!';
-    self.cSessao           = '!XSESSAO!';
-    self.cTabela           = '!XTABELA!';
-    self.cCodigo         = '!XCODIGO!';
+    self.cLogin       = '!XLOGIN!';
+    self.cSessao      = '!XSESSAO!';
+    self.cTabela      = '!XTABELA!';
+    self.cCodigo      = '!XCODIGO!';
     self.cTabOrigem   = '!XTABORIGEM!';
-    self.cOperacao     = '!XOPERACAO!';
-    self.aLinhas           = ko.observableArray([{id: "ok", valor: "ok"}]);
+    self.cOperacao    = '!XOPERACAO!';
+    self.aLinhas      = ko.observableArray([{id: "ok", valor: "ok"}]);
+	self.cFiltro      = '!XFILTRO!';
+
 
     // Comportamento    
 //        self.obterCadastro = function() {
@@ -538,7 +540,7 @@ function ViewModel() {
 
     self.obterCadastro = function () {
         jQuery.ajax("tabelas_obter", {
-            data: ko.toJSON( { login: self.cLogin, sessao: self.cSessao, tabela: self.cTabela, codigo: self.cCodigo, taborigem: self.cTabOrigem, operacao: self.cOperacao }),
+            data: ko.toJSON( { login: self.cLogin, sessao: self.cSessao, tabela: self.cTabela, codigo: self.cCodigo, taborigem: self.cTabOrigem, operacao: self.cOperacao, filtro: self.cFiltro}),
             type: "post",   
             contentType: "application/json",
             success: function(result) {

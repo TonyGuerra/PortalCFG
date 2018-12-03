@@ -222,9 +222,11 @@ namespace Recursos
                 string cCodigo = oLogin["codigo"];
                 string cOperacao = oLogin["operacao"];
                 string cFiltro = oLogin["filtro"];
+                string cTabItens = "0";
+                int nPastaItem = 0;
 
             //--------------- Dados da configuracao da tabela de itens
-                string cQuery = string.Format("SELECT * FROM aa48itens WHERE id0aa40tabelas = {0} ", cTabela);
+               string cQuery = string.Format("SELECT * FROM aa48itens WHERE id0aa40tabelas = {0} ", cTabela);
 
                 List<string> campos = new List<string>(new string[] { "id1aa40tabelas", "PASTA" });
 
@@ -232,21 +234,20 @@ namespace Recursos
 
                 if ((list.Count < campos.Count) || (list["PASTA"].Count <= 0))
                 {
-                    LogFile.Log(string.Format("Tabelas_Obter: Problema para obter os dados da tabela de itens! Tabela: {0}", cTabela));
-                    break;
-                }
+                    LogFile.Log(string.Format("Tabelas_Obter: Sem itens! Tabela: {0}", cTabela));
 
-                string cTabItens = Convert.ToString(list["id1aa40tabelas"].First());
-                int nPastaItem = Int32.Parse(list["PASTA"].First());
+                } else
+                {
+                    cTabItens = Convert.ToString(list["id1aa40tabelas"].First());
+                    nPastaItem = Int32.Parse(list["PASTA"].First());
+                }
 
             //--------------- Dados da configuracao da tabela do cabecalho
                 cQuery = string.Format("SELECT * FROM aa40tabelas WHERE idSequencial = {0} ", cTabela);
-
                 campos = new List<string>(new string[] { "TABELA", "PASTAS" });
-
                 list = MeuDB.Select(cQuery, campos);
 
-                if ((list.Count < campos.Count) || (list["PASTA"].Count <= 0))
+                if ((list.Count < campos.Count) || (list["TABELA"].Count <= 0))
                 {
                     LogFile.Log(string.Format("Tabelas_Obter: Problema para obter os dados da tabela de cabecalho! Tabela: {0}", cTabela));
                     break;
@@ -274,12 +275,12 @@ namespace Recursos
 
                 campos = new List<string>(new string[] { "CAMPO", "TITULO", "TIPO", "TAMANHO", "CASADECIMAL", "OPCOES", "OBRIGATORIO", "PASTA", "EDICAO", "ALTERACAO", "CONSULTATIPO",
                                                          "CONSULTACODIGO", "CONSULTACAMPO", "CONSULTACONDICAO", "CONSULTASEQ", "CONSULTABLK", "DESTINO", "POSICAO", "PADRAO",
-                                                         "REVELADOR", "REVELARCAMPO", "REVELARVALOR", "GATILHOTIPO", "GATILHOCAMPO", "ULTIMOVALOR", "OBRIGATORIO", "ALTURA",
-                                                         "CHARCASE"});
+                                                         "REVELADOR", "REVELARCAMPO", "REVELARVALOR", "GATILHOTIPO", "GATILHOCAMPO", "ULTIMOVALOR", "ALTURA", "CHARCASE", "TELA",
+                                                         "TIPOPADRAO", "COMENTARIO", "EDITCOND" });
 
                 MultiValueDictionary<string, string> lsCampos = MeuDBP.Select(cQuery, campos);
 
-                if ((lsCampos.Count < campos.Count) || (lsCampos["PASTA"].Count <= 0))
+                if ((lsCampos.Count < campos.Count) || (lsCampos["CAMPO"].Count <= 0))
                 {
                     LogFile.Log(string.Format("Tabelas_Obter: Problema para obter os campos da tabela! Tabela: {0}", cTabela));
                     break;
@@ -287,10 +288,9 @@ namespace Recursos
 
             //--------------- Dados da tabela 
                 cQuery = "SELECT * FROM " + cNomeTabela + " WHERE idSequencial = " + cCodigo;
-
                 campos = new List<string>(new string[] {});
 
-                for(int i=0; i < lsCampos.Count; i++) { campos.Add(lsCampos["CAMPO"].ElementAt(i)); }
+                for (int i=0; i < lsCampos["CAMPO"].Count; i++) { campos.Add(lsCampos["CAMPO"].ElementAt(i)); }
 
                 MultiValueDictionary<string, string>  lsDados = MeuDB.Select(cQuery, campos);
 
@@ -319,27 +319,22 @@ namespace Recursos
 
                 //--------------- CABEÇALHO
 
-                    cJSon += Tabelas_Obter_Cabecalho(MeuDB, lsCampos, lsDados, MeuLib, cTabOrigem, cOperacao, i);
+                    cJSon += Tabelas_Obter_Cabecalho(MeuDB, MeuLib, lsCampos, lsDados, cTabOrigem, cNomeTabela, cCodigo, cOperacao, i);
 
                     cJSon += "],";
                 }
 
+                LogFile.Log("cJSon:");
+                LogFile.Log(cJSon);
 
-                cHtml = cHtml.Replace("!XLOGIN!", oLogin["login"]);
-                cHtml = cHtml.Replace("!XSESSAO!", oLogin["sessao"]);
-                cHtml = cHtml.Replace("!XOPERACAO!", cOperacao);
-                cHtml = cHtml.Replace("!XTABELA!", cTabela);
-                cHtml = cHtml.Replace("!XNOMETABELA!", cNomeTabela);
-                cHtml = cHtml.Replace("!XTABORIGEM!", cTabOrigem);
-                cHtml = cHtml.Replace("!XCODIGO!", cCodigo);
-                cHtml = cHtml.Replace("!XFILTRO!", cFiltro);
+                cHtml = cJSon;
 
             } while (false);
 
             return cHtml;
         }
 
-        private string Tabelas_Obter_Cabecalho(DBConnect MeuDB, ArtLib MeuLib, MultiValueDictionary<string, string> lsCampos, MultiValueDictionary<string, string> lsDados, string cTabOrigem, string cNomeTabela, string cOperacao, int nPasta)
+        private string Tabelas_Obter_Cabecalho(DBConnect MeuDB, ArtLib MeuLib, MultiValueDictionary<string, string> lsCampos, MultiValueDictionary<string, string> lsDados, string cTabOrigem, string cNomeTabela, string cCodigo, string cOperacao, int nPasta)
         {
             int nSeq = 0;
             string cSeq = "";
@@ -347,7 +342,7 @@ namespace Recursos
             string cJSon = "";
             MultiValueDictionary<int,string> aValores = new MultiValueDictionary<int,string>();  //aValores.Add(0, "VALOR1"); aValores.Add(0, "VALOR2");
 
-            for (int i=0; i < lsCampos.Count; i++)
+            for (int i=0; i < lsCampos["PASTA"].Count; i++)
             {
                 //Se não for da pasta ignora
                 if((Int32.Parse(lsCampos["PASTA"].ElementAt(i)) != i)) { continue; }
@@ -403,7 +398,7 @@ namespace Recursos
                     }
                 }
 
-                Boolean lComboBox = String.IsNullOrEmpty(lsCampos["OPCOES"].ElementAt(i));
+                Boolean lComboBox = !( String.IsNullOrEmpty(lsCampos["OPCOES"].ElementAt(i)) );
 
                 if (lComboBox)
                 {
@@ -601,10 +596,10 @@ namespace Recursos
                 cValor = (String.IsNullOrEmpty(cValor) && !String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : cValor);
 
                 cJSon += String.Format("  \"sequencia\": {0}", nSeq.ToString());
-                cJSon += String.Format(", \"titulo\": \"{0}:\"", lsDados["TITULO"].ElementAt(i));
-                cJSon += String.Format(", \"titulo2\": \"{0}:\"", lsDados["COMENTARIO"].ElementAt(i));
+                cJSon += String.Format(", \"titulo\": \"{0}:\"", lsCampos["TITULO"].ElementAt(i));
+                cJSon += String.Format(", \"titulo2\": \"{0}:\"", lsCampos["COMENTARIO"].ElementAt(i));
                 cJSon += String.Format(", \"campo\": \"{0}\"", cCampo);
-                cJSon += String.Format(", \"tamanho\": \"{0}\"", lsDados["TAMANHO"].ElementAt(i));
+                cJSon += String.Format(", \"tamanho\": \"{0}\"", lsCampos["TAMANHO"].ElementAt(i));
                 cJSon += String.Format(", \"altura\": \"{0}\"", cCmpAltura);
                 cJSon += String.Format(", \"valor\": \"{0}\"", cValor);
                 cJSon += String.Format(", \"config\": \"{0}{1}{2}{3}{4}\"", cType, cSoLeitura, cCmpRevelador, cCmpObriga, cCmpCharCase);
@@ -631,13 +626,30 @@ namespace Recursos
                 {
                     cJSon += ", \"checks\"   : [";
 
-                    cJSon +=
+                    cJSon += MeuDB.FVerCheck(MeuDB, cNomeTabela, cCodigo, cTabCheckBox, cCmpCheckBox, cCondCheckBox, cDestCheckBox);
 
                     cJSon += " ]";
                 }
 
+                if (lCheckNum)
+                {
+                    cJSon += ", \"checks\"   : [";
 
-            }
+                    cJSon += MeuDB.FVerCheckNum(MeuDB, cNomeTabela, cCodigo, cTabCheckBox, cCmpCheckBox, cCmpSequencia, cCmpBloco, cCondCheckBox, cDestCheckBox);
+
+                    cJSon += " ]";
+                }
+
+                aValores.Add(i, "|X" + cCampo + "X|");  //Macro substituição de campos
+                aValores.Add(i, cValor);
+
+            } //for(i)(lsCampos)
+
+            cJSon = (String.IsNullOrEmpty(cJSon) ? "" : cJSon+"}] }");
+
+            cJSon = MeuLib.JSONAcento(cJSon);
+
+            cJSon = cJSon.Replace("\\x", "!!x");
 
             return cJSon;
         }
