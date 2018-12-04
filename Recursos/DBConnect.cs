@@ -373,7 +373,7 @@ namespace Recursos
 
                 for (int i = 0; i < list.Count; i++)
                 {
-                    cCmpOpcoes += list["idSequencial"].ElementAt(i) + "=" + list[cCmpConsulta].ElementAt(i);
+                    cCmpOpcoes += (String.IsNullOrEmpty(cCmpOpcoes) ? "" : ";") + list["idSequencial"].ElementAt(i) + "=" + list[cCmpConsulta].ElementAt(i);
                 }
 
             } while (false);

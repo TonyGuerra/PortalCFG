@@ -294,7 +294,7 @@ namespace Recursos
 
                 MultiValueDictionary<string, string>  lsDados = MeuDB.Select(cQuery, campos);
 
-                if ((lsDados.Count < campos.Count) || (lsDados[lsCampos["CAMPO"].ElementAt(0)].Count <= 0))
+                if ((lsDados.Count < campos.Count) || (lsDados[lsCampos["CAMPO"].First()].Count <= 0))
                 {
                     LogFile.Log(string.Format("Tabelas_Obter: Problema para obter os dados da tabela! Tabela: {0}", cTabela));
                     break;
@@ -310,12 +310,12 @@ namespace Recursos
                     if (i > 0) { cJSon += ","; }
 
                     cJSon += "{";
-                    cJSon += string.Format("\"xpasta\"   : \"tab{0}\","    , i.ToString());
+                    cJSon += string.Format("\"xpasta\"   : \"tab{0}\","    , (i+1).ToString());
                     cJSon += string.Format("\"xdisplay\" : \"display{0}\",", cDisplay);
 
                     cDisplay = "none";
 
-                    cJSon = "\"xcampos\" : [";
+                    cJSon += "\"xcampos\" : [";
 
                 //--------------- CABEÇALHO
 
@@ -342,10 +342,10 @@ namespace Recursos
             string cJSon = "";
             MultiValueDictionary<int,string> aValores = new MultiValueDictionary<int,string>();  //aValores.Add(0, "VALOR1"); aValores.Add(0, "VALOR2");
 
-            for (int i=0; i < lsCampos["PASTA"].Count; i++)
+            for (int i=0; i < lsCampos["CAMPO"].Count; i++)
             {
                 //Se não for da pasta ignora
-                if((Int32.Parse(lsCampos["PASTA"].ElementAt(i)) != i)) { continue; }
+                if((Int32.Parse(lsCampos["PASTA"].ElementAt(i)) != nPasta)) { continue; }
 
                 string cCampo          = lsCampos["CAMPO"].ElementAt(i);
                 string cCmpTipo        = lsCampos["TIPO"].ElementAt(i).Trim();
@@ -433,7 +433,7 @@ namespace Recursos
                     lCheckBox     = true;
                     cType         = "6";
 
-                    cValor        = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
+                    cValor        = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
 
                 } /* CHECKBOX */ else
 
@@ -441,7 +441,7 @@ namespace Recursos
                 {
                     cType = "7";
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0000000000000000000000"));
+                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0000000000000000000000"));
 
                 } /* PERIODO */ else
 
@@ -457,7 +457,7 @@ namespace Recursos
                     lCheckNum     = true;
                     cType         = "8";
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
+                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
 
                 } /* CHECKNUM */ else
 
@@ -468,7 +468,7 @@ namespace Recursos
                         aOpcoes = MeuLib.FMatriz(cCmpOpcoes);
                         cType = "2";
 
-                        cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
+                        cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
 
                     } /* SELECT */
 
@@ -477,7 +477,7 @@ namespace Recursos
                         int nPos = "12345679".IndexOf(cCmpEdicao);
                         cType = "11111149".Substring(nPos, 1);
 
-                        cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : cCmpValPadrao);
+                        cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
 
                     } /* TEXT/PASSWORD/HIDDEN */
 
@@ -487,7 +487,7 @@ namespace Recursos
                 {
                     cType = "3";
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : cCmpValPadrao);
+                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
                                        
                 } /* MEMO */ else
 
@@ -497,7 +497,7 @@ namespace Recursos
 
                     cCmpValPadrao = (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "  /  /    ");
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : cCmpValPadrao);
+                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
 
                 } /* DATA */ else
 
@@ -507,7 +507,7 @@ namespace Recursos
 
                     cCmpValPadrao = (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "  :  ");
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : cCmpValPadrao);
+                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
 
                 } /* HORA */ else
 
@@ -515,7 +515,7 @@ namespace Recursos
                 {
                     cType = "1";
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao.Trim() : "0"));
+                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao.Trim() : "0"));
 
                 } /* NUMERICO */
 
@@ -616,7 +616,9 @@ namespace Recursos
                     {
                         if (j > 0) { cJSon += ","; }
 
-                        cJSon += " {" + String.Format("\"id\": \"{0}\", \"name\": \"{1}\"}", aOpcoes[j].ElementAt(0), aOpcoes[j].ElementAt(1));
+                        cJSon += " {";
+                        cJSon += String.Format("\"id\": \"{0}\", \"name\": \"{1}\"", aOpcoes[j].ElementAt(0), aOpcoes[j].ElementAt(1));
+                        cJSon += "}";
                     }
 
                     cJSon += " ]";
