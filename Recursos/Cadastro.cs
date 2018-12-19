@@ -162,10 +162,18 @@ namespace Recursos
                     {
                         for (int i = 0; i < aTabPastas.Length; i++)
                         {
-                            cJSPastas += string.Format("self.items.push(new ItemViewModel(\"{0}\"));", aTabPastas[i]);
+                            //Acento no formato JSon: 0=Configuração =>> eval("'0=Configura!!xE7!!xE3o'".replace(/!!x/g,'\\x'))
+                            cJSPastas += string.Format("self.items.push(new ItemViewModel(eval(\"'{0}'\".replace(/!!x/g,'\\\\x'))));", aTabPastas[i]);
                         }
                     }
                 }
+
+                //LogFile.Log(" --- cJSPastas:");
+                //LogFile.Log(cJSPastas);
+
+                cJSPastas = MeuLib.JSONAcento(cJSPastas);
+
+                //LogFile.Log(cJSPastas);
 
                 cHtml = cHtml.Replace("!XLOGIN!"        , oLogin["login"]);
                 cHtml = cHtml.Replace("!XSESSAO!"       , oLogin["sessao"]);
@@ -226,10 +234,8 @@ namespace Recursos
                 int nPastaItem = 0;
 
             //--------------- Dados da configuracao da tabela de itens
-               string cQuery = string.Format("SELECT * FROM aa48itens WHERE id0aa40tabelas = {0} ", cTabela);
-
+                string cQuery = string.Format("SELECT * FROM aa48itens WHERE id0aa40tabelas = {0} ", cTabela);
                 List<string> campos = new List<string>(new string[] { "id1aa40tabelas", "PASTA" });
-
                 MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
 
                 if ((list.Count < campos.Count) || (list["PASTA"].Count <= 0))
@@ -270,14 +276,12 @@ namespace Recursos
                 //0=Dados;1=Funcoes
                 var aPastas = cPastas.Split(';');
 
-            //--------------- Campos da tabela
+            //--------------- Campos da tabela Cabeçalho
                 cQuery = "SELECT * FROM aa41campos WHERE id0aa40tabelas = " + cTabela + " ORDER BY ORDEM ";
-
                 campos = new List<string>(new string[] { "CAMPO", "TITULO", "TIPO", "TAMANHO", "CASADECIMAL", "OPCOES", "OBRIGATORIO", "PASTA", "EDICAO", "ALTERACAO", "CONSULTATIPO",
                                                          "CONSULTACODIGO", "CONSULTACAMPO", "CONSULTACONDICAO", "CONSULTASEQ", "CONSULTABLK", "DESTINO", "POSICAO", "PADRAO",
                                                          "REVELADOR", "REVELARCAMPO", "REVELARVALOR", "GATILHOTIPO", "GATILHOCAMPO", "ULTIMOVALOR", "ALTURA", "CHARCASE", "TELA",
                                                          "TIPOPADRAO", "COMENTARIO", "EDITCOND" });
-
                 MultiValueDictionary<string, string> lsCampos = MeuDBP.Select(cQuery, campos);
 
                 if ((lsCampos.Count < campos.Count) || (lsCampos["CAMPO"].Count <= 0))
@@ -286,12 +290,10 @@ namespace Recursos
                     break;
                 }
 
-            //--------------- Dados da tabela 
+            //--------------- Dados da tabela Cabeçalho
                 cQuery = "SELECT * FROM " + cNomeTabela + " WHERE idSequencial = " + cCodigo;
                 campos = new List<string>(new string[] {});
-
-                for (int i=0; i < lsCampos["CAMPO"].Count; i++) { campos.Add(lsCampos["CAMPO"].ElementAt(i)); }
-
+                for (int i=0; i < lsCampos["CAMPO"].Count; i++) { campos.Add(lsCampos["CAMPO"].ElementAt(i)); }  //Campos do Cabeçalho
                 MultiValueDictionary<string, string>  lsDados = MeuDB.Select(cQuery, campos);
 
                 if ((lsDados.Count < campos.Count) || (lsDados[lsCampos["CAMPO"].First()].Count <= 0))
@@ -310,8 +312,8 @@ namespace Recursos
                     if (i > 0) { cJSon += ","; }
 
                     cJSon += "{";
-                    cJSon += string.Format("\"xpasta\"   : \"tab{0}\","    , (i+1).ToString());
-                    cJSon += string.Format("\"xdisplay\" : \"display{0}\",", cDisplay);
+                    cJSon += string.Format("\"xpasta\" : \"tab{0}\","         , (i+1).ToString());
+                    cJSon += string.Format("\"xdisplay\" : \"display:{0};\", ", cDisplay);
 
                     cDisplay = "none";
 
@@ -322,10 +324,27 @@ namespace Recursos
                     cJSon += Tabelas_Obter_Cabecalho(MeuDB, MeuLib, lsCampos, lsDados, cTabOrigem, cNomeTabela, cCodigo, cOperacao, i);
 
                     cJSon += "],";
+
+                //--------------- ITENS
+
+                    if (nPastaItem != i)
+                    {
+                        //Item vazio
+                        cJSon += "\"xtititem\" : [], \"xitens\" : []";
+
+                    } else
+                    {
+
+                    }
+                    
+
+                    cJSon += "}";
                 }
 
-                LogFile.Log("cJSon:");
-                LogFile.Log(cJSon);
+                cJSon += "]}";
+
+                //LogFile.Log("cJSon:");
+                //LogFile.Log(cJSon);
 
                 cHtml = cJSon;
 
@@ -334,12 +353,116 @@ namespace Recursos
             return cHtml;
         }
 
+        private string Tabelas_Obter_Itens(DBConnect MeuDB, DBConnect MeuDBP, ArtLib MeuLib, string cTabOrigem, string cTabItens, string cCmpIdPai, string cCodPai, string cOperacao)
+        {
+
+            string cJTitulo1 = "\"xtititem\" : [{0}]";
+            string cJItem1   = ",\"xitens\"  : [{0}]";
+            string cJItem2   = "";
+            string cJItemV1  = ",\"xitemvazio\" : {0}";
+            string cJItemV2  = "";
+            int nItem = 0;
+            bool llItemVazio = true; //Iniciar a montagem do item vazio
+
+            LogFile.Log(" --- Obter itens --- ");
+            LogFile.Log(" --- cTabOrigem: " + cTabOrigem);
+            LogFile.Log(" --- cCodPai...: " + cCodPai);
+
+            do
+            {
+
+            //------------------ Dados da configuracao da tabela de itens
+
+                string cQuery = string.Format("SELECT * FROM aa40tabelas WHERE idSequencial = {0} ", cTabItens);
+                List<string> campos = new List<string>(new string[] { "TABELA" });
+                MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
+
+                if ((list.Count < campos.Count) || (list["TABELA"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("Tabelas_Obter_Itens: Problema para obter os dados de configuracao da tabela de itens! Tabela: {0}", cTabItens));
+                    break;
+                }
+
+                string cNomeTabela = list["TABELA"].First();
+
+            //------------------ Status da tabela
+
+                cQuery = string.Format(" SELECT CODIGO, DESCRICAO, " +
+                                       " (SELECT DESCRICAO FROM aa46status b46 WHERE b46.id0aa40tabelas = 13 AND b46.CODIGO = a46.STATUS LIMIT 0,1) AS COR " +
+                                       " FROM aa46status a46 " +
+                                       " WHERE id0aa40tabelas = {0} ORDER BY ORDEM ", cTabItens);
+                campos = new List<string>(new string[] { "CODIGO", "DESCRICAO", "COR" });
+                MultiValueDictionary<string, string> lsStatus = MeuDB.Select(cQuery, campos);
+
+                if ((lsStatus.Count < campos.Count) || (lsStatus["CODIGO"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("Tabelas_Obter_Itens: Problema para obter os status da tabela de itens! Tabela: {0}", cTabItens));
+                    break;
+                }
+
+            //--------------- Campos da tabela de itens
+
+                cQuery = "SELECT * FROM aa41campos WHERE id0aa40tabelas = " + cTabItens + " ORDER BY ORDEM ";
+                campos = new List<string>(new string[] { "CAMPO", "TITULO", "TIPO", "TAMANHO", "CASADECIMAL", "OPCOES", "OBRIGATORIO", "PASTA", "EDICAO", "ALTERACAO", "CONSULTATIPO",
+                                                         "CONSULTACODIGO", "CONSULTACAMPO", "CONSULTACONDICAO", "CONSULTASEQ", "CONSULTABLK", "DESTINO", "POSICAO", "PADRAO",
+                                                         "REVELADOR", "REVELARCAMPO", "REVELARVALOR", "GATILHOTIPO", "GATILHOCAMPO", "ULTIMOVALOR", "ALTURA", "CHARCASE", "TELA",
+                                                         "TIPOPADRAO", "COMENTARIO", "EDITCOND" });
+                MultiValueDictionary<string, string> lsCampos = MeuDBP.Select(cQuery, campos);
+
+                if ((lsCampos.Count < campos.Count) || (lsCampos["CAMPO"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("Tabelas_Obter: Problema para obter os campos da tabela! Tabela: {0}", cTabItens));
+                    break;
+                }
+
+            //------------------ Dados da tabela de itens
+
+                cQuery = string.Format("SELECT * FROM {0} WHERE {1} = {2} ", cNomeTabela, cCmpIdPai, cTabOrigem);
+                for (int i = 0; i < lsCampos["CAMPO"].Count; i++) { campos.Add(lsCampos["CAMPO"].ElementAt(i)); } //Campos do item
+                MultiValueDictionary<string, string> lsDados = MeuDB.Select(cQuery, campos);
+
+                if ((lsDados.Count < campos.Count) || (lsDados["idSequencial"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("Tabelas_Obter_Itens: Problema para obter os dados da tabela de itens! Tabela: {0}", cTabItens));
+                    break;
+                }
+
+                string cJTitulo2 = "";
+                int nLin = 0;
+
+                for (int i = 0; i < lsDados["idSequencial"].Count; i++)
+                {
+                    ++nLin;
+
+                    int nSeq = 0;
+                    string cJItem3 = "";
+
+                    string cReg = lsDados["idSequencial"].ElementAt(i);
+
+                    for (int j=0; j < lsCampos["CAMPO"].Count; j++)
+                    {
+                        if (lsCampos["CAMPO"].ElementAt(j) == cCmpIdPai) { continue; }
+
+                        bool lComboBox = !( String.IsNullOrEmpty(lsCampos["OPCOES"].ElementAt(j)) );
+
+                        if (lComboBox) { lComboBox = !( lsCampos["OPCOES"].ElementAt(j).Contains("!X") ); }
+
+
+                    }
+
+                }
+
+            } while (false);
+
+        }
+
         private string Tabelas_Obter_Cabecalho(DBConnect MeuDB, ArtLib MeuLib, MultiValueDictionary<string, string> lsCampos, MultiValueDictionary<string, string> lsDados, string cTabOrigem, string cNomeTabela, string cCodigo, string cOperacao, int nPasta)
         {
             int nSeq = 0;
             string cSeq = "";
             int nLin = 0;      //Alternar a cor
             string cJSon = "";
+            string cLinCor = "";
             MultiValueDictionary<int,string> aValores = new MultiValueDictionary<int,string>();  //aValores.Add(0, "VALOR1"); aValores.Add(0, "VALOR2");
 
             for (int i=0; i < lsCampos["CAMPO"].Count; i++)
@@ -378,7 +501,6 @@ namespace Recursos
                 Boolean lCheckNum     = false;
                 string cType          = "6";
                 string cValor         = "";
-                string cLinCor        = "";
                 string cGatilhoClasse = "x";
                 MultiValueDictionary<int, string> aOpcoes = new MultiValueDictionary<int, string>();
 
@@ -421,6 +543,8 @@ namespace Recursos
                     string cCondConsulta = lsCampos["CONSULTACONDICAO"].ElementAt(i);
 
                     cCmpOpcoes = MeuDB.FConsultaCombo(MeuDB, cTabOrigem, nCodConsulta, nCmpConsulta, cCondConsulta);
+
+                    lComboBox = true;
 
                 } /* CONSULTA COMBO */ else
 
@@ -470,7 +594,7 @@ namespace Recursos
 
                         cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
 
-                    } /* SELECT */
+                    } /* SELECT */ else
 
                     /* TEXT/PASSWORD/HIDDEN */ if ("12345679".Contains(cCmpEdicao))
                     {
@@ -642,7 +766,7 @@ namespace Recursos
                     cJSon += " ]";
                 }
 
-                aValores.Add(i, "|X" + cCampo + "X|");  //Macro substituição de campos
+                aValores.Add(i, "|X" + cCampo + "X|");  //Adiciona para Macro substituição de campos
                 aValores.Add(i, cValor);
 
             } //for(i)(lsCampos)
@@ -655,5 +779,7 @@ namespace Recursos
 
             return cJSon;
         }
+
     }
+
 }

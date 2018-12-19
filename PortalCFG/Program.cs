@@ -66,20 +66,6 @@ namespace PortalCFG
             ThreadPool.QueueUserWorkItem(o =>
             {
 
-                LogFile.Log(" .");
-                LogFile.Log(" PortalCFG ");
-                LogFile.Log(" .");
-                LogFile.Log(" criado em 16/10/2018 em C#");
-                LogFile.Log("        em 26/05/2015 em Lazarus");
-                LogFile.Log(" autor Antonio C Ferreira");
-                LogFile.Log(" .");
-                LogFile.Log(" Objetivo: Pai dos portais de negócio.");
-                LogFile.Log(" .");
-                LogFile.Log(" Portal executando...");
-                LogFile.Log(" .");
-                LogFile.Log(" pressione quit para sair!");
-                LogFile.Log(" .");
-
                 try
                 {
                     while (_listener.IsListening)
@@ -229,6 +215,23 @@ namespace PortalCFG
             var URL = string.Format("http://localhost:{0}/{1}/", cPorta, cRaiz);
             WebXServer ws = new WebXServer(SendResponse, URL);
             string cKey = "";
+
+            LogFile.Log(" .");
+            LogFile.Log(" PortalCFG ");
+            LogFile.Log(" .");
+            LogFile.Log(" criado em 16/10/2018 em C#");
+            LogFile.Log("        em 26/05/2015 em Lazarus");
+            LogFile.Log(" autor Antonio C Ferreira");
+            LogFile.Log(" .");
+            LogFile.Log(" Objetivo: Pai dos portais de negócio.");
+            LogFile.Log(" .");
+            LogFile.Log(" Portal executando...");
+            LogFile.Log(" .");
+            LogFile.Log(" " + URL);
+            LogFile.Log(" .");
+            LogFile.Log(" pressione quit para sair!");
+            LogFile.Log(" .");
+
 
             // Some biolerplate to react to close window event, CTRL-C, kill, etc
             _handler += new EventHandler(Handler);

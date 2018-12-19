@@ -203,11 +203,16 @@ namespace Recursos
         public string JSONAcento(string cCod)
         {
             string cAcento = "ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿŒœŠšŸƒ";
-            string[] aJSONAcento = {"\xC0", "\xC1", "\xC2", "\xC3", "\xC4", "\xC5", "\xC6", "\xC7", "\xC8", "\xC9", "\xCA", "\xCB", "\xCC", "\xCD", "\xCF",
+            /*string[] aJSONAcento = {"\xC0", "\xC1", "\xC2", "\xC3", "\xC4", "\xC5", "\xC6", "\xC7", "\xC8", "\xC9", "\xCA", "\xCB", "\xCC", "\xCD", "\xCF",
                                     "\xD0", "\xD1", "\xD2", "\xD3", "\xD4", "\xD5", "\xD6",         "\xD8", "\xD9", "\xDA", "\xDB", "\xDC", "\xDD", "\xDF",
                                     "\xE0", "\xE1", "\xE2", "\xE3", "\xE4", "\xE5", "\xE6", "\xE7", "\xE8", "\xE9", "\xEA", "\xEB", "\xEC", "\xED", "\xEF",
                                     "\xF0", "\xF1", "\xF2", "\xF3", "\xF4", "\xF5", "\xF6",         "\xF8", "\xF9", "\xFA", "\xFB", "\xFC", "\xFD", "\xFF",
-                                    "\u0152","\u0160","\u0161","\u0178","\u0192"};
+                                    "\u0152","\u0160","\u0161","\u0178","\u0192"};*/
+            string[] aJSONAcento = {"!!xC0", "!!xC1", "!!xC2", "!!xC3", "!!xC4", "!!xC5", "!!xC6", "!!xC7", "!!xC8", "!!xC9", "!!xCA", "!!xCB", "!!xCC", "!!xCD", "!!xCF",
+                                    "!!xD0", "!!xD1", "!!xD2", "!!xD3", "!!xD4", "!!xD5", "!!xD6",         "!!xD8", "!!xD9", "!!xDA", "!!xDB", "!!xDC", "!!xDD", "!!xDF",
+                                    "!!xE0", "!!xE1", "!!xE2", "!!xE3", "!!xE4", "!!xE5", "!!xE6", "!!xE7", "!!xE8", "!!xE9", "!!xEA", "!!xEB", "!!xEC", "!!xED", "!!xEF",
+                                    "!!xF0", "!!xF1", "!!xF2", "!!xF3", "!!xF4", "!!xF5", "!!xF6",         "!!xF8", "!!xF9", "!!xFA", "!!xFB", "!!xFC", "!!xFD", "!!xFF",
+                                    "!!u0152","!!u0160","!!u0161","!!u0178","!!u0192"};
             string cL = "";
             string cS = "";
             int nPos = 0;
@@ -219,7 +224,7 @@ namespace Recursos
 
                 if (nPos >= 0)
                 {
-                    cS += aJSONAcento[nPos];
+                    cS += aJSONAcento[nPos-2];
                 }
                 else
                 {

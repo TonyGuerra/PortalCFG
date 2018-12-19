@@ -263,9 +263,9 @@ function Right(str, n){
                       <!-- ko if: ($index() === 0) -->
                           <td>
                               <div>
-                                   <a href data-bind="click: $root.incluiritem, attr:{itemid: $parent.xitemid}"><img src="/imagens/portal_mais.gif" border="0" title="Incluir"></a>
+                                   <a href data-bind="click: $root.incluiritem, attr:{itemid: $parent.xitemid}"><img src="portal_mais.gif" border="0" title="Incluir"></a>
                                    &nbsp;
-                                   <a href data-bind="click: $root.excluiritem, attr:{itemid: $parent.xitemid}"><img src="/imagens/portal_menos.gif" border="0" title="Excluir"></a>
+                                   <a href data-bind="click: $root.excluiritem, attr:{itemid: $parent.xitemid}"><img src="portal_menos.gif" border="0" title="Excluir"></a>
                                    &nbsp;
                                </div>
                           </td>
@@ -544,12 +544,12 @@ function ViewModel() {
             type: "post",   
             contentType: "application/json",
             success: function(result) {
-                var xJSon = ko.toJSON(result);
-                var cJSon = JSON.stringify(xJSon);
+				var cJSon = ko.toJSON(result);
                 cJSon = cJSon.replace(/!!x/g,'\\x');
                 cJSon = eval(cJSon);  //Executa a acentuacao no token \x, nao delimitar com apostrofe pois resulta em erro no parse();
                 //console.log(cJSon);
                 xJSon = JSON.parse(cJSon);
+				//console.log(xJSon);
                 var oDados = ko.mapping.fromJS(xJSon);
                 self.aDados(oDados);   //databind em value
             },
