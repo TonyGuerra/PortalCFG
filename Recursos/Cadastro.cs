@@ -39,9 +39,9 @@ namespace Recursos
 
                 if (cHtml.Contains("Sessao Expirou")) { break; }
 
-                string cTabela       = Convert.ToString(oLogin["tabela"]);
+                string cTabela       = oLogin["taborigem"]; //Convert.ToString(oLogin["tabela"]);
                 string cTabOrigem    = oLogin["taborigem"];
-                string cTabPasta     = Convert.ToString(oLogin["tabela"]);
+                string cTabPasta     = oLogin["taborigem"]; //Convert.ToString(oLogin["tabela"]);
                 string cOrigem       = oLogin["origem"];
                 string[] aOp         = { "", "", "VISUALIZAR", "INCLUIR", "ALTERAR", "EXCLUIR", "", "" };
                 string cOperacao     = oLogin["operacao"];
@@ -241,6 +241,7 @@ namespace Recursos
                 if ((list.Count < campos.Count) || (list["PASTA"].Count <= 0))
                 {
                     LogFile.Log(string.Format("Tabelas_Obter: Sem itens! Tabela: {0}", cTabela));
+                    nPastaItem = -1;
 
                 } else
                 {
@@ -334,7 +335,7 @@ namespace Recursos
 
                     } else
                     {
-
+                        cJSon += Tabelas_Obter_Itens(MeuDB, MeuDBP, MeuLib, cTabOrigem, cTabItens, ("id0"+cNomeTabela), cCodigo, cOperacao);
                     }
                     
 
@@ -353,16 +354,335 @@ namespace Recursos
             return cHtml;
         }
 
+        private string Tabelas_Obter_Cabecalho(DBConnect MeuDB, ArtLib MeuLib, MultiValueDictionary<string, string> lsCampos, MultiValueDictionary<string, string> lsDados, string cTabOrigem, string cNomeTabela, string cCodigo, string cOperacao, int nPasta)
+        {
+            int nSeq = 0;
+            string cSeq = "";
+            int nLin = 0;      //Alternar a cor
+            string cJSon = "";
+            string cLinCor = "";
+            MultiValueDictionary<int,string> aValores = new MultiValueDictionary<int,string>();  //aValores.Add(0, "VALOR1"); aValores.Add(0, "VALOR2");
+
+            for (int i=0; i < lsCampos["CAMPO"].Count; i++)
+            {
+                //Se não for da pasta ignora
+                if((Int32.Parse(lsCampos["PASTA"].ElementAt(i)) != nPasta)) { continue; }
+
+                string cCampo          = lsCampos["CAMPO"].ElementAt(i);
+                string cCmpValPadrao   = lsCampos["PADRAO"].ElementAt(i).Trim();
+                string cCmpOpcoes      = lsCampos["OPCOES"].ElementAt(i);
+                string cCmpIDRevelar   = lsCampos["REVELARCAMPO"].ElementAt(i);
+                string cCmpVlrRevelar  = lsCampos["REVELARVALOR"].ElementAt(i);
+
+                string cCmpRevelador   = (lsCampos["REVELADOR"].ElementAt(i) == "S" ? "1" : "0");
+                string cCmpAltura      = (String.IsNullOrEmpty(lsCampos["ALTURA"].ElementAt(i)) || (lsCampos["ALTURA"].ElementAt(i) == "0") ? "400" : lsCampos["ALTURA"].ElementAt(i)) + "px";
+                string cCmpObriga      = (lsCampos["OBRIGATORIO"].ElementAt(i) == "S" ? "1" : "0");
+                Boolean lDireita       = (lsCampos["POSICAO"].ElementAt(i) == "2");
+
+                string cCmpGatilho    = "ok";
+                string cCmpCheckBox   = "";
+                string cCmpSequencia  = "";
+                string cCmpBloco      = "";
+                string cTabCheckBox   = "";
+                string cCondCheckBox  = "";
+                string cDestCheckBox  = "";
+                Boolean lCheckBox     = false;
+                Boolean lCheckNum     = false;
+                string cType          = "6";
+                string cValor         = "";
+                string cGatilhoClasse = "x";
+                MultiValueDictionary<int, string> aOpcoes = new MultiValueDictionary<int, string>();
+
+
+                if (lsCampos["TIPOPADRAO"].ElementAt(i) == "3")
+                {
+                    cCmpValPadrao = MeuDB.FMacro(MeuDB, cCmpValPadrao, cTabOrigem);
+                }
+
+                cCmpValPadrao = cCmpValPadrao.Replace("|||XTABORIGEM|||", cTabOrigem);
+
+                if ( cCmpValPadrao.Contains("|X") && cCmpValPadrao.Contains("X|"))
+                {
+                    for(int j=0; j < aValores.Count; j++)
+                    {
+                        cCmpValPadrao = cCmpValPadrao.Replace(aValores[j].ElementAt(0), aValores[j].ElementAt(1));
+                    }
+                }
+
+                Boolean lComboBox = !( String.IsNullOrEmpty(lsCampos["OPCOES"].ElementAt(i)) );
+
+                if (lComboBox)
+                {
+                    lComboBox = !( lsCampos["OPCOES"].ElementAt(i).Contains("!X") ); //!XPASTAS!
+                }
+
+                string cSoLeitura = "0";
+
+                if ( "25".Contains(cOperacao) || "36".Contains(lsCampos["EDICAO"].ElementAt(i)) ||
+                     ((cOperacao == "4") && (lsCampos["ALTERACAO"].ElementAt(i) == "2")) ||
+                     ((cOperacao == "3") && (lsCampos["ALTERACAO"].ElementAt(i) == "3")) )
+                {
+                    cSoLeitura = "1";
+                }
+
+                /* CONSULTA COMBO */ if (lsCampos["CONSULTATIPO"].ElementAt(i) == "1")
+                {
+                    int nCodConsulta     = Int32.Parse(lsCampos["CONSULTACODIGO"].ElementAt(i));
+                    int nCmpConsulta     = Int32.Parse(lsCampos["CONSULTACAMPO"].ElementAt(i));
+                    string cCondConsulta = lsCampos["CONSULTACONDICAO"].ElementAt(i);
+
+                    cCmpOpcoes = MeuDB.FConsultaCombo(MeuDB, cTabOrigem, nCodConsulta, nCmpConsulta, cCondConsulta);
+
+                    lComboBox = true;
+
+                } /* CONSULTA COMBO */ else
+
+                /* CHECKBOX */ if (lsCampos["CONSULTATIPO"].ElementAt(i) == "3")
+                {
+                    cTabCheckBox  = lsCampos["CONSULTACODIGO"].ElementAt(i);
+                    cCmpCheckBox  = lsCampos["CONSULTACAMPO"].ElementAt(i);
+                    cCondCheckBox = lsCampos["CONSULTACONDICAO"].ElementAt(i);
+                    cDestCheckBox = lsCampos["DESTINO"].ElementAt(i);
+                    lCheckBox     = true;
+                    cType         = "6";
+
+                    cValor        = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
+
+                } /* CHECKBOX */ else
+
+                /* PERIODO */ if (lsCampos["CONSULTATIPO"].ElementAt(i) == "4")
+                {
+                    cType = "7";
+
+                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0000000000000000000000"));
+
+                } /* PERIODO */ else
+
+                /* CHECKNUM */
+                if (lsCampos["CONSULTATIPO"].ElementAt(i) == "4")
+                {
+                    cTabCheckBox  = lsCampos["CONSULTACODIGO"].ElementAt(i);
+                    cCmpCheckBox  = lsCampos["CONSULTACAMPO"].ElementAt(i);
+                    cCondCheckBox = lsCampos["CONSULTACONDICAO"].ElementAt(i);
+                    cCmpSequencia = lsCampos["CONSULTASEQ"].ElementAt(i);
+                    cCmpBloco     = lsCampos["CONSULTABLQ"].ElementAt(i);
+                    cDestCheckBox = lsCampos["DESTINO"].ElementAt(i);
+                    lCheckNum     = true;
+                    cType         = "8";
+
+                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
+
+                } /* CHECKNUM */ else
+
+                if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
+                {
+                    /* SELECT */ if ( lComboBox )
+                    {
+                        aOpcoes = MeuLib.FMatriz(cCmpOpcoes);
+                        cType = "2";
+
+                        cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
+
+                    } /* SELECT */ else
+
+                    /* TEXT/PASSWORD/HIDDEN */ if ("12345679".Contains(lsCampos["EDICAO"].ElementAt(i)))
+                    {
+                        int nPos = "12345679".IndexOf(lsCampos["EDICAO"].ElementAt(i));
+                        cType = "11111149".Substring(nPos, 1);
+
+                        cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
+
+                    } /* TEXT/PASSWORD/HIDDEN */
+
+                } else
+
+                /* MEMO */ if (lsCampos["TIPO"].ElementAt(i) == "M")
+                {
+                    cType = "3";
+
+                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
+                                       
+                } /* MEMO */ else
+
+                /* DATA */ if (lsCampos["TIPO"].ElementAt(i) == "D")
+                {
+                    cType = "5";
+
+                    cCmpValPadrao = (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "  /  /    ");
+
+                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
+
+                } /* DATA */ else
+
+                /* HORA */ if (lsCampos["TIPO"].ElementAt(i) == "H")
+                {
+                    cType = "1";
+
+                    cCmpValPadrao = (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "  :  ");
+
+                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
+
+                } /* HORA */ else
+
+                /* NUMERICO */ if (lsCampos["TIPO"].ElementAt(i) == "N")
+                {
+                    cType = "1";
+
+                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao.Trim() : "0"));
+
+                } /* NUMERICO */
+
+                cValor.Replace("\r", "\n");
+                cValor.Replace("\"", "'");
+
+                if ((lsCampos["TELA"].ElementAt(i) == "2") || (lsCampos["EDICAO"].ElementAt(i) == "9")) { cType = "9"; }
+
+            //--------------- JSON
+
+                if ( !lDireita ) { ++nSeq; }
+                if ( !lDireita && (cType != "9")) { ++nLin; }
+
+                if (cType == "9")
+                {
+                    cCmpIDRevelar  = "esconder";
+                    cCmpVlrRevelar = "esconder";
+                } else
+                {
+                    cLinCor = ((nLin % 2) == 0 ? "1" : "0");
+                }
+
+                if ((nSeq > 1) && !lDireita) { cJSon += "}]"; }
+
+                if ((nSeq <= 1) && !lDireita) { cJSon += "{"; }
+                else { cJSon += "},{"; }
+
+                if (!lDireita)
+                {
+                    cSeq = ("00" + nSeq.ToString());
+                    cSeq = cSeq.Substring(cSeq.Length - 2, 2);
+
+                    cJSon += String.Format(" \"classe\": \"{0}\",", cLinCor);
+                    cJSon += String.Format(" \"nome\": \"xlinha{0}\",", cSeq);
+                    cJSon += String.Format(" \"rev1\": \"{0}\",", cCmpIDRevelar);
+                    cJSon += String.Format(" \"rev2\": \"{0}\",", cCmpVlrRevelar);
+                    cJSon += " \"xlinha\": [{";
+                }
+
+                /* GATILHO CONSULTA */ if (lsCampos["GATILHOTIPO"].ElementAt(i) == "1")
+                {
+                    cGatilhoClasse = "xgatilho";
+
+                    string cQuery = string.Format("SELECT CAMPO FROM aa41campos WHERE idSequencial = {0} ", lsCampos["GATILHOCAMPO"].ElementAt(i));
+
+                    List<string> campos = new List<string>(new string[] { "CAMPO" });
+
+                    MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
+
+                    if ( !( (list.Count < campos.Count) || (list["CAMPO"].Count <= 0) ) )
+                    {
+                        cCmpGatilho = list["CAMPO"].First();
+                    }
+                } /* GATILHO CONSULTA */
+
+
+                /* GATILHO REVELADOR DE LINHA */ if (cCmpRevelador == "1")
+                {
+                    cGatilhoClasse = "xgatilho";
+
+                } /* GATILHO REVELADOR DE LINHA */
+
+
+                /* INCLUSAO - ULTIMO VALOR */ if ((cOperacao == "3") && (lsCampos["ULTIMOVALOR"].ElementAt(i) == "S"))
+                {
+                    string cQuery = string.Format("SELECT Max({0}) AS {1} FROM {2} ", cCampo, cCampo, cNomeTabela);
+
+                    List<string> campos = new List<string>(new string[] { cCampo });
+
+                    MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
+
+                    if (!((list.Count < campos.Count) || (list[cCampo].Count <= 0)))
+                    {
+                        cValor = list[cCampo].First();
+                    }
+                }
+
+                cValor = (String.IsNullOrEmpty(cValor) && !String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : cValor);
+
+                cJSon += String.Format("  \"sequencia\": {0}", nSeq.ToString());
+                cJSon += String.Format(", \"titulo\": \"{0}:\"", lsCampos["TITULO"].ElementAt(i));
+                cJSon += String.Format(", \"titulo2\": \"{0}:\"", lsCampos["COMENTARIO"].ElementAt(i));
+                cJSon += String.Format(", \"campo\": \"{0}\"", cCampo);
+                cJSon += String.Format(", \"tamanho\": \"{0}\"", lsCampos["TAMANHO"].ElementAt(i));
+                cJSon += String.Format(", \"altura\": \"{0}\"", cCmpAltura);
+                cJSon += String.Format(", \"valor\": \"{0}\"", cValor);
+                cJSon += String.Format(", \"config\": \"{0}{1}{2}{3}{4}\"", cType, cSoLeitura, cCmpRevelador, cCmpObriga, lsCampos["CHARCASE"].ElementAt(i).Trim());
+                cJSon += String.Format(", \"editcond\": \"{0}\"", lsCampos["EDITCOND"].ElementAt(i));
+                cJSon += String.Format(", \"gatilhoclasse\": \"{0}\"", cGatilhoClasse);
+                cJSon += String.Format(", \"gatilhoid\": \"{0}\"", lsCampos["GATILHOCAMPO"].ElementAt(i));
+                cJSon += String.Format(", \"gatilhocampo\": \"{0}\"", cCmpGatilho);
+
+                if (lComboBox)
+                {
+                    cJSon += ", \"option\"   : [";
+
+                    for(int j=0; j < aOpcoes.Count; j++)
+                    {
+                        if (j > 0) { cJSon += ","; }
+
+                        cJSon += " {";
+                        cJSon += String.Format("\"id\": \"{0}\", \"name\": \"{1}\"", aOpcoes[j].ElementAt(0), aOpcoes[j].ElementAt(1));
+                        cJSon += "}";
+                    }
+
+                    cJSon += " ]";
+                }
+
+                if (lCheckBox)
+                {
+                    cJSon += ", \"checks\"   : [";
+
+                    cJSon += MeuDB.FVerCheck(MeuDB, cNomeTabela, cCodigo, cTabCheckBox, cCmpCheckBox, cCondCheckBox, cDestCheckBox);
+
+                    cJSon += " ]";
+                }
+
+                if (lCheckNum)
+                {
+                    cJSon += ", \"checks\"   : [";
+
+                    cJSon += MeuDB.FVerCheckNum(MeuDB, cNomeTabela, cCodigo, cTabCheckBox, cCmpCheckBox, cCmpSequencia, cCmpBloco, cCondCheckBox, cDestCheckBox);
+
+                    cJSon += " ]";
+                }
+
+                aValores.Add(i, "|X" + cCampo + "X|");  //Adiciona para Macro substituição de campos
+                aValores.Add(i, cValor);
+
+            } //for(i)(lsCampos)
+
+            cJSon = (String.IsNullOrEmpty(cJSon) ? "" : cJSon+"}] }");
+
+            cJSon = MeuLib.JSONAcento(cJSon);
+
+            cJSon = cJSon.Replace("\\x", "!!x");
+
+            return cJSon;
+        }
+
+
         private string Tabelas_Obter_Itens(DBConnect MeuDB, DBConnect MeuDBP, ArtLib MeuLib, string cTabOrigem, string cTabItens, string cCmpIdPai, string cCodPai, string cOperacao)
         {
 
+            string cJSon = "";
             string cJTitulo1 = "\"xtititem\" : [{0}]";
-            string cJItem1   = ",\"xitens\"  : [{0}]";
-            string cJItem2   = "";
-            string cJItemV1  = ",\"xitemvazio\" : {0}";
-            string cJItemV2  = "";
+            string cJTitulo2 = "";
+            string cJItem1 = ",\"xitens\"  : [{0}]";
+            string cJItem2 = "";
+            string cJItemV1 = ",\"xitemvazio\" : {0}";
+            string cJItemV2 = "";
+            string cJItemV3 = "";
             int nItem = 0;
-            bool llItemVazio = true; //Iniciar a montagem do item vazio
+            bool lItemVazio = true; //Iniciar a montagem do item vazio
 
             LogFile.Log(" --- Obter itens --- ");
             LogFile.Log(" --- cTabOrigem: " + cTabOrigem);
@@ -427,7 +747,6 @@ namespace Recursos
                     break;
                 }
 
-                string cJTitulo2 = "";
                 int nLin = 0;
 
                 for (int i = 0; i < lsDados["idSequencial"].Count; i++)
@@ -439,345 +758,274 @@ namespace Recursos
 
                     string cReg = lsDados["idSequencial"].ElementAt(i);
 
-                    for (int j=0; j < lsCampos["CAMPO"].Count; j++)
+                    for (int j = 0; j < lsCampos["CAMPO"].Count; j++)
                     {
                         if (lsCampos["CAMPO"].ElementAt(j) == cCmpIdPai) { continue; }
 
-                        bool lComboBox = !( String.IsNullOrEmpty(lsCampos["OPCOES"].ElementAt(j)) );
+                        bool lComboBox = !(String.IsNullOrEmpty(lsCampos["OPCOES"].ElementAt(j)));
 
-                        if (lComboBox) { lComboBox = !( lsCampos["OPCOES"].ElementAt(j).Contains("!X") ); }
+                        if (lComboBox) { lComboBox = !(lsCampos["OPCOES"].ElementAt(j).Contains("!X")); }
 
+                        string cCampo = lsCampos["CAMPO"].ElementAt(j);
+                        string cCmpObriga = (lsCampos["OBRIGATORIO"].ElementAt(j) == "S" ? "1" : "0");
+                        string cCmpValPadrao = lsCampos["PADRAO"].ElementAt(j).Trim();
+                        string cCmpOpcoes = lsCampos["OPCOES"].ElementAt(j).Trim();
 
+                        string cType = "";
+                        string cSoLeitura = "0";
+                        string cClasse = "";
+                        string cValor = "";
+                        string cValor2 = "";
+                        string cVlrVazio1 = "";
+                        string cVlrVazio2 = "";
+
+                        MultiValueDictionary<int, string> aOpcoes = new MultiValueDictionary<int, string>();
+
+                        if (("25".Contains(cOperacao)) || ("36".Contains(lsCampos["EDICAO"].ElementAt(j))) ||
+                            ((cOperacao == "4") && (lsCampos["ALTERACAO"].ElementAt(j) == "2")) ||
+                            ((cOperacao == "3") && (lsCampos["ALTERACAO"].ElementAt(j) == "3")))
+                        {
+                            cSoLeitura = "1";
+                        }
+
+                        /*CONSULTA COMBO*/ if (lsCampos["CONSULTATIPO"].ElementAt(j) == "1")
+                        {
+                            int nCodConsulta = Int32.Parse(lsCampos["CONSULTACODIGO"].ElementAt(j));
+                            int nCmpConsulta = Int32.Parse(lsCampos["CONSULTACAMPO"].ElementAt(j));
+                            string cCondConsulta = lsCampos["CONSULTACONDICAO"].ElementAt(j);
+
+                            cCmpOpcoes = MeuDB.FConsultaCombo(MeuDB, cTabOrigem, nCodConsulta, nCmpConsulta, cCondConsulta);
+
+                            lComboBox = true;
+
+                        } /*CONSULTA COMBO*/
+
+                        if ((lsCampos["TIPO"].ElementAt(j) == "C") || lComboBox)
+                        {
+                            /*STATUS*/ if (cCampo == "STATUS")
+                            {
+                                cType = "6";
+
+                                cCmpValPadrao = (String.IsNullOrEmpty(cCmpValPadrao) ? lsStatus["DESCRICAO"].ElementAt(0) : cCmpValPadrao);
+
+                                cValor = lsDados["STATUS"].ElementAt(i);
+
+                                cValor = ((cOperacao == "3") || String.IsNullOrEmpty(cValor) ? cCmpValPadrao : cValor);
+
+                                for (int k = 0; k < lsStatus["CODIGO"].Count; k++)
+                                {
+                                    if (lsStatus["CODIGO"].ElementAt(k) == cValor)
+                                    {
+                                        cValor = lsStatus["DESCRICAO"].ElementAt(k);
+                                        cValor2 = String.Format("portal_led_{0}.png", lsStatus["COR"].ElementAt(k));
+                                    }
+
+                                    if (lsStatus["CODIGO"].ElementAt(k) == cCmpValPadrao)
+                                    {
+                                        cVlrVazio1 = lsStatus["DESCRICAO"].ElementAt(k);
+                                        cVlrVazio2 = String.Format("portal_led_{0}.png", lsStatus["COR"].ElementAt(k));
+                                    }
+                                }/*for k*/
+
+                            }/*STATUS*/
+
+                            else
+
+                            /*SELECT*/ if (lComboBox)
+                            {
+                                aOpcoes = MeuLib.FMatriz(cCmpOpcoes);
+                                cType = "2";
+
+                                cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
+
+                            } /* SELECT */
+                            else
+
+                            /* TEXT/PASSWORD/HIDDEN */ if ("12345679".Contains(lsCampos["EDICAO"].ElementAt(j)))
+                            {
+                                int nPos = "12345679".IndexOf(lsCampos["EDICAO"].ElementAt(j));
+                                cType = "11111149".Substring(nPos, 1);
+
+                                cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : cCmpValPadrao);
+
+                            } /* TEXT/PASSWORD/HIDDEN */
+
+                        }
+                        else
+
+                        /* MEMO */ if (lsCampos["TIPO"].ElementAt(j) == "M")
+                        {
+                            cType = "3";
+
+                            cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : cCmpValPadrao);
+
+                        } /* MEMO */
+                        else
+
+                        /* DATA */ if (lsCampos["TIPO"].ElementAt(j) == "D")
+                        {
+                            cType = "5";
+
+                            cCmpValPadrao = (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "  /  /    ");
+
+                            cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : cCmpValPadrao);
+
+                        } /* DATA */
+                        else
+
+                        /* HORA */ if (lsCampos["TIPO"].ElementAt(j) == "H")
+                        {
+                            cType = "1";
+
+                            cCmpValPadrao = (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "  :  ");
+
+                            cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : cCmpValPadrao);
+
+                        } /* HORA */
+                        else
+
+                        /* NUMERICO */ if (lsCampos["TIPO"].ElementAt(j) == "N")
+                        {
+                            cType = "1";
+
+                            cValor = (!String.IsNullOrEmpty(lsDados[cCampo].ElementAt(i)) ? lsDados[cCampo].ElementAt(i) : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao.Trim() : "0"));
+
+                        } /* NUMERICO */
+
+                        cValor.Replace("\r", "\n");
+                        cValor.Replace("\"", "'");
+
+                        if ((lsCampos["TELA"].ElementAt(j) == "2") || (lsCampos["EDICAO"].ElementAt(j) == "9")) { cType = "9"; }
+
+                    //------------------ JSON
+
+                        ++nSeq;
+
+                        string cJItem4 = "";
+
+                        cJItem4 += String.Format("  \"sequencia\": {0}", nSeq.ToString());
+                        cJItem4 += String.Format(", \"campo\"    : \"{0}\"", cCampo);
+                        cJItem4 += String.Format(", \"tamanho\"  : \"{0}\"", lsCampos["TAMANHO"].ElementAt(j).Trim());
+                        cJItem4 += String.Format(", \"valor\"    : \"{0}\"", cValor);
+                        cJItem4 += String.Format(", \"valor2\"   : \"{0}\"", cValor2);
+                        cJItem4 += String.Format(", \"config\"   : \"{0}{1}{2}{3}\"", cType, cSoLeitura, cCmpObriga, lsCampos["CHARCASE"].ElementAt(j));
+                        cJItem4 += String.Format(", \"editcond\" : \"{0}\"", lsCampos["EDITCOND"].ElementAt(j));
+                        cJItem4 += String.Format(", \"classe\"   : \"{0}\"", cClasse);
+
+                        if (lComboBox)
+                        {
+                            cJItem4 += ", \"option\"   : [";
+
+                            for (int k = 0; k < aOpcoes.Count; k++)
+                            {
+                                if (k > 0) { cJItem4 += ","; }
+
+                                cJItem4 += " {";
+                                cJItem4 += String.Format("\"id\": \"{0}\", \"name\": \"{1}\"", aOpcoes[k].ElementAt(0), aOpcoes[k].ElementAt(1));
+                                cJItem4 += "}";
+                            }
+
+                            cJItem4 += " ]";
+                        }
+
+                        if (nLin == 1)
+                        {
+                            if (cCampo == "STATUS")
+                            {
+                                cJTitulo2 = "{" + String.Format("\"titulo\": \"{0}\"}", lsCampos["TITULO"].ElementAt(j)) +
+                                            (String.IsNullOrEmpty(cJTitulo2) ? "" : ",") + cJTitulo2;
+                            }
+                            else
+                            {
+                                cJTitulo2 += (String.IsNullOrEmpty(cJTitulo2) ? "" : ",") + "{" + String.Format("\"titulo\": \"{0}\"}", lsCampos["TITULO"].ElementAt(j));
+                            }
+                        }
+
+                        if (cCampo == "STATUS")
+                        {
+                            cJItem3 = "{" + String.Format("{0}}", cJItem4) +
+                                      (String.IsNullOrEmpty(cJItem3) ? "" : ",") + cJItem3;
+                        }
+                        else
+                        {
+                            cJItem3 += (String.IsNullOrEmpty(cJItem3) ? "" : ",") + String.Format("{{0}}", cJItem4);
+                        }
+
+                    //------------------ JSON - Item Vazio
+                        if (lItemVazio)
+                        {
+                            string cJItemV4 = "";
+
+                            cJItemV4 += String.Format("  \"sequencia\": {0}", nSeq.ToString());
+                            cJItemV4 += String.Format(", \"campo\"    : \"{0}\"", cCampo);
+                            cJItemV4 += String.Format(", \"tamanho\"  : \"{0}\"", lsCampos["TAMANHO"].ElementAt(j).Trim());
+                            cJItemV4 += String.Format(", \"valor\"    : \"{0}\"", cValor);
+                            cJItemV4 += String.Format(", \"valor2\"   : \"{0}\"", cValor2);
+                            cJItemV4 += String.Format(", \"config\"   : \"{0}{1}{2}{3}\"", cType, cSoLeitura, cCmpObriga, lsCampos["CHARCASE"].ElementAt(j));
+                            cJItemV4 += String.Format(", \"editcond\" : \"{0}\"", lsCampos["EDITCOND"].ElementAt(j));
+                            cJItemV4 += String.Format(", \"classe\"   : \"{0}\"", cClasse);
+
+                            if (lComboBox)
+                            {
+                                cJItemV4 += ", \"option\"   : [";
+
+                                for (int k = 0; k < aOpcoes.Count; k++)
+                                {
+                                    if (k > 0) { cJItemV4 += ","; }
+
+                                    cJItemV4 += " {";
+                                    cJItemV4 += String.Format("\"id\": \"{0}\", \"name\": \"{1}\"", aOpcoes[k].ElementAt(0), aOpcoes[k].ElementAt(1));
+                                    cJItemV4 += "}";
+                                }
+
+                                cJItemV4 += " ]";
+                            }
+
+                            if (cCampo == "STATUS")
+                            {
+                                cJItemV3 = "{" + String.Format("{0}}", cJItemV4) +
+                                          (String.IsNullOrEmpty(cJItemV3) ? "" : ",") + cJItemV3;
+                            }
+                            else
+                            {
+                                cJItemV3 += (String.IsNullOrEmpty(cJItemV3) ? "" : ",") + String.Format("{{0}}", cJItemV4);
+                            }
+
+                        }
+
+                    }/*for j - campos*/
+
+                    ++nItem;
+
+                    cJItem2 += (String.IsNullOrEmpty(cJItem2) ? "" : ",") + "{" + String.Format("\"xitemid\"  : {0}, \"xitemsts\" : 8, \"xitemreg\" : {1}, \"xitem\" : [{2}]}", nItem.ToString(), lsDados["idSequencial"].ElementAt(i), cJItem3);
+
+                    if (lItemVazio)
+                    {
+                        cJItemV2 += (String.IsNullOrEmpty(cJItemV2) ? "" : ",") + "{" + String.Format("\"xitemid\"  : {0}, \"xitemsts\" : 1, \"xitemtab\" : {1}, \"xitem\" : [{2}]}", nItem.ToString(), cTabItens, cJItem3);
                     }
 
-                }
+                    lItemVazio = false;
+
+                }/*for i - itens*/
 
             } while (false);
 
-        }
-
-        private string Tabelas_Obter_Cabecalho(DBConnect MeuDB, ArtLib MeuLib, MultiValueDictionary<string, string> lsCampos, MultiValueDictionary<string, string> lsDados, string cTabOrigem, string cNomeTabela, string cCodigo, string cOperacao, int nPasta)
-        {
-            int nSeq = 0;
-            string cSeq = "";
-            int nLin = 0;      //Alternar a cor
-            string cJSon = "";
-            string cLinCor = "";
-            MultiValueDictionary<int,string> aValores = new MultiValueDictionary<int,string>();  //aValores.Add(0, "VALOR1"); aValores.Add(0, "VALOR2");
-
-            for (int i=0; i < lsCampos["CAMPO"].Count; i++)
+            if (String.IsNullOrEmpty(cJTitulo2))
             {
-                //Se não for da pasta ignora
-                if((Int32.Parse(lsCampos["PASTA"].ElementAt(i)) != nPasta)) { continue; }
+                cJTitulo2 = "{\"titulo\": \"Manuten!!xE7!!xE3o\"}," + cJTitulo2;
+            }
 
-                string cCampo          = lsCampos["CAMPO"].ElementAt(i);
-                string cCmpTipo        = lsCampos["TIPO"].ElementAt(i).Trim();
-                string cCmpValPadrao   = lsCampos["PADRAO"].ElementAt(i).Trim();
-                string cCmpEdicao      = lsCampos["EDICAO"].ElementAt(i);
-                string cCmpAlteracao   = lsCampos["ALTERACAO"].ElementAt(i);
-                string cCmpTpConsulta  = lsCampos["CONSULTATIPO"].ElementAt(i);
-                string cCmpOpcoes      = lsCampos["OPCOES"].ElementAt(i);
-                string cCmpTela        = lsCampos["TELA"].ElementAt(i);
-                string cCmpIDRevelar   = lsCampos["REVELARCAMPO"].ElementAt(i);
-                string cCmpVlrRevelar  = lsCampos["REVELARVALOR"].ElementAt(i);
-                string cCmpTpGatilho   = lsCampos["GATILHOTIPO"].ElementAt(i);
-                string cCmpIDGatilho   = lsCampos["GATILHOCAMPO"].ElementAt(i);
-                string cCmpUltimoValor = lsCampos["ULTIMOVALOR"].ElementAt(i);
-                string cCmpCharCase    = lsCampos["CHARCASE"].ElementAt(i).Trim();
+            cJTitulo1 = String.Format(cJTitulo1, cJTitulo2);
+            cJItemV1 = String.Format(cJItemV1, cJItemV2);
+            cJItem1 = String.Format(cJItem1, cJItem2);
 
-                string cCmpRevelador   = (lsCampos["REVELADOR"].ElementAt(i) == "S" ? "1" : "0");
-                string cCmpAltura      = (String.IsNullOrEmpty(lsCampos["ALTURA"].ElementAt(i)) || (lsCampos["ALTURA"].ElementAt(i) == "0") ? "400" : lsCampos["ALTURA"].ElementAt(i)) + "px";
-                string cCmpObriga      = (lsCampos["OBRIGATORIO"].ElementAt(i) == "S" ? "1" : "0");
-                Boolean lDireita       = (lsCampos["POSICAO"].ElementAt(i) == "2");
-
-                string cCmpGatilho    = "ok";
-                string cCmpCheckBox   = "";
-                string cCmpSequencia  = "";
-                string cCmpBloco      = "";
-                string cTabCheckBox   = "";
-                string cCondCheckBox  = "";
-                string cDestCheckBox  = "";
-                Boolean lCheckBox     = false;
-                Boolean lCheckNum     = false;
-                string cType          = "6";
-                string cValor         = "";
-                string cGatilhoClasse = "x";
-                MultiValueDictionary<int, string> aOpcoes = new MultiValueDictionary<int, string>();
-
-
-                if (lsCampos["TIPOPADRAO"].ElementAt(i) == "3")
-                {
-                    cCmpValPadrao = MeuDB.FMacro(MeuDB, cCmpValPadrao, cTabOrigem);
-                }
-
-                cCmpValPadrao = cCmpValPadrao.Replace("|||XTABORIGEM|||", cTabOrigem);
-
-                if ( cCmpValPadrao.Contains("|X") && cCmpValPadrao.Contains("X|"))
-                {
-                    for(int j=0; j < aValores.Count; j++)
-                    {
-                        cCmpValPadrao = cCmpValPadrao.Replace(aValores[j].ElementAt(0), aValores[j].ElementAt(1));
-                    }
-                }
-
-                Boolean lComboBox = !( String.IsNullOrEmpty(lsCampos["OPCOES"].ElementAt(i)) );
-
-                if (lComboBox)
-                {
-                    lComboBox = !( lsCampos["OPCOES"].ElementAt(i).Contains("!X") ); //!XPASTAS!
-                }
-
-                string cSoLeitura = "0";
-
-                if ( "25".Contains(cOperacao) || "36".Contains(cCmpEdicao) ||
-                     ((cOperacao == "4") && (cCmpAlteracao == "2")) ||
-                     ((cOperacao == "3") && (cCmpAlteracao == "3")) )
-                {
-                    cSoLeitura = "1";
-                }
-
-                /* CONSULTA COMBO */ if (cCmpTpConsulta == "1")
-                {
-                    int nCodConsulta     = Int32.Parse(lsCampos["CONSULTACODIGO"].ElementAt(i));
-                    int nCmpConsulta     = Int32.Parse(lsCampos["CONSULTACAMPO"].ElementAt(i));
-                    string cCondConsulta = lsCampos["CONSULTACONDICAO"].ElementAt(i);
-
-                    cCmpOpcoes = MeuDB.FConsultaCombo(MeuDB, cTabOrigem, nCodConsulta, nCmpConsulta, cCondConsulta);
-
-                    lComboBox = true;
-
-                } /* CONSULTA COMBO */ else
-
-                /* CHECKBOX */ if (cCmpTpConsulta == "3")
-                {
-                    cTabCheckBox  = lsCampos["CONSULTACODIGO"].ElementAt(i);
-                    cCmpCheckBox  = lsCampos["CONSULTACAMPO"].ElementAt(i);
-                    cCondCheckBox = lsCampos["CONSULTACONDICAO"].ElementAt(i);
-                    cDestCheckBox = lsCampos["DESTINO"].ElementAt(i);
-                    lCheckBox     = true;
-                    cType         = "6";
-
-                    cValor        = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
-
-                } /* CHECKBOX */ else
-
-                /* PERIODO */ if (cCmpTpConsulta == "4")
-                {
-                    cType = "7";
-
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0000000000000000000000"));
-
-                } /* PERIODO */ else
-
-                /* CHECKNUM */
-                if (cCmpTpConsulta == "4")
-                {
-                    cTabCheckBox  = lsCampos["CONSULTACODIGO"].ElementAt(i);
-                    cCmpCheckBox  = lsCampos["CONSULTACAMPO"].ElementAt(i);
-                    cCondCheckBox = lsCampos["CONSULTACONDICAO"].ElementAt(i);
-                    cCmpSequencia = lsCampos["CONSULTASEQ"].ElementAt(i);
-                    cCmpBloco     = lsCampos["CONSULTABLQ"].ElementAt(i);
-                    cDestCheckBox = lsCampos["DESTINO"].ElementAt(i);
-                    lCheckNum     = true;
-                    cType         = "8";
-
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
-
-                } /* CHECKNUM */ else
-
-                if ((cCmpTipo == "C") || lComboBox)
-                {
-                    /* SELECT */ if ( lComboBox )
-                    {
-                        aOpcoes = MeuLib.FMatriz(cCmpOpcoes);
-                        cType = "2";
-
-                        cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
-
-                    } /* SELECT */ else
-
-                    /* TEXT/PASSWORD/HIDDEN */ if ("12345679".Contains(cCmpEdicao))
-                    {
-                        int nPos = "12345679".IndexOf(cCmpEdicao);
-                        cType = "11111149".Substring(nPos, 1);
-
-                        cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
-
-                    } /* TEXT/PASSWORD/HIDDEN */
-
-                } else
-
-                /* MEMO */ if (cCmpTipo == "M")
-                {
-                    cType = "3";
-
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
-                                       
-                } /* MEMO */ else
-
-                /* DATA */ if (cCmpTipo == "D")
-                {
-                    cType = "5";
-
-                    cCmpValPadrao = (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "  /  /    ");
-
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
-
-                } /* DATA */ else
-
-                /* HORA */ if (cCmpTipo == "H")
-                {
-                    cType = "1";
-
-                    cCmpValPadrao = (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "  :  ");
-
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
-
-                } /* HORA */ else
-
-                /* NUMERICO */ if (cCmpTipo == "N")
-                {
-                    cType = "1";
-
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao.Trim() : "0"));
-
-                } /* NUMERICO */
-
-                cValor.Replace("\r", "\n");
-                cValor.Replace("\"", "'");
-
-                if ((cCmpTela == "2") || (cCmpEdicao == "9")) { cType = "9"; }
-
-            //--------------- JSON
-
-                if ( !lDireita ) { ++nSeq; }
-                if ( !lDireita && (cType != "9")) { ++nLin; }
-
-                if (cType == "9")
-                {
-                    cCmpIDRevelar  = "esconder";
-                    cCmpVlrRevelar = "esconder";
-                } else
-                {
-                    cLinCor = ((nLin % 2) == 0 ? "1" : "0");
-                }
-
-                if ((nSeq > 1) && !lDireita) { cJSon += "}]"; }
-
-                if ((nSeq <= 1) && !lDireita) { cJSon += "{"; }
-                else { cJSon += "},{"; }
-
-                if (!lDireita)
-                {
-                    cSeq = ("00" + nSeq.ToString());
-                    cSeq = cSeq.Substring(cSeq.Length - 2, 2);
-
-                    cJSon += String.Format(" \"classe\": \"{0}\",", cLinCor);
-                    cJSon += String.Format(" \"nome\": \"xlinha{0}\",", cSeq);
-                    cJSon += String.Format(" \"rev1\": \"{0}\",", cCmpIDRevelar);
-                    cJSon += String.Format(" \"rev2\": \"{0}\",", cCmpVlrRevelar);
-                    cJSon += " \"xlinha\": [{";
-                }
-
-                /* GATILHO CONSULTA */ if (cCmpTpGatilho == "1")
-                {
-                    cGatilhoClasse = "xgatilho";
-
-                    string cQuery = string.Format("SELECT CAMPO FROM aa41campos WHERE idSequencial = {0} ", cCmpIDGatilho);
-
-                    List<string> campos = new List<string>(new string[] { "CAMPO" });
-
-                    MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
-
-                    if ( !( (list.Count < campos.Count) || (list["CAMPO"].Count <= 0) ) )
-                    {
-                        cCmpGatilho = list["CAMPO"].First();
-                    }
-                } /* GATILHO CONSULTA */
-
-
-                /* GATILHO REVELADOR DE LINHA */ if (cCmpRevelador == "1")
-                {
-                    cGatilhoClasse = "xgatilho";
-
-                } /* GATILHO REVELADOR DE LINHA */
-
-
-                /* INCLUSAO - ULTIMO VALOR */ if ((cOperacao == "3") && (cCmpUltimoValor == "S"))
-                {
-                    string cQuery = string.Format("SELECT Max({0}) AS {1} FROM {2} ", cCampo, cCampo, cNomeTabela);
-
-                    List<string> campos = new List<string>(new string[] { cCampo });
-
-                    MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
-
-                    if (!((list.Count < campos.Count) || (list[cCampo].Count <= 0)))
-                    {
-                        cValor = list[cCampo].First();
-                    }
-                }
-
-                cValor = (String.IsNullOrEmpty(cValor) && !String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : cValor);
-
-                cJSon += String.Format("  \"sequencia\": {0}", nSeq.ToString());
-                cJSon += String.Format(", \"titulo\": \"{0}:\"", lsCampos["TITULO"].ElementAt(i));
-                cJSon += String.Format(", \"titulo2\": \"{0}:\"", lsCampos["COMENTARIO"].ElementAt(i));
-                cJSon += String.Format(", \"campo\": \"{0}\"", cCampo);
-                cJSon += String.Format(", \"tamanho\": \"{0}\"", lsCampos["TAMANHO"].ElementAt(i));
-                cJSon += String.Format(", \"altura\": \"{0}\"", cCmpAltura);
-                cJSon += String.Format(", \"valor\": \"{0}\"", cValor);
-                cJSon += String.Format(", \"config\": \"{0}{1}{2}{3}{4}\"", cType, cSoLeitura, cCmpRevelador, cCmpObriga, cCmpCharCase);
-                cJSon += String.Format(", \"editcond\": \"{0}\"", lsCampos["EDITCOND"].ElementAt(i));
-                cJSon += String.Format(", \"gatilhoclasse\": \"{0}\"", cGatilhoClasse);
-                cJSon += String.Format(", \"gatilhoid\": \"{0}\"", cCmpIDGatilho);
-                cJSon += String.Format(", \"gatilhocampo\": \"{0}\"", cCmpGatilho);
-
-                if (lComboBox)
-                {
-                    cJSon += ", \"option\"   : [";
-
-                    for(int j=0; j < aOpcoes.Count; j++)
-                    {
-                        if (j > 0) { cJSon += ","; }
-
-                        cJSon += " {";
-                        cJSon += String.Format("\"id\": \"{0}\", \"name\": \"{1}\"", aOpcoes[j].ElementAt(0), aOpcoes[j].ElementAt(1));
-                        cJSon += "}";
-                    }
-
-                    cJSon += " ]";
-                }
-
-                if (lCheckBox)
-                {
-                    cJSon += ", \"checks\"   : [";
-
-                    cJSon += MeuDB.FVerCheck(MeuDB, cNomeTabela, cCodigo, cTabCheckBox, cCmpCheckBox, cCondCheckBox, cDestCheckBox);
-
-                    cJSon += " ]";
-                }
-
-                if (lCheckNum)
-                {
-                    cJSon += ", \"checks\"   : [";
-
-                    cJSon += MeuDB.FVerCheckNum(MeuDB, cNomeTabela, cCodigo, cTabCheckBox, cCmpCheckBox, cCmpSequencia, cCmpBloco, cCondCheckBox, cDestCheckBox);
-
-                    cJSon += " ]";
-                }
-
-                aValores.Add(i, "|X" + cCampo + "X|");  //Adiciona para Macro substituição de campos
-                aValores.Add(i, cValor);
-
-            } //for(i)(lsCampos)
-
-            cJSon = (String.IsNullOrEmpty(cJSon) ? "" : cJSon+"}] }");
-
+            cJSon = cJTitulo1 + cJItemV1 + cJItem1;
             cJSon = MeuLib.JSONAcento(cJSon);
 
             cJSon = cJSon.Replace("\\x", "!!x");
 
             return cJSon;
+
         }
 
     }

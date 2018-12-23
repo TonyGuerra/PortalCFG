@@ -280,7 +280,7 @@ namespace Recursos
                 for (int i = 0; i < list["MENU"].Count; i++)
                 {
                     cOpcao = list["MENU"].ElementAt(i);
-                    cPagina = (String.IsNullOrEmpty(list["PAGINA"].ElementAt(i)) ? "pagina_cadastro" : list["PAGINA"].ElementAt(i));
+                    cPagina = (String.IsNullOrEmpty(list["PAGINA"].ElementAt(i)) ? "tabelas_cadastro" : list["PAGINA"].ElementAt(i));
 
                     if (cOpcao.Length != (cCodMenu.Length + 2))
                     {
@@ -799,7 +799,7 @@ namespace Recursos
 
                     cJSon2 += (cJSon2 == "{" ? "" : ",") + String.Format(" \"idSequencial\" : {0} ", list["IDSEQUENCIAL"].ElementAt(i));
 
-                    cJSon2 += String.Format(", \"TABELA\" : {0} ", cTabela);
+                    cJSon2 += String.Format(", \"tabela\" : {0} ", cTabela);
 
                     cJSon2 += cJSon3;
 
