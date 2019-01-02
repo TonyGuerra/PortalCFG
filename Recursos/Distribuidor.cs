@@ -148,6 +148,10 @@ namespace Recursos
                 {
                     cHtml = MeuCadastro.Tabelas_Obter(request, MeuDBP, MeuDB, MeuLib, cMeuPath, cDados);
                 }
+                else if (cMeuPath == "tabelas_valida")
+                {
+                    cHtml = MeuCadastro.Tabelas_Valida(request, MeuDBP, MeuDB, MeuLib, cMeuPath, cDados);
+                }
                 else if (Resources.ResourceManager.GetObject(cMeuPath) != null)
                 {
                     cHtml = Generico(request, MeuDB, MeuLib, cMeuPath, cDados);
@@ -456,7 +460,7 @@ namespace Recursos
                     break;
                 }
 
-                if (!cMeuPath.Contains("_obter"))
+                if ( !( cMeuPath.Contains("_obter") ) && !(cMeuPath.Contains("_valida")) )
                 {
                     cHtml = Resources.ResourceManager.GetObject(cMeuPath).ToString();
 

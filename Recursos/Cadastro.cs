@@ -199,7 +199,8 @@ namespace Recursos
             } while (false);
 
             return cHtml;
-        }
+
+        } //Tabelas_Cadastro()
 
         public string Tabelas_Obter(HttpListenerRequest request, DBConnect MeuDBP, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
         {
@@ -352,7 +353,8 @@ namespace Recursos
             } while (false);
 
             return cHtml;
-        }
+
+        } //Tabelas_Obter()
 
         private string Tabelas_Obter_Cabecalho(DBConnect MeuDB, ArtLib MeuLib, MultiValueDictionary<string, string> lsCampos, MultiValueDictionary<string, string> lsDados, string cTabOrigem, string cNomeTabela, string cCodigo, string cOperacao, int nPasta)
         {
@@ -667,7 +669,8 @@ namespace Recursos
             cJSon = cJSon.Replace("\\x", "!!x");
 
             return cJSon;
-        }
+
+        } //Tabelas_Obter_Cabecalho()
 
 
         private string Tabelas_Obter_Itens(DBConnect MeuDB, DBConnect MeuDBP, ArtLib MeuLib, string cTabOrigem, string cTabItens, string cCmpIdPai, string cCodPai, string cOperacao)
@@ -1026,8 +1029,111 @@ namespace Recursos
 
             return cJSon;
 
-        }
+        } //Tabelas_Obter_Itens()
 
+
+        public string Tabelas_Valida(HttpListenerRequest request, DBConnect MeuDBP, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string cQueryString = HttpUtility.UrlDecode(request.Url.Query);
+            string cJSon = cDados.Replace("dados=", "");
+            dynamic oLogin = serializer.Deserialize<dynamic>(cJSon);
+            string cHtml = "ERRO: Html nao atribuido";
+
+            LogFile.Log(" --- Tabelas_Valida:");
+
+            if (!String.IsNullOrEmpty(cQueryString))
+            {
+                int nP = (cQueryString.Contains("dados=") ? 7 : 1);
+                cJSon = MeuLib.Base64Decode(cQueryString.Substring(nP));
+                oLogin = serializer.Deserialize<dynamic>(cJSon);
+            }
+
+            do
+            {
+
+                cHtml = Distribuidor.Generico(request, MeuDB, MeuLib, cMeuPath, cJSon);
+
+                if (cHtml.Contains("Sessao Expirou")) { break; }
+
+                string cTabela = Convert.ToString(oLogin["tabela"]);
+                string cCodigo = oLogin["codigo"];
+                string cOperacao = oLogin["operacao"];
+
+                //--------------- Dados da configuracao da tabela de itens
+                string cQuery = string.Format("SELECT * FROM aa40tabelas WHERE idSequencial = {0} ", cTabela);
+                List<string> campos = new List<string>(new string[] { "TABELA" });
+                MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
+
+                if ((list.Count < campos.Count) || (list["TABELA"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("Tabelas_Valida: tabela nao encontrada! Tabela: {0}", cTabela));
+                    cHtml = "ERRO: Tabela invalida!";
+                    break;
+                }
+
+                string cNomeTabela = list["TABELA"].First();
+
+                LogFile.Log("cTabela........: " + cTabela);
+                LogFile.Log("cCodigo........: " + cCodigo);
+                LogFile.Log("cNomeTabela....: " + cNomeTabela);
+
+                if ( !( String.IsNullOrEmpty(cCodigo) ) )
+                {
+                    cQuery = "SELECT * FROM " + cNomeTabela + " WHERE idSequencial = " + cCodigo;
+                    campos = new List<string>(new string[] { "idSequencial" });
+                    list = MeuDB.Select(cQuery, campos);
+
+                    if ((list.Count < campos.Count) || (list["idSequencial"].Count <= 0))
+                    {
+                        LogFile.Log(string.Format("Tabelas_Valida: Codigo invalido! Codigo: {0}", cCodigo));
+                        cHtml = "ERRO: Codigo invalido!";
+                        break;
+                    }
+                }
+
+                dynamic aCampos = oLogin["dados"]["xconteudo"][0]["xcampos"];
+                string cCmpObr = "";
+                string cCmpRetirar = "N";
+
+                for (int i=0; i < aCampos.Length; i++)
+                {
+                    dynamic aLinhas = aCampos[i]["xlinha"];
+
+                    for(int j=0; j < aLinhas.Length; j++)
+                    {
+                        string cObriga = (aLinhas[j]["config"].Substring(3,1) == "1" ? " (OBRIGATORIO)" : "");
+
+                        if  ( !(String.IsNullOrEmpty(cObriga)) &&  String.IsNullOrEmpty(aLinhas[j]["valor"]) )
+                        {
+                            cCmpObr += (String.IsNullOrEmpty(cCmpObr) ? "" : ",") + aLinhas[j]["titulo"];
+                        }
+
+                        if (aLinhas[j]["campo"] == "RETIRAR")
+                        {
+                            cCmpRetirar = aLinhas[j]["valor"];
+                        }
+                    } //for(i)
+                }//for(j)
+
+                cCmpObr = cCmpObr.Replace(":", "");
+
+                if((cOperacao == "5") && (cCmpRetirar == "S"))
+                {
+                    cHtml = "ERRO: Nao pode excluir este registro!";
+                } else if("34".Contains(cOperacao) && !(String.IsNullOrEmpty(cCmpObr)))
+                {
+                    cHtml = "ERRO : Estes campos sao obrigatorios: " + cCmpObr;
+                } else
+                {
+                    cHtml = "Validado!";
+                }
+
+            } while (false);
+
+            return cHtml;
+
+        } //Tabelas_Valida()
     }
 
 }
