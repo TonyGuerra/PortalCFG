@@ -5,10 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+//OpenLog
+//Log
+//CloseLog
+
 namespace Recursos
 {
     public class LogFile
     {
+
         private static StreamWriter log;
 
         public static void OpenLog()
@@ -31,6 +36,7 @@ namespace Recursos
             }
 
         }
+
 
         public static void Log(string cLog)
         {
@@ -57,6 +63,7 @@ namespace Recursos
                 }
             }
         }
+
 
         public static void CloseLog()
         {

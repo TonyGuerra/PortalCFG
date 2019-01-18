@@ -11,10 +11,19 @@ using System.Web.UI.WebControls;
 using System.Reflection;
 using System.Web.Script.Serialization;
 
+//Tabelas_Filtro
+//Grupos
+//Pagina_Browser
+//Pagina_Browser_Filtro
+//Obter_Browser
+//Obter_Browse_JSon
+//
+
 namespace Recursos
 {
     public class Browser
     {
+
         public string Tabelas_Filtro(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -153,6 +162,7 @@ namespace Recursos
             return cHtml;
         }
 
+
         private static List<string> Grupos(DBConnect MeuDB, string cTabela)
         {
 
@@ -177,16 +187,29 @@ namespace Recursos
 
         }
 
+
         public string Pagina_Browser(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string cQueryString = HttpUtility.UrlDecode(request.Url.Query);
-            dynamic oLogin = serializer.Deserialize<dynamic>(cDados.Replace("dados=", ""));
+            dynamic oLogin = null;
             string cHtml = "ERRO: Html nao atribuido";
 
             LogFile.Log(" --- Pagina_Browser:");
 
-            if (!String.IsNullOrEmpty(cQueryString))
+            if  (String.IsNullOrEmpty(cQueryString))
+            {
+                cQueryString = HttpUtility.UrlDecode(cDados);
+
+                if (cQueryString.Contains("&") && cQueryString.Contains("="))
+                {
+                    oLogin = MeuLib.DMatriz(cQueryString, '&', '=');
+                } else
+                {
+                    oLogin = serializer.Deserialize<dynamic>(cQueryString.Replace("dados=", ""));
+                }
+            }
+            else
             {
                 int nP = (cQueryString.Contains("dados=") ? 7 : 1);
                 oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(nP));
@@ -201,17 +224,48 @@ namespace Recursos
 
                 //--------------- Filtro -----------------------------------------------------------
 
+                string cFiltro = "";
+
                 MultiValueDictionary<int, string> aCampos = new MultiValueDictionary<int, string>();
 
-                String cFiltro = Pagina_Browser_Filtro(MeuDB, MeuLib, oLogin, ref aCampos);
+                List<string> campos = null;
+                MultiValueDictionary<string, string> list = null;
+
+
+                if (oLogin.ContainsKey("filtro") && !String.IsNullOrEmpty(oLogin["filtro"]))
+                {
+                    cFiltro = oLogin["filtro"];
+
+                    list = DCampos(MeuDB, oLogin["tabela"], ref campos);
+
+                    if ((list.Count < campos.Count) || (list["idSequencial"].Count <= 0)) { break; }
+
+                    string cBrowseTit = "";
+
+                    for (int i = 0; i < list["idSequencial"].Count; i++)
+                    {
+
+                        cBrowseTit = (String.IsNullOrEmpty(list["BROWSETIT"].ElementAt(i)) ? list["TITULO"].ElementAt(i) : list["BROWSETIT"].ElementAt(i));
+
+                        aCampos.Add(i, cBrowseTit);
+                        aCampos.Add(i, list["CAMPO"].ElementAt(i));
+                        aCampos.Add(i, list["OPCOES"].ElementAt(i));
+                        aCampos.Add(i, list["idSequencial"].ElementAt(i));
+
+                    }
+                }
+                else
+                {
+                    cFiltro = Pagina_Browser_Filtro(MeuDB, MeuLib, oLogin, ref aCampos);
+                }
 
                 //--------------- Usuario -----------------------------------------------------------
 
                 string cQuery = string.Format("SELECT * FROM aa10usuarios WHERE USUARIO = '{0}' ", oLogin["login"]);
 
-                List<string> campos = new List<string>(new string[] { "idSequencial", "PERMISSAO" });
+                campos = new List<string>(new string[] { "idSequencial", "PERMISSAO" });
 
-                MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
+                list = MeuDB.Select(cQuery, campos);
 
                 if ((list.Count < campos.Count))
                 {
@@ -397,10 +451,10 @@ namespace Recursos
                 int nPaginaFim = 1;
 
                 
-                if (((IDictionary<string, object>) oLogin).ContainsKey("paginaatu"))
+                if (oLogin.ContainsKey("paginaatu"))
                 {
-                    nPaginaAtu = oLogin["paginaatu"];
-                    nPaginaFim = oLogin["paginafim"];
+                    nPaginaAtu = Int32.Parse(oLogin["paginaatu"]);
+                    nPaginaFim = Int32.Parse(oLogin["paginafim"]);
                     cTrace1    = oLogin["trace1"];
                 }
                 else
@@ -449,6 +503,7 @@ namespace Recursos
             return cHtml;
         }
 
+
         private string Pagina_Browser_Filtro(DBConnect MeuDB, ArtLib MeuLib, dynamic oLogin, ref MultiValueDictionary<int, string> aCampos)
         {
             String cFiltro = "";
@@ -465,12 +520,9 @@ namespace Recursos
             {
                 //--------------- Campos -------------------------------------------------------------
 
-                string cQuery = string.Format("SELECT * FROM aa41campos WHERE id0aa40tabelas = {0} AND BROWSESN='S' AND OPERACAO <> 'I' ORDER BY ORDEM ", oLogin["tabela"]);
+                List<string> campos = null;
 
-                //Opções de Menu do usuário
-                List<string> campos = new List<string>(new string[] { "idSequencial", "CAMPO", "TITULO", "FILTRO", "OPCOES", "BROWSETIT" });
-
-                MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
+                MultiValueDictionary<string, string> list = DCampos(MeuDB, oLogin["tabela"], ref campos);
 
                 if ((list.Count < campos.Count) || (list["idSequencial"].Count <= 0)) { break; }
 
@@ -533,6 +585,21 @@ namespace Recursos
 
             return MeuLib.Base64Encode(cFiltro);
         }
+
+
+        static MultiValueDictionary<string, string> DCampos(DBConnect MeuDB, string cTabela, ref List<string> campos)
+        {
+
+            string cQuery = string.Format("SELECT * FROM aa41campos WHERE id0aa40tabelas = {0} AND BROWSESN='S' AND OPERACAO <> 'I' ORDER BY ORDEM ", cTabela);
+
+            //Opções de Menu do usuário
+            campos = new List<string>(new string[] { "idSequencial", "CAMPO", "TITULO", "FILTRO", "OPCOES", "BROWSETIT" });
+
+            MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
+
+            return list;
+        }
+               
 
         public string Obter_Browser(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
         {
@@ -615,10 +682,11 @@ namespace Recursos
             return cHtml;
         }
 
+
         private static string Obter_Browse_JSon(DBConnect MeuDB, ArtLib MeuLib, string cTabela, string cFiltro, string cLimite)
         {
 
-            LogFile.Log("Obter_Browse_Inicio: cTabela: " + cTabela);
+            LogFile.Log("Obter_Browse_JSon: cTabela: " + cTabela);
 
             string cJSon = "";
 
@@ -712,7 +780,7 @@ namespace Recursos
                 list = MeuDB.Select(cQuery, campos, false);
                 if ((list.Count < campos.Count))
                 {
-                    LogFile.Log(string.Format("Obter_Browse_Inicio: Problema para obter o Nome da Tabela! Tabela: {0}", cTabela));
+                    LogFile.Log(string.Format("Obter_Browse_Inicio: Problema para obter os dados da Tabela! Tabela: {0}", cTabela));
                     break;
                 }
 
@@ -818,8 +886,13 @@ namespace Recursos
                 cJSon += "]";
 
             } while (false);
+
+            cJSon = MeuLib.LimpaCaracterControle(cJSon);
+
+            //LogFile.Log(cJSon);
             
             return cJSon;
         }
+
     }
 }

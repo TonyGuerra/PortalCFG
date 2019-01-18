@@ -17,6 +17,7 @@ namespace Recursos
         private string database;
         private string uid;
         private string password;
+        private ArtLib MeuLib = new ArtLib();
 
         //Constructor
         public DBConnect(string cDataBase)
@@ -93,7 +94,7 @@ namespace Recursos
             if (this.OpenConnection())
             {
                 //create command and assign the query and connection from the constructor
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlCommand cmd = new MySqlCommand(MeuLib.LimpaCaracterControle(query), connection);
 
                 //Execute command
                 nReg = cmd.ExecuteNonQuery();
@@ -110,9 +111,10 @@ namespace Recursos
         }
 
         //Update statement
-        public void Update(string query)
+        public int Update(string query)
         {
             //string query = "UPDATE tableinfo SET name='Joe', age='22' WHERE name='John Smith'";
+            int nReg = 0;
 
             //Open connection
             if (this.OpenConnection())
@@ -120,18 +122,22 @@ namespace Recursos
                 //create mysql command
                 MySqlCommand cmd = new MySqlCommand();
                 //Assign the query using CommandText
-                cmd.CommandText = query;
+                cmd.CommandText = MeuLib.LimpaCaracterControle(query);
                 //Assign the connection using Connection
                 cmd.Connection = connection;
 
                 //Execute query
-                int nReg = cmd.ExecuteNonQuery();
+                nReg = cmd.ExecuteNonQuery();
 
                 LogFile.Log(" --- Update processado! regs.: " + nReg.ToString());
 
                 //close connection
                 this.CloseConnection();
+
             }
+
+            return nReg;
+
         }
 
         //Delete statement
@@ -184,7 +190,7 @@ namespace Recursos
                 {
                     foreach (string campo in campos)
                     {
-                        list.Add(campo, dataReader[campo] + "");
+                        list.Add(campo, MeuLib.LimpaCaracterControle(dataReader[campo] + ""));
                     }
 
                 }

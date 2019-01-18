@@ -11,6 +11,15 @@ using System.Web.UI.WebControls;
 using System.Reflection;
 using System.Web.Script.Serialization;
 
+//Pagina
+//Valida_Login
+//Autentica_Login
+//Menutree_Esquerdo
+//MenuNivel
+//Generico
+//Check_Sessao
+//S_mensagem
+
 namespace Recursos
 {
     public class Distribuidor
@@ -152,6 +161,14 @@ namespace Recursos
                 {
                     cHtml = MeuCadastro.Tabelas_Valida(request, MeuDBP, MeuDB, MeuLib, cMeuPath, cDados);
                 }
+                else if (cMeuPath == "tabelas_gravar")
+                {
+                    cHtml = MeuCadastro.Tabelas_Gravar(request, MeuDBP, MeuDB, MeuLib, cMeuPath, cDados);
+                }
+                else if (cMeuPath == "tabelas_sucesso")
+                {
+                    cHtml = MeuCadastro.Tabelas_Sucesso(request, MeuDBP, MeuDB, MeuLib, cMeuPath, cDados);
+                }
                 else if (Resources.ResourceManager.GetObject(cMeuPath) != null)
                 {
                     cHtml = Generico(request, MeuDB, MeuLib, cMeuPath, cDados);
@@ -166,6 +183,7 @@ namespace Recursos
             return cHtml;
 
         }
+
 
         private static string Valida_Login(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cDados)
         {
@@ -248,6 +266,7 @@ namespace Recursos
 
         }
 
+
         private static string Autentica_Login(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -288,6 +307,7 @@ namespace Recursos
 
             return cHtml;
         }
+
 
         private static string Menutree_Esquerdo(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
         {
@@ -379,6 +399,7 @@ namespace Recursos
             return cHtml;
         }
 
+
         private static void MenuNivel(ArtLib MeuLib, MultiValueDictionary<string, string> list, string cMenu, int nNivel, ref int i, ref string cMeuMenu, string cParametros)
         {
             string cMenuNivel = "";
@@ -422,17 +443,30 @@ namespace Recursos
             i--;
         }
 
+
         public static string Generico(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string cHtml = "ERRO: Html nao atribuido";
             string cQueryString = HttpUtility.UrlDecode(request.Url.Query);
-            dynamic oLogin = serializer.Deserialize<dynamic>(cDados.Replace("dados=", ""));
+            dynamic oLogin = null;
 
             //LogFile.Log(" --- Generico:");
 
+            if (String.IsNullOrEmpty(cQueryString))
+            {
+                cQueryString = HttpUtility.UrlDecode(cDados);
 
-            if (!String.IsNullOrEmpty(cQueryString))
+                if (cQueryString.Contains("&") && cQueryString.Contains("="))
+                {
+                    oLogin = MeuLib.DMatriz(cQueryString, '&', '=');
+                }
+                else
+                {
+                    oLogin = serializer.Deserialize<dynamic>(cQueryString.Replace("dados=", ""));
+                }
+            }
+            else
             {
                 int nP = (cQueryString.Contains("dados=") ? 7 : 1 );
                 string cJSon = cQueryString.Substring(nP);
@@ -460,7 +494,7 @@ namespace Recursos
                     break;
                 }
 
-                if ( !( cMeuPath.Contains("_obter") ) && !(cMeuPath.Contains("_valida")) )
+                if ( !( cMeuPath.Contains("_obter") ) && !(cMeuPath.Contains("_valida")) && !(cMeuPath.Contains("_gravar")))
                 {
                     cHtml = Resources.ResourceManager.GetObject(cMeuPath).ToString();
 
@@ -474,6 +508,7 @@ namespace Recursos
 
             return cHtml;
         }
+
 
         public static bool Check_Sessao(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cLogin, string cSessao)
         {
@@ -544,7 +579,8 @@ namespace Recursos
             return lOk;
         }
 
-       public static string S_mensagem(string cMensagem, string onclick)
+
+        public static string S_mensagem(string cMensagem, string onclick)
         {
             ArtLib MeuLib = new ArtLib();
 

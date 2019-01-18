@@ -58,23 +58,24 @@ function Right(str, n){
 <body style="color:#0080FF; margin-left:10px; font-family: Arial; font-style: normal; text-decoration: none; font-size: 10pt;width:98%;" onload="Init()">
 
 <form name="form1" id="form1" method="post" action="">
-<input name="cTrace1" id="cTrace1" type="hidden" value="!XTRACE1!">
-<input name="cTrace2" id="cTrace2" type="hidden" value="!XTRACE2!">
-<input name="cLogin" id="cLogin" type="hidden" value="!XLOGIN!">
-<input name="cSessao" id="cSessao" type="hidden" value="!XSESSAO!">
-<input name="cMenu" id="cMenu" type="hidden" value="!XMENU!">
-<input name="cTabela" id="cTabela" type="hidden" value="!XTABELA!">
-<input name="cNomeTabela" id="cNomeTabela" type="hidden" value="!XNOMETABELA!">
-<input name="cRegistro" id="cRegistro" type="hidden" value="!XREGISTRO!">
-<input name="cOrigem" id="cOrigem" type="hidden" value="!XORIGEM!">
-<input name="cItem" id="cItem" type="hidden" value="!XITEM!">
-<input name="cItensExcluidos" id="cItensExcluidos" type="hidden" value="">
-<input name="cOperacao" id="cOperacao" type="hidden" value="!XOPERACAO!">
-<input name="cXFiltro" id="cXFiltro" type="hidden" value="!XFILTRO!">
-<input name="nXPaginaAtu" id="nXPaginaAtu" type="hidden" value=!XPAGINAATU!>
-<input name="nXPaginaFim" id="nXPaginaFim" type="hidden" value=!XPAGINAFIM!>
+<input name="trace1" id="trace1" type="hidden" value="!XTRACE1!">
+<input name="trace2" id="trace2" type="hidden" value="!XTRACE2!">
+<input name="login" id="login" type="hidden" value="!XLOGIN!">
+<input name="sessao" id="sessao" type="hidden" value="!XSESSAO!">
+<input name="menu" id="menu" type="hidden" value="!XMENU!">
+<input name="tabela" id="tabela" type="hidden" value="!XTABELA!">
+<input name="nometabela" id="nometabela" type="hidden" value="!XNOMETABELA!">
+<input name="registro" id="registro" type="hidden" value="!XREGISTRO!">
+<input name="origem" id="origem" type="hidden" value="!XORIGEM!">
+<input name="item" id="item" type="hidden" value="!XITEM!">
+<input name="itensexcluidos" id="itensexcluidos" type="hidden" value="">
+<input name="operacao" id="operacao" type="hidden" value="!XOPERACAO!">
+<input name="filtro" id="filtro" type="hidden" value="!XFILTRO!">
+<input name="paginaatu" id="paginaatu" type="hidden" value=!XPAGINAATU!>
+<input name="paginafim" id="paginafim" type="hidden" value=!XPAGINAFIM!>
 
 <input type="hidden" id="dados" name="dados" value=""/>
+
 
 <div id="DivGeral" name="DivGeral" style="visibility: hidden">
 
@@ -345,14 +346,14 @@ function Right(str, n){
 
 <script type='text/javascript'>
 
-    var cTrace1  = document.form1.cTrace1.value;
-    var cTrace2  = document.form1.cTrace2.value;
+    var cTrace1  = document.form1.trace1.value;
+    var cTrace2  = document.form1.trace2.value;
     var node;
     var contador = 0;
     var aXLinhas = [];
     var cPasta   = '';
 
-	parent.DATA.caminho(cTrace1+cTrace2);
+	parent.DATA.caminho(trace1+trace2);
     //parent.Frame1.hmheader.fMeudiv(cTrace1, cTrace2);
     //parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:parent.Frame2.hmcontent.fVoltar();" style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
     //parent.Frame1.hmheader.meutd2.innerHTML='<a href=javascript:parent.Frame2.hmcontent.fFiltro("!XCHAVE!"); style="text-decoration: none;"><ul><li>Filtro</li></ul></a>';

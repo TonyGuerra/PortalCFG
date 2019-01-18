@@ -8,6 +8,14 @@ using System.Threading;
 using System.IO;
 using Recursos;
 
+//WebXServer.ContainsLoop
+//WebXServer.WebXServer
+//WebXServer.WebXServer
+//WebXServer.Run
+//WebXServer.Stop
+//Program.SendResponse
+//Program.Main
+
 namespace PortalCFG
 {
     public class WebXServer
@@ -28,6 +36,7 @@ namespace PortalCFG
             }
             return false;
         }
+
 
         public WebXServer(IReadOnlyCollection<string> prefixes, Func<HttpListenerRequest, string> method)
         {
@@ -56,10 +65,12 @@ namespace PortalCFG
             _listener.Start();
         }
 
+
         public WebXServer(Func<HttpListenerRequest, string> method, params string[] prefixes)
            : this(prefixes, method)
         {
         }
+
 
         public void Run()
         {
@@ -140,6 +151,7 @@ namespace PortalCFG
             });
         }
 
+
         public void Stop()
         {
             _listener.Stop();
@@ -210,6 +222,7 @@ namespace PortalCFG
             return Distribuidor.Pagina(request, cRaizCFG, cRaiz);
         }
 
+
         private static void Main(string[] args)
         {
             var URL = string.Format("http://localhost:{0}/{1}/", cPorta, cRaiz);
@@ -247,6 +260,7 @@ namespace PortalCFG
             ws.Stop();
 
         }
+
     }
 }
 
