@@ -547,6 +547,7 @@ function ViewModel() {
             success: function(result) {
 				var cJSon = ko.toJSON(result);
                 cJSon = cJSon.replace(/!!x/g,'\\x');
+                cJSon = cJSon.replace(/!!u/g,'\\u');
                 cJSon = eval(cJSon);  //Executa a acentuacao no token \x, nao delimitar com apostrofe pois resulta em erro no parse();
                 //console.log(cJSon);
                 xJSon = JSON.parse(cJSon);

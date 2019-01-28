@@ -694,6 +694,7 @@ if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
             cJSon = MeuLib.JSONAcento(cJSon);
 
             cJSon = cJSon.Replace("\\x", "!!x");
+            cJSon = cJSon.Replace("\\u", "!!u");
 
             return cJSon;
 
@@ -1056,6 +1057,7 @@ if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
             cJSon = MeuLib.JSONAcento(cJSon);
 
             cJSon = cJSon.Replace("\\x", "!!x");
+            cJSon = cJSon.Replace("\\u", "!!u");
 
             return cJSon;
 

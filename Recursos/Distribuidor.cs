@@ -48,8 +48,8 @@ namespace Recursos
             {
                 if (request.HttpMethod == "POST")
                 {
-                    using (var reader = new StreamReader(request.InputStream,
-                                                         request.ContentEncoding))
+                    //Conversao para Encoding.UTF8 resolveu o problema de retornar em 2 chars o (Ã) - \u00C3\u0081 = encodeURI(chr) = %C3%81
+                    using (var reader = new StreamReader(request.InputStream, Encoding.UTF8))
                     {
                         cDados = reader.ReadToEnd();
 
@@ -57,6 +57,11 @@ namespace Recursos
                         {
                             cDados = HttpUtility.UrlDecode(cDados);
                         }
+
+                        //if (cDados.IndexOf("\u00C3") >= 0)
+                        //{
+                        //    cDados = HttpUtility.HtmlDecode(cDados);
+                        //}
                     }
                     /*
                     int nTam = 1024;

@@ -887,7 +887,7 @@ namespace Recursos
 
             } while (false);
 
-            cJSon = MeuLib.LimpaCaracterControle(cJSon);
+            //cJSon = MeuLib.LimpaCaracterControle(cJSon);
 
             //LogFile.Log(cJSon);
             
