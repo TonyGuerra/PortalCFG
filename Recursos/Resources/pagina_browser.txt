@@ -167,6 +167,12 @@
 				self.atualMINIGRUPO = 'xxxxx';
 				self.indiceMINIGRUPO = -1;
 
+				var nP = self.cTrace1.indexOf(self.cTrace2);
+				
+				if  (nP >= 0) {
+					self.cTrace1 = self.cTrace1.substr(0,nP);
+				}
+
 				//Nao usado
 				self.veGRUPO = function(indice, TR_GRUPO) {
 

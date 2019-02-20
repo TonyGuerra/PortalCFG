@@ -283,8 +283,8 @@ namespace Recursos
 
             cOpcao = cOpcoes.Substring(nP, cOpcoes.Length-nP);
             nP = cOpcao.IndexOf(";");
-            nP = (nP <= 0 ? cOpcao.Length+1 : nP);
-            cOpcao = cOpcao.Substring(0, nP - 1);
+            nP = (nP <= 0 ? cOpcao.Length : nP);
+            cOpcao = cOpcao.Substring(0, nP);
             nP = cOpcao.IndexOf("=");
 
             if  (nP <= 0)

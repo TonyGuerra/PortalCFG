@@ -268,6 +268,7 @@ namespace Recursos
                 if ((list.Count < campos.Count) || (list["TABELA"].Count <= 0))
                 {
                     LogFile.Log(string.Format("Tabelas_Obter: Problema para obter os dados da tabela de cabecalho! Tabela: {0}", cTabela));
+                    LogFile.Log(cQuery);
                     break;
                 }
 
@@ -299,6 +300,7 @@ namespace Recursos
                 if ((lsCampos.Count < campos.Count) || (lsCampos["CAMPO"].Count <= 0))
                 {
                     LogFile.Log(string.Format("Tabelas_Obter: Problema para obter os campos da tabela! Tabela: {0}", cTabela));
+                    LogFile.Log(cQuery);
                     break;
                 }
 
@@ -308,9 +310,10 @@ namespace Recursos
                 for (int i = 0; i < lsCampos["CAMPO"].Count; i++) { campos.Add(lsCampos["CAMPO"].ElementAt(i)); }  //Campos do Cabeçalho
                 MultiValueDictionary<string, string> lsDados = MeuDB.Select(cQuery, campos);
 
-                if ((lsDados.Count < campos.Count) || (lsDados[lsCampos["CAMPO"].First()].Count <= 0))
+                if ((cCodigo != "-1") && ((lsDados.Count < campos.Count) || (lsDados[lsCampos["CAMPO"].First()].Count <= 0)))
                 {
                     LogFile.Log(string.Format("Tabelas_Obter: Problema para obter os dados da tabela! Tabela: {0}", cTabela));
+                    LogFile.Log(cQuery);
                     break;
                 }
 
@@ -375,6 +378,7 @@ namespace Recursos
             int nLin = 0;      //Alternar a cor
             string cJSon = "";
             string cLinCor = "";
+            Boolean lAlteracao = (cOperacao != "3");
             MultiValueDictionary<int, string> aValores = new MultiValueDictionary<int, string>();  //aValores.Add(0, "VALOR1"); aValores.Add(0, "VALOR2");
 
             for (int i = 0; i < lsCampos["CAMPO"].Count; i++)
@@ -462,7 +466,7 @@ namespace Recursos
                     lCheckBox = true;
                     cType = "6";
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
+                    cValor = (lAlteracao && !String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
 
                 } /* CHECKBOX */
                 else
@@ -471,13 +475,12 @@ namespace Recursos
                 {
                     cType = "7";
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0000000000000000000000"));
+                    cValor = (lAlteracao && !String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0000000000000000000000"));
 
                 } /* PERIODO */
                 else
 
-/* CHECKNUM */
-if (lsCampos["CONSULTATIPO"].ElementAt(i) == "4")
+/* CHECKNUM */ if (lsCampos["CONSULTATIPO"].ElementAt(i) == "4")
                 {
                     cTabCheckBox = lsCampos["CONSULTACODIGO"].ElementAt(i);
                     cCmpCheckBox = lsCampos["CONSULTACAMPO"].ElementAt(i);
@@ -488,12 +491,12 @@ if (lsCampos["CONSULTATIPO"].ElementAt(i) == "4")
                     lCheckNum = true;
                     cType = "8";
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
+                    cValor = (lAlteracao && !String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
 
                 } /* CHECKNUM */
                 else
 
-if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
+                if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
                 {
                     /* SELECT */
                     if (lComboBox)
@@ -501,7 +504,7 @@ if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
                         aOpcoes = MeuLib.FMatriz(cCmpOpcoes);
                         cType = "2";
 
-                        cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
+                        cValor = (lAlteracao && !String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "0"));
 
                     } /* SELECT */
                     else
@@ -511,7 +514,7 @@ if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
                         int nPos = "12345679".IndexOf(lsCampos["EDICAO"].ElementAt(i));
                         cType = "11111149".Substring(nPos, 1);
 
-                        cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
+                        cValor = (lAlteracao && !String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
 
                     } /* TEXT/PASSWORD/HIDDEN */
 
@@ -522,7 +525,7 @@ if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
                 {
                     cType = "3";
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
+                    cValor = (lAlteracao && !String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
 
                 } /* MEMO */
                 else
@@ -533,7 +536,7 @@ if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
 
                     cCmpValPadrao = (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "  /  /    ");
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
+                    cValor = (lAlteracao && !String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
 
                 } /* DATA */
                 else
@@ -544,7 +547,7 @@ if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
 
                     cCmpValPadrao = (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao : "  :  ");
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
+                    cValor = (lAlteracao && !String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : cCmpValPadrao);
 
                 } /* HORA */
                 else
@@ -553,7 +556,7 @@ if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
                 {
                     cType = "1";
 
-                    cValor = (!String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao.Trim() : "0"));
+                    cValor = (lAlteracao && !String.IsNullOrEmpty(lsDados[cCampo].First()) ? lsDados[cCampo].First() : (!String.IsNullOrEmpty(cCmpValPadrao) ? cCmpValPadrao.Trim() : "0"));
 
                 } /* NUMERICO */
 
@@ -1359,7 +1362,7 @@ if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
 
                 cCmpObr = cCmpObr.Replace(":", "");
 
-                if ((cOperacao == "5") && (cCmpRetirar == "S"))
+                if ((cOperacao == "5") && !(String.IsNullOrEmpty(cCmpRetirar)))
                 {
                     cHtml = "ERRO: Nao pode excluir este registro! Use o campo RETIRAR!";
                     break;
@@ -1374,13 +1377,28 @@ if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
 
             //--------------- GRAVAR CABECALHO
                 
-                if (cOperacao == "4") //Alteracao
+                if ((cOperacao == "5") /*Exclusao*/ || ((cCmpRetirar == "S") && (cCmpOperacao == "I")))
                 {
-                    LogFile.Log(" Alteracao: " + cNomeTabela);
+
+                    LogFile.Log(" Exclusao: " + cNomeTabela + " - idSequencial: " + cCodigo);
+
+                    cQuery = String.Format(" DELETE FROM {0} WHERE idSequencial = {1} ", cNomeTabela, cCodigo);
+
+                    cHtml = "Registro excluido com sucesso!";
+
+                    if (MeuDB.Delete(cQuery) <= 0)
+                    {
+                        cHtml = "ERRO: Problema para excluir o registro!";
+                    }
+
+                }
+                else if (cOperacao == "4") //Alteracao
+                {
+                    LogFile.Log(" Alteracao: " + cNomeTabela + " - idSequencial: " + cCodigo);
 
                     cQuery = String.Format(" UPDATE {0} SET ", cNomeTabela);
 
-                    for (int i=0; i < aDados.Count; i++)
+                    for (int i=0; i < aDados["CAMPO"].Count; i++)
                     {
                         if (cQuery.Substring(cQuery.Length-4,4) != "SET ") { cQuery += ","; }
 
@@ -1415,10 +1433,69 @@ if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
 
                     cHtml = "Registro alterado com sucesso!";
 
+                    LogFile.Log(" --- cQuery: ");
+                    LogFile.Log(cQuery);
+
                     if (MeuDB.Update(cQuery) <= 0)
                     {
                         cHtml = "ERRO: Problema para alterar o registro!";
                     } 
+
+                }
+                else if (cOperacao == "3") //Inclusao
+                {
+                    LogFile.Log(" Inclusao: " + cNomeTabela);
+
+                    cQuery = " ({0}) VALUES ({1}) ";
+
+                    for (int i = 0; i < aDados["CAMPO"].Count; i++)
+                    {
+
+                        cValor = aDados["VALOR"].ElementAt(i);
+
+                        if (aDados["TIPO"].ElementAt(i) == "N")  //Numerico
+                        {
+                            cValor = (String.IsNullOrEmpty(cValor) ? "0" : cValor);
+
+                        }
+                        else if (aDados["TIPO"].ElementAt(i) == "D") //Data
+                        {
+                            if ((cValor.Trim() == "/ /") || String.IsNullOrEmpty(cValor)) { cValor = "NULL"; }
+                            else if (cValor.Contains("T00:00:00.000Z")) { cValor = String.Format("'{0}'", cValor.Substring(0, 10)); }
+                            else { cValor = String.Format("'{0}'", DateTime.Parse(cValor).ToString("yyyy-MM-dd")); }
+
+                        }
+                        else //Caractere
+                        {
+                            cValor = cValor.Replace("'", "\"");
+
+                            //Cliptografado
+                            if (aDados["EDICAO"].ElementAt(i) == "7") { cValor = MeuLib.Cobrir(cValor); }
+
+                            cValor = String.Format("'{0}'", cValor);
+
+                        }
+
+                        // Irá montar a query dos campos e dos valores = INSERT INTO (CAMPO1,CAMPO2{0}) VALUES (VALOR1,VALOR2{1}) 
+                        // onde {0} será substituido no final por ",CAMPO3{0}" o mesmo para o valor ",VALOR3{1}". No final {0} e {1} serao substituidos por "" (vazio).
+                        cQuery = String.Format(cQuery, (i > 0 ? "," : "") + aDados["CAMPO"].ElementAt(i) + "{0}", (i > 0 ? "," : "") + cValor + "{1}");
+
+                    }//for(i)
+
+                    //Limpa as tags {0} e {1}
+                    cQuery = String.Format(cQuery, "", "");
+
+                    cQuery = " INSERT INTO " + cNomeTabela + cQuery;
+
+                    //LogFile.Log(" --- cQuery: ");
+                    //LogFile.Log(cQuery);
+
+                    cHtml = "Registro incluido com sucesso!";
+
+                    if (MeuDB.Insert(cQuery) <= 0)
+                    {
+                        cHtml = "ERRO: Problema para incluir o registro!";
+                    }
 
                 }
 
@@ -1473,6 +1550,9 @@ if ((lsCampos["TIPO"].ElementAt(i) == "C") || lComboBox)
                     cQuery = "select xseq from ";
                     cQuery += String.Format(" (select t01.*, (@seq := @seq + 1) as xseq from (SELECT @seq := 0) AS nada, {0} as t01 order by {1}) as tabela ", cNomeTabela, cOrderBy);
                     cQuery += String.Format(" where idSequencial = {0} ", cIdSequencial);
+
+                    LogFile.Log("cQuery.: ");
+                    LogFile.Log(cQuery);
 
                     campos = new List<string>(new string[] { "xseq" });
                     list = MeuDB.Select(cQuery, campos, false);

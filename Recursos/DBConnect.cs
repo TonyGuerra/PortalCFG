@@ -141,20 +141,24 @@ namespace Recursos
         }
 
         //Delete statement
-        public void Delete(string query)
+        public int Delete(string query)
         {
             //string query = "DELETE FROM tableinfo WHERE name='John Smith'";
+            int nReg = 0;
 
             if (this.OpenConnection())
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
 
-                int nReg = cmd.ExecuteNonQuery();
+                nReg = cmd.ExecuteNonQuery();
 
                 LogFile.Log(" --- Delete processado! regs.: " + nReg.ToString());
 
                 this.CloseConnection();
             }
+
+            return nReg;
+
         }
 
         //Select statement

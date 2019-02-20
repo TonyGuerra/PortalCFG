@@ -25,7 +25,7 @@
 <script type='text/javascript'>
 
 function fVoltar() { 
-   document.form1.action = "tabelas_browse";
+   document.form1.action = "pagina_browser";
    document.form1.submit()
 }
 
@@ -346,15 +346,12 @@ function Right(str, n){
 
 <script type='text/javascript'>
 
-    var cTrace1  = document.form1.trace1.value;
-    var cTrace2  = document.form1.trace2.value;
     var node;
     var contador = 0;
     var aXLinhas = [];
     var cPasta   = '';
 
-	parent.DATA.caminho(trace1+trace2);
-    //parent.Frame1.hmheader.fMeudiv(cTrace1, cTrace2);
+	//parent.document.meuframe.document.getElementById("trace").name
     //parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:parent.Frame2.hmcontent.fVoltar();" style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
     //parent.Frame1.hmheader.meutd2.innerHTML='<a href=javascript:parent.Frame2.hmcontent.fFiltro("!XCHAVE!"); style="text-decoration: none;"><ul><li>Filtro</li></ul></a>';
     //parent.Frame1.hmheader.meutd3.innerHTML='<a href=javascript:parent.Frame2.hmcontent.vm.validaCadastro(); style="text-decoration: none;"><ul><li>Gravar</li></ul></a>';
@@ -531,6 +528,8 @@ function ViewModel() {
     self.cTabOrigem   = '!XTABORIGEM!';
     self.cOperacao    = '!XOPERACAO!';
     self.aLinhas      = ko.observableArray([{id: "ok", valor: "ok"}]);
+	self.cTrace1      = '!XTRACE1!';
+	self.cTrace2      = '!XTRACE2!';
 	self.cFiltro      = '!XFILTRO!';
 
 
@@ -963,6 +962,8 @@ function ViewModel() {
 vm = new ViewModel();
 
 ko.applyBindings(vm);
+
+parent.DATA.caminho(vm.cTrace1+vm.cTrace2);
 
 // Executa a obtencao dos dados para o bind:with
 vm.obterCadastro();

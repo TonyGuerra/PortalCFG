@@ -240,7 +240,7 @@ namespace PortalCFG
             LogFile.Log(" .");
             LogFile.Log(" Portal executando...");
             LogFile.Log(" .");
-            LogFile.Log(" " + URL);
+            LogFile.Log(" " + URL + "login");
             LogFile.Log(" .");
             LogFile.Log(" pressione quit para sair!");
             LogFile.Log(" .");
