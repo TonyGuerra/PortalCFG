@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArtLib.cs" />
+    <Compile Include="Atributos.cs" />
     <Compile Include="Browser.cs" />
     <Compile Include="Cadastro.cs" />
     <Compile Include="DBConnect.cs" />

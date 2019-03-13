@@ -26,7 +26,7 @@ namespace Recursos
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string cQueryString = HttpUtility.UrlDecode(request.Url.Query);
-            string cJSon = cDados.Replace("dados=", "");
+            string cJSon = HttpUtility.UrlDecode(cDados.Replace("dados=", ""));
             dynamic oLogin = serializer.Deserialize<dynamic>(cJSon);
             string cHtml = "ERRO: Html nao atribuido";
 
@@ -602,7 +602,7 @@ namespace Recursos
                 {
                     cGatilhoClasse = "xgatilho";
 
-                    string cQuery = string.Format("SELECT CAMPO FROM aa41campos WHERE idSequencial = {0} ", lsCampos["GATILHOCAMPO"].ElementAt(i));
+                    string cQuery = String.Format("SELECT CAMPO FROM aa41campos WHERE idSequencial = {0} ", lsCampos["GATILHOCAMPO"].ElementAt(i));
 
                     List<string> campos = new List<string>(new string[] { "CAMPO" });
 
@@ -1610,22 +1610,22 @@ namespace Recursos
                 cHtml += " <br><br><br><br><br><br><br><br><br><br><br>" + Environment.NewLine;
                 cHtml += String.Format(" <form name=\"form1\" method=\"post\" action=\"{0}\">", cAcao) + Environment.NewLine;
 
-                cHtml += String.Format(" <input name=\"trace1\"      id=\"trace1\"      type=\"hidden\" value=\"{0}\">", oLogin["trace1"])     + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"trace2\"      id=\"trace2\"      type=\"hidden\" value=\"{0}\">", oLogin["trace2"])     + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"login\"       id=\"login\"       type=\"hidden\" value=\"{0}\">", oLogin["login"])      + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"sessao\"      id=\"sessao\"      type=\"hidden\" value=\"{0}\">", oLogin["sessao"])     + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"menu\"        id=\"menu\"        type=\"hidden\" value=\"{0}\">", oLogin["menu"])       + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"tabela\"      id=\"tabela\"      type=\"hidden\" value=\"{0}\">", oLogin["tabela"])     + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"nometabela\"  id=\"nometabela\"  type=\"hidden\" value=\"{0}\">", oLogin["nometabela"]) + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"registro\"    id=\"registro\"    type=\"hidden\" value=\"{0}\">", oLogin["registro"])   + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"origem\"      id=\"origem\"      type=\"hidden\" value=\"{0}\">", oLogin["origem"])     + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"item\"        id=\"item\"        type=\"hidden\" value=\"{0}\">", oLogin["item"])       + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"operacao\"    id=\"operacao\"    type=\"hidden\" value=\"{0}\">", oLogin["operacao"])   + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"filtro\"      id=\"filtro\"      type=\"hidden\" value=\"{0}\">", oLogin["filtro"])    + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"paginaatu\"   id=\"paginaatu\"   type=\"hidden\" value=\"{0}\">", oLogin["paginaatu"]) + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"paginafim\"   id=\"paginafim\"   type=\"hidden\" value=\"{0}\">", oLogin["paginafim"]) + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"XSEQUENCIAL1\"   id=\"XSEQUENCIAL1\"   type=\"hidden\" value=\"{0}\">", "") + Environment.NewLine;
-                cHtml += String.Format(" <input name=\"XSEQUENCIAL2\"   id=\"XSEQUENCIAL2\"   type=\"hidden\" value=\"{0}\">", "9999999") + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"trace1\"         id=\"trace1\"         type=\"hidden\" value=\"{0}\">", oLogin["trace1"])     + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"trace2\"         id=\"trace2\"         type=\"hidden\" value=\"{0}\">", oLogin["trace2"])     + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"login\"          id=\"login\"          type=\"hidden\" value=\"{0}\">", oLogin["login"])      + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"sessao\"         id=\"sessao\"         type=\"hidden\" value=\"{0}\">", oLogin["sessao"])     + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"menu\"           id=\"menu\"           type=\"hidden\" value=\"{0}\">", oLogin["menu"])       + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"tabela\"         id=\"tabela\"         type=\"hidden\" value=\"{0}\">", oLogin["tabela"])     + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"nometabela\"     id=\"nometabela\"     type=\"hidden\" value=\"{0}\">", oLogin["nometabela"]) + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"registro\"       id=\"registro\"       type=\"hidden\" value=\"{0}\">", oLogin["registro"])   + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"origem\"         id=\"origem\"         type=\"hidden\" value=\"{0}\">", oLogin["origem"])     + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"item\"           id=\"item\"           type=\"hidden\" value=\"{0}\">", oLogin["item"])       + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"operacao\"       id=\"operacao\"       type=\"hidden\" value=\"{0}\">", oLogin["operacao"])   + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"filtro\"         id=\"filtro\"         type=\"hidden\" value=\"{0}\">", oLogin["filtro"])     + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"paginaatu\"      id=\"paginaatu\"      type=\"hidden\" value=\"{0}\">", oLogin["paginaatu"])  + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"paginafim\"      id=\"paginafim\"      type=\"hidden\" value=\"{0}\">", oLogin["paginafim"])  + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"XSEQUENCIAL1\"   id=\"XSEQUENCIAL1\"   type=\"hidden\" value=\"{0}\">", "")                   + Environment.NewLine;
+                cHtml += String.Format(" <input name=\"XSEQUENCIAL2\"   id=\"XSEQUENCIAL2\"   type=\"hidden\" value=\"{0}\">", "9999999")            + Environment.NewLine;
 
                 cHtml += String.Format(" <center>{0}</center>", oLogin["dados"]) + Environment.NewLine;
                 cHtml += " <br><br>" + Environment.NewLine;

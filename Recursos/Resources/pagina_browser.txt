@@ -286,7 +286,7 @@
 				self.manutencao = function(data,geral) {
 					 //console.log(geral.currentTarget.name) ;
 					 document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: self.cSessao, operacao:  geral.currentTarget.name, 
-					                                          codigo: data.idSequencial, taborigem: self.cTabela, tabela: data.TABELA(), 
+					                                          codigo: data.idSequencial, taborigem: self.cTabela, tabela: data.tabela(), 
 															  origem: self.cOrigem, tipotabela: self.cTipoTabela, paginaatu: self.nPaginaAtu,
 															  paginafim: self.nPaginaFim, trace1: self.cTrace1, trace2: self.cTrace2, 
 															  menu: self.cMenu, filtro: self.cFiltro})
