@@ -220,4 +220,7 @@
   <data name="tabelas_cadastro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\tabelas_cadastro.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="campos_browse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\campos_browse.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

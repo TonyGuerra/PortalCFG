@@ -262,11 +262,11 @@ namespace Recursos
                 {
                     if (list["ORDNUMERO"].ElementAt(i) == "S")
                     {
-                        cOrdem = (String.IsNullOrEmpty(cOrdem) ? "" : ",") + String.Format("({0}*1", list["CAMPO"].ElementAt(i));
+                        cOrdem += (String.IsNullOrEmpty(cOrdem) ? "" : ",") + String.Format("({0}*1", list["CAMPO"].ElementAt(i));
                     }
                     else
                     {
-                        cOrdem = (String.IsNullOrEmpty(cOrdem) ? "" : ",") + list["CAMPO"].ElementAt(i);
+                        cOrdem += (String.IsNullOrEmpty(cOrdem) ? "" : ",") + list["CAMPO"].ElementAt(i);
                     }
                 }
 

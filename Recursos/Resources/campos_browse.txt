@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <meta name="generator" content="PORTALCFG">
+    <meta name="created" content="sex, 17 jun 2011 13:05:43 GMT">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta charset='UTF-8'>
+    <title>PortalCFG</title>
+    <script type="text/javascript" src="json2.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type='text/javascript' src='knockout.js'></script>
+    <script type="text/javascript" src="knockout.mapping-latest.js"></script>
+ 
+<link href="PortalCFG.css" rel="stylesheet" type="text/css" />    
+
+<script type='text/javascript'>
+
+function fEfetivar() { 
+
+     document.form1.action =  "campos_efetivar";
+     document.form1.submit();
+         
+}
+
+function fCopiar() { 
+
+    if  ((document.form1.inpTabela.value == '') || (document.form1.inpTabela.value == '0')) {
+        alert('Tabela nao definida!');
+        return false;
+    };
+
+    if  (document.form1.inpRegDe.value == '') {
+        alert('Reg de nao definido!');
+        return false;
+     };
+
+    if  ((document.form1.inpRegAte.value == '') || (document.form1.inpRegAte.value == '0')) {
+        alert('Reg ate nao definido!');
+        return false;
+     };
+
+    if  (document.form1.inpTabela.value == document.form1.cTabela.value) {
+        alert('N&atildeo pode copiar da propria tabela!');
+        return false;
+     };
+
+     document.form1.action =  "campos_copiar";
+     document.form1.submit();
+         
+}
+
+</script>
+
+
+</head>
+
+<body style="color:#0080FF; font-family: Arial; font-style: normal; text-decoration: none; font-size: 10pt; width:102%;zoom:90%;">
+
+<Form name="form1" id="form1" method="post" action="">
+<input name="cTrace1" id="cTrace1" type="hidden" value="!XTRACE!">
+<input name="cTrace2" id="cTrace2" type="hidden" value="Campos Browse > ">
+<input name="cLogin" id="cLogin" type="hidden" value="!XLOGIN!">
+<input name="cSessao" id="cSessao" type="hidden" value="!XSESSAO!">
+<input name="cMenu" id="cMenu" type="hidden" value="!XMENU!">
+<input name="cTabela" id="cTabela" type="hidden" value="!XTABELA!">
+<input name="cNomeTabela" id="cNomeTabela" type="hidden" value="!XNOMETABELA!">
+<input name="cTipoTabela" id="cTipoTabela" type="hidden" value="Tabela">
+<input name="cTabPasta" id="cTabPasta" type="hidden" value="!XTABPASTA!">
+<input name="cOrigem" id="cOrigem" type="hidden" value="BROWSE">
+<input name="dados" id="dados" type="hidden" value=""/>
+
+<div id="divCabecalho" name="divCabecalho" style="visibility:hidden;">
+
+<div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
+<div id="xLinhaFina" style="position:relative;width:100%;height:0.6mm;"></div>
+<div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
+
+<div style="position:relative; font-weight: bold; Left:010px;">
+     >> CAMPOS BROWSE  - Tabela !XCADASTRO! 
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copiar da tabela: 
+    <input name="inpTabela" type="text" size="6" value="0" style="text-align:right">
+    &nbsp;&nbsp;&nbsp;&nbsp; Reg de: 
+    <input name="inpRegDe" type="text" size="6" value="0" style="text-align:right"> 
+    &nbsp;ate: 
+    <input name="inpRegAte" type="text" size="6" value="0" style="text-align:right"> 
+    <input name="btCopiar" id="brCopiar" style="background-color: rgb(0, 150, 255);color:white" type="button" value="Copiar" onclick="javascript:fCopiar();">
+</div>
+
+<div style="position:relative; left:030px; text-align:right; font-weight: bold; height: 10px;">&nbsp;</div>
+<div id="xLinhaFina" style="position:relative;width:100%;height:0.6mm;"></div>
+<div style="position:relative;height: 15px;">&nbsp;</div>
+
+</div>
+
+<!-- Inicio Browse Campos -->
+<div id="divCampos" name="divCampos" class="BordaDiv" style="position:relative;float:left;visibility:hidden;">
+<div id="xTitulo" style="height:10mm; margin-top:-1mm; text-indent:3mm; line-height:10mm;"><span style="font-family: Arial; font-weight: bold; font-style: normal; text-decoration: none; font-size: 11pt;">Campos</span></div>
+<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
+<table name="8" data-bind="with: obterDados" width="100%" border="0" cellpadding="2" cellspacing="0" bordercolor="#0096FF" style="font-weight: normal; font-style: normal; text-decoration: none; font-size: 9pt; height:1.5mm;">
+  <tr id="xTitulo2" data-bind="if: (xbrowse8().length > 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm">
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+     !XCABECALHO_CAMPOS!
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Codigo</strong></div></td>
+  </tr>
+
+  <tr id="xTitulo2" data-bind="if: (xbrowse8().length === 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Sts</strong></div></td>
+  </tr>
+
+ !XLINHAS_CAMPOS!
+
+     <tbody data-bind="if: (xbrowse8().length === 0)"><tr><td>
+        <a name="8" href data-bind="click: $root.xinclusao, attr: {title : 'tabelas_cadastro'}"><img src="portal_mais.gif" width=18px height=16px border="0" title="Inclusao do Campo"></a>
+     </td></tr></tbody>
+
+</table>
+</div>
+<!-- Fim Browse Campos -->
+
+<!-- Inicio Browse Status -->
+<div id="divStatus" name="divStatus" class="BordaDiv" style="position:relative;float:left;visibility:hidden;">
+<div id="xTitulo" style="height:10mm; margin-top:-1mm; text-indent:3mm; line-height:10mm;"><span style="font-family: Arial; font-weight: bold; font-style: normal; text-decoration: none; font-size: 11pt;">Status</span></div>
+<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
+<table name="13" data-bind="with: obterDados" width="100%" border="0" cellpadding="2" cellspacing="0" bordercolor="#0096FF" style="font-weight: normal; font-style: normal; text-decoration: none; font-size: 9pt; height:1.5mm;">
+  <tr id="xTitulo2" data-bind="if: (xbrowse13().length > 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+       !XCABECALHO_STATUS!
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Codigo</strong></div></td>
+  </tr>
+
+  <tr id="xTitulo2" data-bind="if: (xbrowse13().length === 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Sts</strong></div></td>
+  </tr>
+
+ !XLINHAS_STATUS!
+
+     <tbody data-bind="if: (xbrowse13().length === 0)"><tr><td>
+        <a name="13" href data-bind="click: $root.xinclusao, attr: {title : 'tabelas_cadastro'}"><img src="portal_mais.gif" width=18px height=16px border="0" title="Inclusao do Status"></a>
+     </td></tr></tbody>
+
+</table>
+
+</div>
+<!-- Fim Browse Status -->
+
+<!-- Inicio Browse Indices -->
+<div id="divIndices" name="divIndices" class="BordaDiv" style="position:relative;float:left;visibility:hidden;">
+<div id="xTitulo" style="height:10mm; margin-top:-1mm; text-indent:3mm; line-height:10mm;"><span style="font-family: Arial; font-weight: bold; font-style: normal; text-decoration: none; font-size: 11pt;">&Iacutendices</span></div>
+<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
+<table name="3" data-bind="with: obterDados" width="100%" border="0" cellpadding="2" cellspacing="0" bordercolor="#0096FF" style="font-weight: normal; font-style: normal; text-decoration: none; font-size: 9pt; height:1.5mm;">
+  <tr id="xTitulo2" data-bind="if: (xbrowse3().length > 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+       !XCABECALHO_INDICES!
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Codigo</strong></div></td>
+  </tr>
+
+  <tr id="xTitulo2" data-bind="if: (xbrowse3().length === 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Sts</strong></div></td>
+  </tr>
+
+ !XLINHAS_INDICES!
+
+     <tbody data-bind="if: (xbrowse3().length === 0)"><tr><td>
+        <a name="3" href data-bind="click: $root.xinclusao, attr: {title : 'tabelas_cadastro'}"><img src="portal_mais.gif" width=18px height=16px border="0" title="Inclusao do Indice"></a>
+     </td></tr></tbody>
+
+</table>
+</div>
+<!-- Fim Browse Indices -->
+
+<!-- Inicio Browse Gatilhos -->
+<div id="divGatilho" name="divGatilho" class="BordaDiv" style="position:relative;float:left;visibility:hidden;">
+<div id="xTitulo" style="height:10mm; margin-top:-1mm; text-indent:3mm; line-height:10mm;"><span style="font-family: Arial; font-weight: bold; font-style: normal; text-decoration: none; font-size: 11pt;">Gatilhos</span></div>
+<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
+<table name="23" data-bind="with: obterDados" width="100%" border="0" cellpadding="2" cellspacing="0" bordercolor="#0096FF" style="font-weight: normal; font-style: normal; text-decoration: none; font-size: 9pt; height:1.5mm;">
+  <tr id="xTitulo2" data-bind="if: (xbrowse20().length > 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+       !XCABECALHO_GATILHO!
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Codigo</strong></div></td>
+  </tr>
+
+  <tr id="xTitulo2" data-bind="if: (xbrowse20().length === 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Sts</strong></div></td>
+  </tr>
+
+ !XLINHAS_GATILHO!
+
+     <tbody data-bind="if: (xbrowse23().length === 0)"><tr><td>
+        <a name="23" href data-bind="click: $root.xinclusao, attr: {title : 'tabelas_cadastro'}"><img src="portal_mais.gif" width=18px height=16px border="0" title="Inclusao do Gatilho"></a>
+     </td></tr></tbody>
+
+</table>
+</div>
+<!-- Fim Browse Gatilhos -->
+
+<!-- Inicio Browse Relacionamento -->
+<div id="divRelacao" name="divRelacao" class="BordaDiv" style="position:relative;float:left;visibility:hidden;">
+<div id="xTitulo" style="height:10mm; margin-top:-1mm; text-indent:3mm; line-height:10mm;"><span style="font-family: Arial; font-weight: bold; font-style: normal; text-decoration: none; font-size: 11pt;">Relacionamento</span></div>
+<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
+<table name="6" data-bind="with: obterDados" width="100%" border="0" cellpadding="2" cellspacing="0" bordercolor="#0096FF" style="font-weight: normal; font-style: normal; text-decoration: none; font-size: 9pt; height:1.5mm;">
+  <tr id="xTitulo2" data-bind="if: (xbrowse6().length > 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+       !XCABECALHO_RELACAO!
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Codigo</strong></div></td>
+  </tr>
+
+  <tr id="xTitulo2" data-bind="if: (xbrowse6().length === 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Sts</strong></div></td>
+  </tr>
+
+ !XLINHAS_RELACAO!
+
+     <tbody data-bind="if: (xbrowse6().length === 0)"><tr><td>
+        <a name="6" href data-bind="click: $root.xinclusao, attr: {title : 'tabelas_cadastro'}"><img src="portal_mais.gif" width=18px height=16px border="0" title="Inclusao da Relacao"></a>
+     </td></tr></tbody>
+
+</table>
+</div>
+<!-- Fim Browse Relacionamento -->
+
+<!-- Inicio Browse Condicoes -->
+<div id="divCondicao" name="divCondicao" class="BordaDiv" style="position:relative;float:left;visibility:hidden;">
+<div id="xTitulo" style="height:10mm; margin-top:-1mm; text-indent:3mm; line-height:10mm;">
+        <span style="font-family: Arial; font-weight: bold; font-style: normal; text-decoration: none; font-size: 11pt;">Condi&ccedil&otildees</span>
+</div>
+<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
+<table name="14" data-bind="with: obterDados" width="100%" border="0" cellpadding="2" cellspacing="0" bordercolor="#0096FF" style="font-weight: normal; font-style: normal; text-decoration: none; font-size: 9pt; height:1.5mm;">
+  <tr id="xTitulo2" data-bind="if: (xbrowse14().length > 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm">
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+        !XCABECALHO_CONDICAO!
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Codigo</strong></div></td>
+  </tr>
+
+  <tr id="xTitulo2" data-bind="if: (xbrowse14().length === 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Sts</strong></div></td>
+  </tr>
+
+ !XLINHAS_CONDICAO!
+
+     <tbody data-bind="if: (xbrowse14().length === 0)"><tr><td>
+        <a name="14" href data-bind="click: $root.xinclusao, attr: {title : 'tabelas_cadastro'}"><img src="portal_mais.gif" width=18px height=16px border="0" title="Inclusao da Condicao"></a>
+     </td></tr></tbody>
+
+</table>
+
+</div>
+<!-- Fim Browse Condicoes -->
+
+<!-- Inicio Browse Triggers -->
+<div id="divTrigger" name="divTrigger" class="BordaDiv" style="position:relative;float:left;visibility:hidden;">
+<div id="xTitulo" style="height:10mm; margin-top:-1mm; text-indent:3mm; line-height:10mm;"><span style="font-family: Arial; font-weight: bold; font-style: normal; text-decoration: none; font-size: 11pt;">Triggers</span></div>
+<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
+<table name="11" data-bind="with: obterDados" width="100%" border="0" cellpadding="2" cellspacing="0" bordercolor="#0096FF" style="font-weight: normal; font-style: normal; text-decoration: none; font-size: 9pt; height:1.5mm;">
+  <tr id="xTitulo2" data-bind="if: (xbrowse11().length > 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+       !XCABECALHO_TRIGGER!
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Codigo</strong></div></td>
+  </tr>
+
+  <tr id="xTitulo2" data-bind="if: (xbrowse11().length === 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Sts</strong></div></td>
+  </tr>
+
+ !XLINHAS_TRIGGER!
+
+     <tbody data-bind="if: (xbrowse11().length === 0)"><tr><td>
+        <a name="11" href data-bind="click: $root.xinclusao, attr: {title : 'tabelas_cadastro'}"><img src="portal_mais.gif" width=18px height=16px border="0" title="Inclusao do Trigger"></a>
+     </td></tr></tbody>
+
+</table>
+</div>
+<!-- Fim Browse Triggers -->
+
+<!-- Inicio Browse Itens -->
+<div id="divItem" name="divItem" class="BordaDiv" style="position:relative;float:left;visibility:hidden;">
+<div id="xTitulo" style="height:10mm; margin-top:-1mm; text-indent:3mm; line-height:10mm;"><span style="font-family: Arial; font-weight: bold; font-style: normal; text-decoration: none; font-size: 11pt;">Itens</span></div>
+<div id="xTitulo" style="background-color:#FFFFFF; height:1mm;">&nbsp;</div>
+<table name="20" data-bind="with: obterDados" width="100%" border="0" cellpadding="2" cellspacing="0" bordercolor="#0096FF" style="font-weight: normal; font-style: normal; text-decoration: none; font-size: 9pt; height:1.5mm;">
+  <tr id="xTitulo2" data-bind="if: (xbrowse20().length > 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+       !XCABECALHO_ITEM!
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Codigo</strong></div></td>
+  </tr>
+
+  <tr id="xTitulo2" data-bind="if: (xbrowse20().length === 0)" style="font-weight: bold; font-size: 9pt; height:1.5mm"><!-- Row 1 -->
+      <td><div  style="margin-right: 1mm; margin-left: 1mm;"><strong>Operacao</strong></div></td>
+     <td><div style="margin-left:1mm; margin-right:1mm;"><strong>Sts</strong></div></td>
+  </tr>
+
+ !XLINHAS_ITEM!
+
+     <tbody data-bind="if: (xbrowse20().length === 0)"><tr><td>
+        <a name="20" href data-bind="click: $root.xinclusao, attr: {title : 'tabelas_cadastro'}"><img src="portal_mais.gif" width=18px height=16px border="0" title="Inclusao do Item"></a>
+     </td></tr></tbody>
+
+</table>
+</div>
+<!-- Fim Browse Itens -->
+
+</Form>
+
+<script type="text/html" id="statusTemplate1">
+    <img data-bind="attr: { src: imagem, title: titulo }" width=18px height=16px border="0">
+</script>
+
+<script type='text/javascript'>
+
+    var cTrace1 = document.form1.cTrace1.value;
+    var cTrace2 = document.form1.cTrace2.value;
+
+	//parent.DATA.caminho(vm.cTrace1+vm.cTrace2);
+     //parent.Frame1.hmheader.fMeudiv(cTrace1, cTrace2);
+     //parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:parent.Frame2.hmcontent.fEfetivar();"  style="text-decoration: none;"><ul><li>Efetivar</li></ul></a>';
+     //parent.Frame1.hmheader.meutd2.innerHTML='<a href="javascript:history.go(-1);"  style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
+     //parent.Frame1.hmheader.meutd3.innerHTML='';
+
+
+function ViewModel() {
+        var self = this;
+
+        self.cLogin         = '!XLOGIN!';
+        self.cSessao        = '!XSESSAO!';
+        self.cTabela        = '!XTABELA!';
+        self.cFiltro          = '!XVIEWFILTRO!';
+
+        self.obterDados   = ko.observable();
+
+        self.atualGRUPO = 'xxxxx';
+        self.indiceGRUPO = -1;
+
+        self.atualSUBGRUPO = 'xxxxx';
+        self.indiceSUBGRUPO = -1;
+
+        self.atualMINIGRUPO = 'xxxxx';
+        self.indiceMINIGRUPO = -1;
+
+        self.veGRUPO = function(indice, TR_GRUPO) {
+
+                  if  (self.indiceGRUPO >= indice) {return false;}
+
+                  if  (TR_GRUPO == "") {return false;}
+                  if  (self.atualGRUPO == TR_GRUPO)  {return false;}
+
+                  self.indiceGRUPO = indice;
+                  self.atualGRUPO = TR_GRUPO;
+
+                  self.atualSUBGRUPO = 'xxxxx';
+                  self.indiceSUBGRUPO = -1;
+
+                  self.atualMINIGRUPO = 'xxxxx';
+                  self.indiceMINIGRUPO = -1;
+
+                  return true;
+        }
+
+        self.veSUBGRUPO = function(indice, TR_SUBGRUPO) {
+
+                  if  (self.indiceSUBGRUPO >= indice) {return false;}
+
+                  if  (TR_SUBGRUPO == "") {return false;}
+                  if  (self.atualSUBGRUPO == TR_SUBGRUPO)  {return false;}
+
+                  self.indiceSUBGRUPO = indice;
+                  self.atualSUBGRUPO = TR_SUBGRUPO;
+
+                  self.atualMINIGRUPO = 'xxxxx';
+                  self.indiceMINIGRUPO = -1;
+
+                  return true;
+        }
+
+        self.veMINIGRUPO = function(indice, TR_MINIGRUPO) {
+
+                  if  (self.indiceMINIGRUPO >= indice) {return false;}
+
+                  if  (TR_MINIGRUPO == "") {return false;}
+                  if  (self.atualMINIGRUPO == TR_MINIGRUPO)  {return false;}
+
+                  self.indiceMINIGRUPO = indice;
+                  self.atualMINIGRUPO = TR_MINIGRUPO;
+
+                  return true;
+        }
+
+
+        // Comportamento    
+        self.obterBrowse = function() {
+			   
+			   var deferred = $.Deferred();
+
+               jQuery.ajax("obter_browser", {
+                   data: ko.toJSON( { login: self.cLogin, sessao: self.cSessao, taborigem: self.cTabela, tabela: '8|13|3|6|14|11|20|23', filtro: self.cFiltro, paginaatu: 0, paginafim: 0}),
+                   type: "post",   
+                   contentType: "application/json",
+                   success: function(result) {
+                           var xJSon = ko.toJSON(result);
+                           //var cJSon = JSON.stringify(xJSon);
+                           //cJSon = cJSon.replace(/!!x/g,'\\x');
+                           cJSon = eval(xJSon);  //Executa a acentuacao no token \x, nao delimitar com apostrofe pois resulta em erro no parse();
+                           //console.log(cJSon);
+                           xJSon = JSON.parse(cJSon);
+                           self.obterDados(ko.mapping.fromJS(xJSon));
+						   deferred.resolve(1);
+                   },
+                   error : function(jq, st, error){
+                           alert(error);
+  						   deferred.resolve(2);
+
+                   }
+             });
+		     return deferred.promise();
+        }
+
+        //--------- Opcao de manutencao -------
+        self.manutencao = function(data,geral) {
+             //console.log(geral.currentTarget.name) ;
+             document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: self.cSessao, operacao:  geral.currentTarget.name, codigo: data.idSequencial, taborigem: self.cTabela, tabela: data.tabela});
+             document.form1.action = geral.currentTarget.title;
+             document.form1.submit();
+       }
+
+        //--------- Opcao de inclusao -------
+        self.xinclusao = function(data,geral) {
+             //console.log(geral.currentTarget.title) ;
+             document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: self.cSessao, operacao:  3, codigo: 0, taborigem: self.cTabela, tabela: geral.currentTarget.name});
+             document.form1.action = geral.currentTarget.title;
+             document.form1.submit();
+       }
+
+ };
+
+var vm = new ViewModel();
+
+ko.applyBindings(vm);
+
+// Executa a obtencao dos dados para o bind:with
+vm.obterBrowse();
+
+//document.form1.cLoad.value = '2'; //proxima reentrada recarrega os dados.
+$(document).ajaxComplete(function(){
+
+   divCabecalho.style.visibility = "visible";
+   divCampos.style.visibility = "visible";
+   divStatus.style.visibility = "visible";
+   divIndices.style.visibility = "visible";
+   divGatilho.style.visibility = "visible";
+   divRelacao.style.visibility = "visible";
+   divCondicao.style.visibility = "visible";
+   divTrigger.style.visibility = "visible";
+   divItem.style.visibility = "visible";
+
+});
+   
+</script>
+
+</body>
+</html>

@@ -31,6 +31,7 @@ namespace Recursos
             ArtLib MeuLib = new ArtLib();
             Browser MeuBrowser = new Browser();
             Cadastro MeuCadastro = new Cadastro();
+            Atributos MeuAtributos = new Atributos();
             string cHtml = "ERRO: Html nao atribuido";
             string cDados = "";
 
@@ -173,6 +174,10 @@ namespace Recursos
                 else if (cMeuPath == "tabelas_sucesso")
                 {
                     cHtml = MeuCadastro.Tabelas_Sucesso(request, MeuDBP, MeuDB, MeuLib, cMeuPath, cDados);
+                }
+                else if (cMeuPath == "campos_browse")
+                {
+                    cHtml = MeuAtributos.Campos_Browse(request, MeuDBP, MeuDB, MeuLib, cMeuPath, cDados);
                 }
                 else if (Resources.ResourceManager.GetObject(cMeuPath) != null)
                 {

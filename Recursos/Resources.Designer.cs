@@ -112,6 +112,28 @@ namespace Recursos {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///  &lt;head&gt;
+        ///    
+        ///    &lt;meta name=&quot;generator&quot; content=&quot;PORTALCFG&quot;&gt;
+        ///    &lt;meta name=&quot;created&quot; content=&quot;sex, 17 jun 2011 13:05:43 GMT&quot;&gt;
+        ///    &lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+        ///    &lt;meta name=&quot;keywords&quot; content=&quot;&quot;&gt;
+        ///    &lt;meta charset=&apos;UTF-8&apos;&gt;
+        ///    &lt;title&gt;PortalCFG&lt;/title&gt;
+        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;/js/json2.js&quot;&gt;&lt;/script&gt;
+        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;/js/jquery.min.js&quot;&gt;&lt;/script&gt;
+        ///    &lt;script type=&apos;text/javascript&apos; src=&apos;/js/knockout.js&apos;&gt;&lt;/script&gt;
+        ///    &lt;script t [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string campos_browse {
+            get {
+                return ResourceManager.GetString("campos_browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap estrutura_png {

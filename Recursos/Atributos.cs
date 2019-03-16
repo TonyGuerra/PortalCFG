@@ -17,7 +17,7 @@ namespace Recursos
 {
     class Atributos
     {
-        public string Campos_Browse(HttpListenerRequest request, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
+        public string Campos_Browse(HttpListenerRequest request, DBConnect MeuDBP, DBConnect MeuDB, ArtLib MeuLib, string cMeuPath, string cDados)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string cQueryString = HttpUtility.UrlDecode(request.Url.Query);
@@ -41,6 +41,108 @@ namespace Recursos
 
                 if (cHtml.Contains("Sessao Expirou")) { break; }
 
+            //--------------- Nome da Tabela --------------------------------------------------
+
+                string cQuery = String.Format("SELECT TABELA FROM aa40tabelas WHERE idSequencial = {0} ", oLogin["tabela"]);
+                List<string> campos = new List<string>(new string[] { "TABELA" });
+                MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
+
+                if ((list.Count < campos.Count) || (list["TABELA"].Count <= 0))
+                {
+                    LogFile.Log(string.Format("Pagina_Browser: Problema para obter o nome da tabela! Tabela: {0}", oLogin["tabela"]));
+                    break;
+                }
+
+                string cNomeTabela = list["TABELA"].First();
+
+                //--------------- Campos da tabela --------------------------------------------------
+
+                string cTabela = Convert.ToString(oLogin["tabela"]);
+                string cFiltrarSN = "I";  //Ignorar o filtro automatico
+                string cFiltro = MeuLib.Base64Encode(" WHERE id0aa40tabelas = " + cTabela);  //Filtro para todas as tabelas pela tabela origem
+                string cTrace1 = oLogin["trace1"] + oLogin["trace2"];
+                string cTrace2 = "";
+                string cCabecalho = "";
+                string cLinha = "";
+                string cMenu = "24"; //Menu de estrutura CAMPOS - M0101ST01
+
+                if ( ! Campos_Browse_HTML(MeuDB, MeuLib, oLogin, cHtml, cFiltrarSN, cMenu, "8", cFiltro, ref cTrace2, ref cCabecalho, ref cLinha) ) { break; }
+
+                cHtml = cHtml.Replace("!XCABECALHO_CAMPOS!", cCabecalho);
+                cHtml = cHtml.Replace("!XLINHAS_CAMPOS!", cLinha);
+
+                cHtml = cHtml.Replace("!XLOGIN!", oLogin["login"]);
+                cHtml = cHtml.Replace("!XSESSAO!", oLogin["sessao"]);
+                cHtml = cHtml.Replace("!XMENU!", cMenu);
+                cHtml = cHtml.Replace("!XTRACE!", cTrace1);
+                cHtml = cHtml.Replace("!XTABELA!", cTabela);
+                cHtml = cHtml.Replace("!XTABPASTA!", cTabela);
+                cHtml = cHtml.Replace("!XNOMETABELA!", cNomeTabela);
+                cHtml = cHtml.Replace("!XCADASTRO!", cNomeTabela + " - " + cTabela);
+                cHtml = cHtml.Replace("!XVIEWFILTRO!", cFiltro);
+
+            //--------------- Status da tabela --------------------------------------------------
+
+                cMenu = "27"; //Menu de estrutura STATUS - M0101ST02
+
+                if (!Campos_Browse_HTML(MeuDB, MeuLib, oLogin, cHtml, cFiltrarSN, cMenu, "13", cFiltro, ref cTrace2, ref cCabecalho, ref cLinha)) { break; }
+
+                cHtml = cHtml.Replace("!XCABECALHO_STATUS!", cCabecalho);
+                cHtml = cHtml.Replace("!XLINHAS_STATUS!", cLinha);
+
+            //--------------- Indices da tabela --------------------------------------------------
+
+                cMenu = "31"; //Menu de estrutura INDICE - M0101ST03
+
+                if (!Campos_Browse_HTML(MeuDB, MeuLib, oLogin, cHtml, cFiltrarSN, cMenu, "3", cFiltro, ref cTrace2, ref cCabecalho, ref cLinha)) { break; }
+
+                cHtml = cHtml.Replace("!XCABECALHO_INDICES!", cCabecalho);
+                cHtml = cHtml.Replace("!XLINHAS_INDICES!", cLinha);
+
+            //--------------- Relacionamentos da tabela --------------------------------------------------
+
+                cMenu = "34"; //Menu de estrutura RELACAO - M0101ST04
+
+                if (!Campos_Browse_HTML(MeuDB, MeuLib, oLogin, cHtml, cFiltrarSN, cMenu, "6", cFiltro, ref cTrace2, ref cCabecalho, ref cLinha)) { break; }
+
+                cHtml = cHtml.Replace("!XCABECALHO_RELACAO!", cCabecalho);
+                cHtml = cHtml.Replace("!XLINHAS_RELACAO!", cLinha);
+
+            //--------------- Condições da tabela --------------------------------------------------
+
+                cMenu = "37"; //Menu de estrutura CONDICAO - M0101ST05
+
+                if (!Campos_Browse_HTML(MeuDB, MeuLib, oLogin, cHtml, cFiltrarSN, cMenu, "14", cFiltro, ref cTrace2, ref cCabecalho, ref cLinha)) { break; }
+
+                cHtml = cHtml.Replace("!XCABECALHO_CONDICAO!", cCabecalho);
+                cHtml = cHtml.Replace("!XLINHAS_CONDICAO!", cLinha);
+
+            //--------------- Triggers da tabela --------------------------------------------------
+
+                cMenu = "40"; //Menu de estrutura TRIGGER - M0101ST06 
+
+                if (!Campos_Browse_HTML(MeuDB, MeuLib, oLogin, cHtml, cFiltrarSN, cMenu, "11", cFiltro, ref cTrace2, ref cCabecalho, ref cLinha)) { break; }
+
+                cHtml = cHtml.Replace("!XCABECALHO_TRIGGER!", cCabecalho);
+                cHtml = cHtml.Replace("!XLINHAS_TRIGGER!", cLinha);
+
+            //--------------- Itens da tabela --------------------------------------------------
+
+                cMenu = "43"; //Menu de estrutura ITENS - M0101ST07
+
+                if (!Campos_Browse_HTML(MeuDB, MeuLib, oLogin, cHtml, cFiltrarSN, cMenu, "20", cFiltro, ref cTrace2, ref cCabecalho, ref cLinha)) { break; }
+
+                cHtml = cHtml.Replace("!XCABECALHO_ITEM!", cCabecalho);
+                cHtml = cHtml.Replace("!XLINHAS_ITEM!", cLinha);
+
+            //--------------- Gatilhos da tabela --------------------------------------------------
+
+                cMenu = "47"; //Menu de estrutura GATILHOS - M0101ST08
+
+                if (!Campos_Browse_HTML(MeuDB, MeuLib, oLogin, cHtml, cFiltrarSN, cMenu, "23", cFiltro, ref cTrace2, ref cCabecalho, ref cLinha)) { break; }
+
+                cHtml = cHtml.Replace("!XCABECALHO_GATILHO!", cCabecalho);
+                cHtml = cHtml.Replace("!XLINHAS_GATILHO!", cLinha);
 
 
 
@@ -50,22 +152,24 @@ namespace Recursos
 
         } //Campos_Browse()
 
-        private string Campos_Browse_HTML(DBConnect MeuDB, ArtLib MeuLib, dynamic oLogin, string cHtml, string cUsuario, string cMenu, string cTabela, string cFiltrarSN, 
-                                          ref string cTrace2, ref string cFiltro, ref string cCabecalho, ref string cStrLinha)
+        public Boolean Campos_Browse_HTML(DBConnect MeuDB, ArtLib MeuLib, dynamic oLogin, string cHtml, string cFiltrarSN, string cMenu, string cTabela, string cFiltro,
+                                          ref string cTrace2, ref string cCabecalho, ref string cStrLinha)
         {
+            Boolean lOk = false;
 
             do
             {
+                LogFile.Log(" --- Campos_Browse_HTML: " + cTabela);
 
                 //--------------- Dados do Usuario
 
-                string cQuery = String.Format("SELECT * FROM aa10usuarios a10 Where a10.USUARIO = '{0}' ", cUsuario);
+                string cQuery = String.Format("SELECT * FROM aa10usuarios a10 Where a10.USUARIO = '{0}' ", oLogin["login"]);
                 List<string> campos = new List<string>(new string[] { "idSequencial", "PERMISSAO" });
                 MultiValueDictionary<string, string> list = MeuDB.Select(cQuery, campos);
 
                 if ((list.Count < campos.Count) || (list["idSequencial"].Count <= 0))
                 {
-                    LogFile.Log(String.Format("Campos_Browse_HTML: Problema para obter os dados do Usuario! Usuario: {0}", cUsuario));
+                    LogFile.Log(String.Format("Campos_Browse_HTML: Problema para obter os dados do Usuario! Usuario: {0}", oLogin["login"]));
                     LogFile.Log(cQuery);
                     break;
                 }
@@ -73,13 +177,13 @@ namespace Recursos
                 string cIdUsuario = list["idSequencial"].First();
                 string cPermissao = list["PERMISSAO"].First();
 
-                //--------------- Trace do Processo
+            //--------------- Trace do Processo
 
                 cQuery = String.Format("SELECT MENU, DESCRICAO FROM aa30menu WHERE idSequencial = {0} ", cMenu);
                 campos = new List<string>(new string[] { "MENU", "DESCRICAO" });
                 list = MeuDB.Select(cQuery, campos);
 
-                if ((list.Count < campos.Count) || (list["idSequencial"].Count <= 0))
+                if ((list.Count < campos.Count) || (list["MENU"].Count <= 0))
                 {
                     LogFile.Log(String.Format("Campos_Browse_HTML: Problema para obter os dados do Menu! Menu: {0}", cMenu));
                     LogFile.Log(cQuery);
@@ -90,11 +194,11 @@ namespace Recursos
 
                 cTrace2 = list["DESCRICAO"].First();
 
-                //--------------- Contém Status
+            //--------------- Contém Status
 
                 cQuery = String.Format("SELECT Count(*) AS TEMSTATUS FROM aa41campos WHERE id0aa40tabelas = {0} AND CAMPO='STATUS' ", cTabela);
                 campos = new List<string>(new string[] { "TEMSTATUS" });
-                list = MeuDB.Select(cQuery, campos);
+                list = MeuDB.Select(cQuery, campos, false);
 
                 if ((list.Count < campos.Count) || (list["TEMSTATUS"].Count <= 0))
                 {
@@ -105,15 +209,15 @@ namespace Recursos
 
                 Boolean lTemStatus = (Int32.Parse(list["TEMSTATUS"].First()) > 0);
 
-                //--------------- Campos da Tabela
+            //--------------- Campos da Tabela
 
                 cQuery = String.Format("SELECT * FROM aa41campos WHERE id0aa40tabelas = {0} AND BROWSESN='S' AND OPERACAO <> 'I' ORDER BY ORDEM ", cTabela);
-                campos = new List<string>(new string[] { "idSequencial", "CAMPO", "BROWSETIT", "TITULO", "OPCOES" });
+                campos = new List<string>(new string[] { "idSequencial", "CAMPO", "BROWSETIT", "TITULO", "OPCOES", "FILTRO" });
                 MultiValueDictionary<string, string> lsCampos = MeuDB.Select(cQuery, campos);
 
                 if ((lsCampos.Count < campos.Count) || (lsCampos["idSequencial"].Count <= 0))
                 {
-                    LogFile.Log(String.Format("Campos_Browse_HTML: Problema para obter os dados do Menu! Menu: {0}", cMenu));
+                    LogFile.Log(String.Format("Campos_Browse_HTML: Problema para obter os campos da Tabela! Tabela: {0}", cTabela));
                     LogFile.Log(cQuery);
                     break;
                 }
@@ -134,7 +238,7 @@ namespace Recursos
                 MultiValueDictionary<string, string> aCampos = new MultiValueDictionary<string, string>();
                 Boolean lCmpRetirar = false;
 
-                for (int x = 0; x < lsCampos.Count; x++)
+                for (int x = 0; x < lsCampos["CAMPO"].Count; x++)
                 {
                     string cParametro = "";
                     string cBrowseTit = lsCampos["BROWSETIT"].ElementAt(x);
@@ -154,22 +258,34 @@ namespace Recursos
                         {
                             //Parametro de:
                             cParametro = String.Format("X{0}1", lsCampos["CAMPO"].ElementAt(x));
-                            cFiltro += String.Format(" AND {0} >= '{1}' ", lsCampos["CAMPO"].ElementAt(x), oLogin[cParametro]);
+                            if (oLogin.ContainsKey(cParametro))
+                            {
+                                cFiltro += String.Format(" AND {0} >= '{1}' ", lsCampos["CAMPO"].ElementAt(x), oLogin[cParametro]);
+                            }
                             //Parametro ate:
                             cParametro = String.Format("X{0}2", lsCampos["CAMPO"].ElementAt(x));
-                            cFiltro += String.Format(" AND {0} <= '{1}' ", lsCampos["CAMPO"].ElementAt(x), oLogin[cParametro]);
+                            if (oLogin.ContainsKey(cParametro))
+                            {
+                                cFiltro += String.Format(" AND {0} <= '{1}' ", lsCampos["CAMPO"].ElementAt(x), oLogin[cParametro]);
+                            }
                         }
                         else if (lsCampos["FILTRO"].ElementAt(x) == "3")
                         {
                             //Parametro parcial:
                             cParametro = String.Format("X{0}1", lsCampos["CAMPO"].ElementAt(x));
-                            cFiltro += String.Format(" AND {0} LIKE '%{1}%' ", lsCampos["CAMPO"].ElementAt(x), oLogin[cParametro]);
+                            if (oLogin.ContainsKey(cParametro))
+                            {
+                                cFiltro += String.Format(" AND {0} LIKE '%{1}%' ", lsCampos["CAMPO"].ElementAt(x), oLogin[cParametro]);
+                            }
                         }
                         else if (lsCampos["FILTRO"].ElementAt(x) == "4")
                         {
                             //Parametro parcial:
                             cParametro = String.Format("X{0}1", lsCampos["CAMPO"].ElementAt(x));
-                            cFiltro += String.Format(" AND {0} = '%{1}%' ", lsCampos["CAMPO"].ElementAt(x), oLogin[cParametro]);
+                            if (oLogin.ContainsKey(cParametro))
+                            {
+                                cFiltro += String.Format(" AND {0} = '%{1}%' ", lsCampos["CAMPO"].ElementAt(x), oLogin[cParametro]);
+                            }
                         }
 
                     } //if (cFiltrar)
@@ -178,12 +294,12 @@ namespace Recursos
 
                 cFiltro = MeuLib.Base64Encode(cFiltro);
 
-                //--------------- Opções de Menu
+            //--------------- Opções de Menu
 
                 cQuery = "SELECT * FROM aa30menu a30 ";
-                if (cPermissao != "1") { cQuery += ", aa11permissao a11 "; }
+                cQuery += (cPermissao == "1" ? "" : ", aa11permissao a11 ");
                 cQuery += String.Format(" WHERE (MENU LIKE '{0}%') AND (TIPO >= '1') AND (TIPO <= '9') AND (STATUS = 'A') ", cCodMenu);
-                if (cPermissao != "1") { cQuery += String.Format(" AND a30.idSequencial = a11.id0aa30menu AND a11.id0aa10usuarios = {0} ", cIdUsuario); }
+                cQuery += (cPermissao == "1" ? "" : String.Format(" AND a30.idSequencial = a11.id0aa30menu AND a11.id0aa10usuarios = {0} ", cIdUsuario));
                 cQuery += " ORDER BY REPLACE(MENU, 'IN', '0IN') ";
 
                 campos = new List<string>(new string[] { "MENU", "DESCRICAO", "TIPO", "IMAGEM", "PAGINA" });
@@ -198,7 +314,7 @@ namespace Recursos
 
                 MultiValueDictionary<string, string> aOpcoes = new MultiValueDictionary<string, string>();
 
-                for (int x = 0; x < list.Count; x++)
+                for (int x = 0; x < list["MENU"].Count; x++)
                 {
                     string cOpcao = list["MENU"].ElementAt(x);
                     string cImagem = "";
@@ -229,9 +345,7 @@ namespace Recursos
 
                 } //for(x)
 
-                //--------------- Opções de Menu
-
-                LogFile.Log("cTabela........: " + cTabela);
+            //--------------- Opções de Menu
 
                 cCabecalho = "";
                 cStrLinha = "";
@@ -243,12 +357,11 @@ namespace Recursos
                 cLinha += "<tr data-bind='attr: { id: TR_ID }'>";
 
                 cLinha += "   <td>";
-                cLinha += "  	<a name='2' href data-bind=\"click: $root.manutencao, attr: {title : 'tabelas_cadastro'}\"><img src='/imagens/portal_visualizar.gif' border='0' title='Visualizar'></a>&nbsp;";
+                cLinha += "  	<a name='2' href data-bind=\"click: $root.manutencao, attr: {title : 'tabelas_cadastro'}\"><img src='portal_visualizar.gif' border='0' title='Visualizar'></a>&nbsp;";
 
-                for (int x = 0; x < aOpcoes.Count; x++)
+                for (int x = 0; x < aOpcoes["TIPO"].Count; x++)
                 {
-                    cLinha += String.Format("&nbsp;  <a name='{0}' href data-bind=\"click: $root.manutencao, attr: {"+"title : '{1}'} \"><img src='/imagens/{2}' width=18px height=16px border='0' title='{3}'></a>",
-                                             aOpcoes["TIPO"].ElementAt(x), aOpcoes["PAGINA"].ElementAt(x), aOpcoes["IMAGEM"].ElementAt(x), aOpcoes["DESCRICAO"].ElementAt(x));
+                    cLinha += "&nbsp;  <a name='" + aOpcoes["TIPO"].ElementAt(x) + "' href data-bind=\"click: $root.manutencao, attr: {title : '" + aOpcoes["PAGINA"].ElementAt(x) + "'} \"><img src='" + aOpcoes["IMAGEM"].ElementAt(x) + "' width=18px height=16px border='0' title='"+ aOpcoes["DESCRICAO"].ElementAt(x) + "'></a>";
                 }
 
                 cLinha += "   </td>";
@@ -256,10 +369,10 @@ namespace Recursos
                 if (lTemStatus)
                 {
                     //cLinha += format('<td data-bind="template: { name: $root.displayStatus, foreach: $root.statuss%s }"></td>',[cTabela]);
-                    cLinha += String.Format("<td data-bind=\"template: { "+"name: 'statusTemplate1', data: IMGSTATUS }\"></td>",cTabela);
+                    cLinha += "<td data-bind=\"template: {name: 'statusTemplate1', data: IMGSTATUS }\"></td>";
                 }
 
-                for (int x = 0; x < aCampos.Count; x++)
+                for (int x = 0; x < aCampos["CAMPO"].Count; x++)
                 {
                     if (String.IsNullOrEmpty(cStrLinha))
                     {
@@ -276,9 +389,11 @@ namespace Recursos
 
                 cStrLinha += cLinha;
 
+                lOk = true;
+
             } while (false);
 
-            return cHtml;
+            return lOk;
 
         }
     }

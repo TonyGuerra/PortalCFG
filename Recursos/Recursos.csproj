@@ -339,5 +339,8 @@
   <ItemGroup>
     <None Include="Resources\core.css.css" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\campos_browse.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
