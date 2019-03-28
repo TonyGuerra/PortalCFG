@@ -27,7 +27,7 @@ namespace Recursos
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string cQueryString = HttpUtility.UrlDecode(request.Url.Query);
             string cJSon = HttpUtility.UrlDecode(cDados.Replace("dados=", ""));
-            dynamic oLogin = serializer.Deserialize<dynamic>(cJSon);
+            dynamic oLogin = null;
             string cHtml = "ERRO: Html nao atribuido";
 
             LogFile.Log(" --- Tabelas_Cadastro:");
@@ -36,6 +36,15 @@ namespace Recursos
             {
                 int nP = (cQueryString.Contains("dados=") ? 7 : 1);
                 cJSon = MeuLib.Base64Decode(cQueryString.Substring(nP));
+                oLogin = serializer.Deserialize<dynamic>(cJSon);
+            } else
+            {
+                if  (cJSon.Contains("&"))
+                {
+                    int nP = cJSon.IndexOf('&');
+                    cJSon = cJSon.Substring(0, nP);
+                }
+
                 oLogin = serializer.Deserialize<dynamic>(cJSon);
             }
 
@@ -46,7 +55,7 @@ namespace Recursos
 
                 if (cHtml.Contains("Sessao Expirou")) { break; }
 
-                string cTabela = oLogin["taborigem"]; //Convert.ToString(oLogin["tabela"]);
+                string cTabela = Convert.ToString(oLogin["tabela"]);
                 string cTabOrigem = oLogin["taborigem"];
                 string cTabPasta = oLogin["taborigem"]; //Convert.ToString(oLogin["tabela"]);
                 string cOrigem = oLogin["origem"];
@@ -150,13 +159,13 @@ namespace Recursos
                 {
                     if (String.IsNullOrEmpty(cPastas))
                     {
-                        cJSPastas = "self.items.push(new ItemViewModel(\"Dados\"));";
+                        cJSPastas = "self.items.push(new ItemViewModel('Dados'));";
                     }
                     else
                     {
                         for (int i = 0; i < aPastas.Length; i++)
                         {
-                            cJSPastas += string.Format("self.items.push(new ItemViewModel({0}));", aPastas[i]);
+                            cJSPastas += string.Format("self.items.push(new ItemViewModel('{0}'));", aPastas[i]);
                         }
                     }
                 }
@@ -164,7 +173,7 @@ namespace Recursos
                 {
                     if (String.IsNullOrEmpty(cTabPastas))
                     {
-                        cJSPastas = "self.items.push(new ItemViewModel(\"Dados\"));";
+                        cJSPastas = "self.items.push(new ItemViewModel('Dados'));";
                     }
                     else
                     {
@@ -406,7 +415,7 @@ namespace Recursos
                 string cDestCheckBox = "";
                 Boolean lCheckBox = false;
                 Boolean lCheckNum = false;
-                string cType = "6";
+                string cType = "2";
                 string cValor = "";
                 string cGatilhoClasse = "x";
                 MultiValueDictionary<int, string> aOpcoes = new MultiValueDictionary<int, string>();
@@ -450,12 +459,20 @@ namespace Recursos
                     int nCmpConsulta = Int32.Parse(lsCampos["CONSULTACAMPO"].ElementAt(i));
                     string cCondConsulta = lsCampos["CONSULTACONDICAO"].ElementAt(i);
 
+                    if (cCondConsulta.Contains("|X") && cCondConsulta.Contains("X|"))
+                    {
+                        for (int j = 0; j < aValores.Count; j++)
+                        {
+                            cCondConsulta = cCondConsulta.Replace(aValores[j].ElementAt(0), aValores[j].ElementAt(1));
+                        }
+                    }
+
                     cCmpOpcoes = MeuDB.FConsultaCombo(MeuDB, cTabOrigem, nCodConsulta, nCmpConsulta, cCondConsulta);
 
                     lComboBox = true;
 
                 } /* CONSULTA COMBO */
-                else
+                
 
 /* CHECKBOX */ if (lsCampos["CONSULTATIPO"].ElementAt(i) == "3")
                 {
@@ -480,7 +497,7 @@ namespace Recursos
                 } /* PERIODO */
                 else
 
-/* CHECKNUM */ if (lsCampos["CONSULTATIPO"].ElementAt(i) == "4")
+/* CHECKNUM */ if (lsCampos["CONSULTATIPO"].ElementAt(i) == "5")
                 {
                     cTabCheckBox = lsCampos["CONSULTACODIGO"].ElementAt(i);
                     cCmpCheckBox = lsCampos["CONSULTACAMPO"].ElementAt(i);
@@ -687,8 +704,10 @@ namespace Recursos
                     cJSon += " ]";
                 }
 
-                aValores.Add(i, "|X" + cCampo + "X|");  //Adiciona para Macro substituição de campos
-                aValores.Add(i, cValor);
+                int z = aValores.Count;
+
+                aValores.Add(z, "|X" + cCampo + "X|");  //Adiciona para Macro substituição de campos
+                aValores.Add(z, cValor);
 
             } //for(i)(lsCampos)
 
@@ -698,6 +717,9 @@ namespace Recursos
 
             cJSon = cJSon.Replace("\\x", "!!x");
             cJSon = cJSon.Replace("\\u", "!!u");
+
+            //LogFile.Log(" --- cJSon: ");
+            //LogFile.Log(cJSon);
 
             return cJSon;
 

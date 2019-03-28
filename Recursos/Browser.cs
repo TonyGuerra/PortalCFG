@@ -495,8 +495,8 @@ namespace Recursos
 
             } while (false);
 
-            LogFile.Log(" --- cJSon: ");
-            LogFile.Log(cHtml);
+            //LogFile.Log(" --- cJSon: ");
+            //LogFile.Log(cHtml);
 
             LogFile.Log(" --- Fim Obter_Browser!");
 
@@ -718,7 +718,7 @@ namespace Recursos
 
             //cJSon = MeuLib.LimpaCaracterControle(cJSon);
 
-            LogFile.Log(cJSon);
+            //LogFile.Log(cJSon);
             
             return cJSon;
         }

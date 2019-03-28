@@ -59,16 +59,7 @@ function fCopiar() {
 <body style="color:#0080FF; font-family: Arial; font-style: normal; text-decoration: none; font-size: 10pt; width:102%;zoom:90%;">
 
 <Form name="form1" id="form1" method="post" action="">
-<input name="cTrace1" id="cTrace1" type="hidden" value="!XTRACE!">
-<input name="cTrace2" id="cTrace2" type="hidden" value="Campos Browse > ">
-<input name="cLogin" id="cLogin" type="hidden" value="!XLOGIN!">
-<input name="cSessao" id="cSessao" type="hidden" value="!XSESSAO!">
-<input name="cMenu" id="cMenu" type="hidden" value="!XMENU!">
-<input name="cTabela" id="cTabela" type="hidden" value="!XTABELA!">
-<input name="cNomeTabela" id="cNomeTabela" type="hidden" value="!XNOMETABELA!">
-<input name="cTipoTabela" id="cTipoTabela" type="hidden" value="Tabela">
-<input name="cTabPasta" id="cTabPasta" type="hidden" value="!XTABPASTA!">
-<input name="cOrigem" id="cOrigem" type="hidden" value="BROWSE">
+
 <input name="dados" id="dados" type="hidden" value=""/>
 
 <div id="divCabecalho" name="divCabecalho" style="visibility:hidden;">
@@ -314,8 +305,8 @@ function fCopiar() {
 
 <script type='text/javascript'>
 
-    var cTrace1 = document.form1.cTrace1.value;
-    var cTrace2 = document.form1.cTrace2.value;
+    //var cTrace1 = document.form1.cTrace1.value;
+    //var cTrace2 = document.form1.cTrace2.value;
 
 	//parent.DATA.caminho(vm.cTrace1+vm.cTrace2);
      //parent.Frame1.hmheader.fMeudiv(cTrace1, cTrace2);
@@ -327,10 +318,17 @@ function fCopiar() {
 function ViewModel() {
         var self = this;
 
-        self.cLogin         = '!XLOGIN!';
-        self.cSessao        = '!XSESSAO!';
-        self.cTabela        = '!XTABELA!';
-        self.cFiltro          = '!XVIEWFILTRO!';
+        self.cLogin       = '!XLOGIN!';
+        self.cSessao      = '!XSESSAO!';
+        self.cTabela      = '!XTABELA!';
+        self.cFiltro      = '!XVIEWFILTRO!';
+		self.cTrace1      = '!XTRACE!';
+		self.cTrace2      = 'Campos Browse > ';
+		self.cMenu        = '!XMENU!';
+		self.cNometabela  = '!XNOMETABELA!';
+		self.cTipoTabela  = 'Campos';
+		self.cTabPasta    = '!XTABPASTA!';
+		self.cOrigem      = 'BROWSE';
 
         self.obterDados   = ko.observable();
 
@@ -422,8 +420,16 @@ function ViewModel() {
 
         //--------- Opcao de manutencao -------
         self.manutencao = function(data,geral) {
-             //console.log(geral.currentTarget.name) ;
-             document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: self.cSessao, operacao:  geral.currentTarget.name, codigo: data.idSequencial, taborigem: self.cTabela, tabela: data.tabela});
+             console.log(geral.currentTarget.name);
+             console.log(geral.currentTarget.title);
+             console.log(self.cTabela);
+             console.log(data.tabela());  //Dados do JSon do Browser
+
+             document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: self.cSessao, operacao:  geral.currentTarget.name, 
+					                                          codigo: data.idSequencial(), taborigem: self.cTabela, tabela: data.tabela(), 
+															  origem: self.cOrigem, tipotabela: self.cTipoTabela, paginaatu: 1,
+															  paginafim: 1, trace1: self.cTrace1, trace2: self.cTrace2, 
+															  menu: self.cMenu, filtro: self.cFiltro})
              document.form1.action = geral.currentTarget.title;
              document.form1.submit();
        }
@@ -431,7 +437,11 @@ function ViewModel() {
         //--------- Opcao de inclusao -------
         self.xinclusao = function(data,geral) {
              //console.log(geral.currentTarget.title) ;
-             document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: self.cSessao, operacao:  3, codigo: 0, taborigem: self.cTabela, tabela: geral.currentTarget.name});
+             document.form1.dados.value = ko.toJSON({ login: self.cLogin, sessao: self.cSessao, operacao:  3, 
+					                                          codigo: 0, taborigem: self.cTabela, tabela: data.tabela(), 
+															  origem: self.cOrigem, tipotabela: self.cTipoTabela, paginaatu: 1,
+															  paginafim: 1, trace1: self.cTrace1, trace2: self.cTrace2, 
+															  menu: self.cMenu, filtro: self.cFiltro})
              document.form1.action = geral.currentTarget.title;
              document.form1.submit();
        }

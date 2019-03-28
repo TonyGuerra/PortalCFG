@@ -57,7 +57,7 @@ namespace Recursos
 
                 //--------------- Campos da tabela --------------------------------------------------
 
-                string cTabela = Convert.ToString(oLogin["tabela"]);
+                string cTabela = Convert.ToString(oLogin["codigo"]);
                 string cFiltrarSN = "I";  //Ignorar o filtro automatico
                 string cFiltro = MeuLib.Base64Encode(" WHERE id0aa40tabelas = " + cTabela);  //Filtro para todas as tabelas pela tabela origem
                 string cTrace1 = oLogin["trace1"] + oLogin["trace2"];
