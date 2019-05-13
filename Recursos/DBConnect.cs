@@ -368,7 +368,7 @@ namespace Recursos
                 cCondConsulta = (cCondConsulta.Trim() == "" ? "" : " And " + cCondConsulta);
                 cCondConsulta = cCondConsulta.Replace("|||XTABORIGEM|||", cTabela);
                 cCondConsulta = cCondConsulta.Replace("|||XNMTABORIGEM|||", cNomeTabela);
-                cCondConsulta = cCondConsulta.Replace("|XCONSULTACODIGOX|", nCodConsulta.ToString());
+                cCondConsulta = cCondConsulta.Replace("|||XCONSULTACODIGO|||", nCodConsulta.ToString());
 
                 cQuery = string.Format("SELECT idSequencial, {0} FROM {1} WHERE idSequencial > 0 {2} Order by {3} ", cCmpConsulta, cTabConsulta, cCondConsulta, cCmpConsulta);
 

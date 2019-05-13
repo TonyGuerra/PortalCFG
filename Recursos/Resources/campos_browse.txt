@@ -328,7 +328,7 @@ function ViewModel() {
 		self.cNometabela  = '!XNOMETABELA!';
 		self.cTipoTabela  = 'Campos';
 		self.cTabPasta    = '!XTABPASTA!';
-		self.cOrigem      = 'BROWSE';
+		self.cOrigem      = 'ATRIBUTOS';
 
         self.obterDados   = ko.observable();
 
@@ -341,6 +341,12 @@ function ViewModel() {
         self.atualMINIGRUPO = 'xxxxx';
         self.indiceMINIGRUPO = -1;
 
+		var nP = self.cTrace1.indexOf(self.cTrace2);
+				
+		if  (nP >= 0) {
+			self.cTrace1 = self.cTrace1.substr(0,nP);
+		}
+			   
         self.veGRUPO = function(indice, TR_GRUPO) {
 
                   if  (self.indiceGRUPO >= indice) {return false;}
@@ -454,6 +460,8 @@ ko.applyBindings(vm);
 
 // Executa a obtencao dos dados para o bind:with
 vm.obterBrowse();
+
+parent.DATA.caminho(vm.cTrace1+vm.cTrace2);
 
 //document.form1.cLoad.value = '2'; //proxima reentrada recarrega os dados.
 $(document).ajaxComplete(function(){

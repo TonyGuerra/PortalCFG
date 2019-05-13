@@ -110,6 +110,8 @@
     document.form1.XSEQUENCIAL1.focus();
 
     parent.DATA.caminho(cTrace1+cTrace2);
+	parent.DATA.showVoltar(true);
+
     //parent.Frame1.hmheader.meutd1.innerHTML='';
     //parent.Frame1.hmheader.meutd2.innerHTML='';
     //parent.Frame1.hmheader.meutd3.innerHTML='';

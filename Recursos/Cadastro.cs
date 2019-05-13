@@ -59,6 +59,7 @@ namespace Recursos
                 string cTabOrigem = oLogin["taborigem"];
                 string cTabPasta = oLogin["taborigem"]; //Convert.ToString(oLogin["tabela"]);
                 string cOrigem = oLogin["origem"];
+                string cPaginaVoltar = (cOrigem == "ATRIBUTOS" ? "campos_browse" : "pagina_browser");
                 string[] aOp = { "", "", "VISUALIZAR", "INCLUIR", "ALTERAR", "EXCLUIR", "", "" };
                 string cOperacao = oLogin["operacao"];
                 string cDescOperacao = aOp[Int32.Parse(cOperacao)];
@@ -165,7 +166,7 @@ namespace Recursos
                     {
                         for (int i = 0; i < aPastas.Length; i++)
                         {
-                            cJSPastas += string.Format("self.items.push(new ItemViewModel('{0}'));", aPastas[i]);
+                            cJSPastas += string.Format("self.items.push(new ItemViewModel('{0}'));", aPastas[i].Substring(2));
                         }
                     }
                 }
@@ -180,7 +181,7 @@ namespace Recursos
                         for (int i = 0; i < aTabPastas.Length; i++)
                         {
                             //Acento no formato JSon: 0=Configuração =>> eval("'0=Configura!!xE7!!xE3o'".replace(/!!x/g,'\\x'))
-                            cJSPastas += string.Format("self.items.push(new ItemViewModel(eval(\"'{0}'\".replace(/!!x/g,'\\\\x'))));", aTabPastas[i]);
+                            cJSPastas += string.Format("self.items.push(new ItemViewModel(eval(\"'{0}'\".replace(/!!x/g,'\\\\x'))));", aTabPastas[i].Substring(2));
                         }
                     }
                 }
@@ -189,6 +190,9 @@ namespace Recursos
                 //LogFile.Log(cJSPastas);
 
                 cJSPastas = MeuLib.JSONAcento(cJSPastas);
+
+                cJSPastas = cJSPastas.Replace("!!x", "\\x");
+                cJSPastas = cJSPastas.Replace("!!u", "\\u");
 
                 //LogFile.Log(cJSPastas);
 
@@ -208,6 +212,7 @@ namespace Recursos
                 cHtml = cHtml.Replace("!XNOMETABORIGEM!", cNomeTabOrigem);
                 cHtml = cHtml.Replace("!XCODIGO!", cCodigo);
                 cHtml = cHtml.Replace("!XORIGEM!", cOrigem);
+                cHtml = cHtml.Replace("!XPAGINAVOLTAR!", cPaginaVoltar);
                 cHtml = cHtml.Replace("!XCHAVE!", cChave);
                 cHtml = cHtml.Replace("!XITEM!", "000");
                 cHtml = cHtml.Replace("!XFILTRO!", cFiltro);
@@ -715,9 +720,6 @@ namespace Recursos
 
             cJSon = MeuLib.JSONAcento(cJSon);
 
-            cJSon = cJSon.Replace("\\x", "!!x");
-            cJSon = cJSon.Replace("\\u", "!!u");
-
             //LogFile.Log(" --- cJSon: ");
             //LogFile.Log(cJSon);
 
@@ -792,6 +794,8 @@ namespace Recursos
                 }
 
                 //------------------ Dados da tabela de itens
+
+                campos = new List<string>(new string[] { "idSequencial" });
 
                 cQuery = string.Format("SELECT * FROM {0} WHERE {1} = {2} ", cNomeTabela, cCmpIdPai, cTabOrigem);
                 for (int i = 0; i < lsCampos["CAMPO"].Count; i++) { campos.Add(lsCampos["CAMPO"].ElementAt(i)); } //Campos do item
@@ -990,18 +994,19 @@ namespace Recursos
                         {
                             if (cCampo == "STATUS")
                             {
-                                cJTitulo2 = "{" + String.Format("\"titulo\": \"{0}\"}", lsCampos["TITULO"].ElementAt(j)) +
-                                            (String.IsNullOrEmpty(cJTitulo2) ? "" : ",") + cJTitulo2;
+                                cJTitulo2 = "{" + String.Format("\"titulo\": \"{0}\"", lsCampos["TITULO"].ElementAt(j)) + 
+                                            "}" + (String.IsNullOrEmpty(cJTitulo2) ? "" : ",") + cJTitulo2;
                             }
                             else
                             {
-                                cJTitulo2 += (String.IsNullOrEmpty(cJTitulo2) ? "" : ",") + "{" + String.Format("\"titulo\": \"{0}\"}", lsCampos["TITULO"].ElementAt(j));
+                                cJTitulo2 += (String.IsNullOrEmpty(cJTitulo2) ? "" : ",") + "{" +
+                                             String.Format("\"titulo\": \"{0}\"", lsCampos["TITULO"].ElementAt(j)) + "}";
                             }
                         }
 
                         if (cCampo == "STATUS")
                         {
-                            cJItem3 = "{" + String.Format("{0}}", cJItem4) +
+                            cJItem3 = "{" + String.Format("{0}", cJItem4) + "}" +
                                       (String.IsNullOrEmpty(cJItem3) ? "" : ",") + cJItem3;
                         }
                         else
@@ -1041,7 +1046,7 @@ namespace Recursos
 
                             if (cCampo == "STATUS")
                             {
-                                cJItemV3 = "{" + String.Format("{0}}", cJItemV4) +
+                                cJItemV3 = "{" + String.Format("{0}", cJItemV4) + "}" +
                                           (String.IsNullOrEmpty(cJItemV3) ? "" : ",") + cJItemV3;
                             }
                             else
@@ -1055,11 +1060,11 @@ namespace Recursos
 
                     ++nItem;
 
-                    cJItem2 += (String.IsNullOrEmpty(cJItem2) ? "" : ",") + "{" + String.Format("\"xitemid\"  : {0}, \"xitemsts\" : 8, \"xitemreg\" : {1}, \"xitem\" : [{2}]}", nItem.ToString(), lsDados["idSequencial"].ElementAt(i), cJItem3);
+                    cJItem2 += (String.IsNullOrEmpty(cJItem2) ? "" : ",") + "{" + String.Format("\"xitemid\"  : {0}, \"xitemsts\" : 8, \"xitemreg\" : {1}, \"xitem\" : [{2}]", nItem.ToString(), lsDados["idSequencial"].ElementAt(i), cJItem3) + "}"; 
 
                     if (lItemVazio)
                     {
-                        cJItemV2 += (String.IsNullOrEmpty(cJItemV2) ? "" : ",") + "{" + String.Format("\"xitemid\"  : {0}, \"xitemsts\" : 1, \"xitemtab\" : {1}, \"xitem\" : [{2}]}", nItem.ToString(), cTabItens, cJItem3);
+                        cJItemV2 += (String.IsNullOrEmpty(cJItemV2) ? "" : ",") + "{" + String.Format("\"xitemid\"  : {0}, \"xitemsts\" : 1, \"xitemtab\" : {1}, \"xitem\" : [{2}]", nItem.ToString(), cTabItens, cJItem3) + "}";
                     }
 
                     lItemVazio = false;
@@ -1081,8 +1086,8 @@ namespace Recursos
 
             cJSon = MeuLib.JSONAcento(cJSon);
 
-            cJSon = cJSon.Replace("\\x", "!!x");
-            cJSon = cJSon.Replace("\\u", "!!u");
+            LogFile.Log(" --- cJSon: ");
+            LogFile.Log(cJSon);
 
             return cJSon;
 

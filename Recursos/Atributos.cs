@@ -21,23 +21,42 @@ namespace Recursos
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string cQueryString = HttpUtility.UrlDecode(request.Url.Query);
-            string cJSon = HttpUtility.UrlDecode(cDados.Replace("dados=", ""));
-            dynamic oLogin = serializer.Deserialize<dynamic>(cJSon);
+            dynamic oLogin = null;
             string cHtml = "ERRO: Html nao atribuido";
 
             LogFile.Log(" --- Campos_Browse:");
 
-            if (!String.IsNullOrEmpty(cQueryString))
+            if (String.IsNullOrEmpty(cQueryString))
+            {
+                cQueryString = HttpUtility.UrlDecode(cDados);
+
+                if ((cQueryString.Substring(0, 1) == "{") || (cQueryString.Substring(0, 7) == "dados={")) //(cQueryString.Contains("&") && cQueryString.Contains("="))
+                {
+                    if (cQueryString.Contains("}&"))
+                    {
+                        var nP = cQueryString.IndexOf("}&");
+                        cQueryString = cQueryString.Substring(0, nP + 1);
+                    }
+
+                    oLogin = serializer.Deserialize<dynamic>(cQueryString.Replace("dados=", ""));
+                }
+                else
+                {
+                    oLogin = MeuLib.DMatriz(cQueryString, '&', '=');
+                }
+            }
+            else
             {
                 int nP = (cQueryString.Contains("dados=") ? 7 : 1);
-                cJSon = MeuLib.Base64Decode(cQueryString.Substring(nP));
+                string cJSon = cQueryString.Substring(nP);
+                if (!cJSon.Contains("{")) { cJSon = MeuLib.Base64Decode(cJSon); }
                 oLogin = serializer.Deserialize<dynamic>(cJSon);
             }
 
             do
             {
 
-                cHtml = Distribuidor.Generico(request, MeuDB, MeuLib, cMeuPath, cJSon);
+                cHtml = Distribuidor.Generico(request, MeuDB, MeuLib, cMeuPath, cDados);
 
                 if (cHtml.Contains("Sessao Expirou")) { break; }
 
@@ -65,6 +84,9 @@ namespace Recursos
                 string cCabecalho = "";
                 string cLinha = "";
                 string cMenu = "24"; //Menu de estrutura CAMPOS - M0101ST01
+
+                LogFile.Log(string.Format("Tabela: {0}", oLogin["tabela"]));
+                LogFile.Log(string.Format("Codigo: {0}", oLogin["codigo"]));
 
                 if ( ! Campos_Browse_HTML(MeuDB, MeuLib, oLogin, cHtml, cFiltrarSN, cMenu, "8", cFiltro, ref cTrace2, ref cCabecalho, ref cLinha) ) { break; }
 

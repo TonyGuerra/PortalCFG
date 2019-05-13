@@ -467,13 +467,19 @@ namespace Recursos
             {
                 cQueryString = HttpUtility.UrlDecode(cDados);
 
-                if (cQueryString.Contains("&") && cQueryString.Contains("="))
+                if ((cQueryString.Substring(0, 1) == "{") || (cQueryString.Substring(0,7) == "dados={")) //(cQueryString.Contains("&") && cQueryString.Contains("="))
                 {
-                    oLogin = MeuLib.DMatriz(cQueryString, '&', '=');
+                    if (cQueryString.Contains("}&"))
+                    {
+                        var nP = cQueryString.IndexOf("}&");
+                        cQueryString = cQueryString.Substring(0, nP+1);
+                    }
+
+                    oLogin = serializer.Deserialize<dynamic>(cQueryString.Replace("dados=", ""));
                 }
                 else
                 {
-                    oLogin = serializer.Deserialize<dynamic>(cQueryString.Replace("dados=", ""));
+                    oLogin = MeuLib.DMatriz(cQueryString, '&', '=');
                 }
             }
             else

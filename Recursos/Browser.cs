@@ -30,7 +30,7 @@ namespace Recursos
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string cQueryString = HttpUtility.UrlDecode(request.Url.Query);
             string cJSon = cDados.Replace("dados=", "");
-            dynamic oLogin = serializer.Deserialize<dynamic>(cJSon);
+            dynamic oLogin = null;
             string cHtml = "ERRO: Html nao atribuido";
 
             LogFile.Log(" --- Tabelas_Filtro:");
@@ -39,6 +39,16 @@ namespace Recursos
             {
                 int nP = (cQueryString.Contains("dados=") ? 7 : 1);
                 cJSon = MeuLib.Base64Decode(cQueryString.Substring(nP));
+                oLogin = serializer.Deserialize<dynamic>(cJSon);
+            }
+            else
+            {
+                if (cJSon.Contains("&"))
+                {
+                    int nP = cJSon.IndexOf('&');
+                    cJSon = cJSon.Substring(0, nP);
+                }
+
                 oLogin = serializer.Deserialize<dynamic>(cJSon);
             }
 
@@ -199,22 +209,31 @@ namespace Recursos
 
             LogFile.Log(" --- Pagina_Browser:");
 
-            if  (String.IsNullOrEmpty(cQueryString))
+            if (String.IsNullOrEmpty(cQueryString))
             {
                 cQueryString = HttpUtility.UrlDecode(cDados);
 
-                if (cQueryString.Contains("&") && cQueryString.Contains("="))
+                if ((cQueryString.Substring(0, 1) == "{") || (cQueryString.Substring(0, 7) == "dados={")) //(cQueryString.Contains("&") && cQueryString.Contains("="))
+                {
+                    if (cQueryString.Contains("}&"))
+                    {
+                        var nP = cQueryString.IndexOf("}&");
+                        cQueryString = cQueryString.Substring(0, nP + 1);
+                    }
+
+                    oLogin = serializer.Deserialize<dynamic>(cQueryString.Replace("dados=", ""));
+                }
+                else
                 {
                     oLogin = MeuLib.DMatriz(cQueryString, '&', '=');
-                } else
-                {
-                    oLogin = serializer.Deserialize<dynamic>(cQueryString.Replace("dados=", ""));
                 }
             }
             else
             {
                 int nP = (cQueryString.Contains("dados=") ? 7 : 1);
-                oLogin = serializer.Deserialize<dynamic>(cQueryString.Substring(nP));
+                string cJSon = cQueryString.Substring(nP);
+                if (!cJSon.Contains("{")) { cJSon = MeuLib.Base64Decode(cJSon); }
+                oLogin = serializer.Deserialize<dynamic>(cJSon);
             }
 
             do
@@ -260,8 +279,8 @@ namespace Recursos
                 
                 if (oLogin.ContainsKey("paginaatu"))
                 {
-                    nPaginaAtu = Int32.Parse(oLogin["paginaatu"]);
-                    nPaginaFim = Int32.Parse(oLogin["paginafim"]);
+                    nPaginaAtu = (((oLogin["paginaatu"]).GetType()).Name.Contains("string") ? Int32.Parse(oLogin["paginaatu"]) : oLogin["paginaatu"]);
+                    nPaginaFim = (((oLogin["paginafim"]).GetType()).Name.Contains("string") ? Int32.Parse(oLogin["paginafim"]) : oLogin["paginafim"]);
                     cTrace1    = oLogin["trace1"];
                 }
                 else
@@ -460,6 +479,7 @@ namespace Recursos
                 cFiltro = MeuLib.Base64Decode(cFiltro);
 
                 LogFile.Log(" --- tabela(s): " + oLogin["tabela"]);
+                LogFile.Log(" ---   cFiltro: " + cFiltro);
 
                 string[] aTabela = null;
 

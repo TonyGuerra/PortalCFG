@@ -137,7 +137,16 @@ namespace PortalCFG
                                 // always close the stream
                                 if (ctx != null)
                                 {
-                                    ctx.Response.OutputStream.Close();
+                                    try
+                                    {
+                                        ctx.Response.OutputStream.Close();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        LogFile.Log(cMensagem);
+                                        LogFile.Log(ex.Message);
+                                        LogFile.Log(ex.StackTrace);
+                                    }
                                 }
                             }
                         }, _listener.GetContext());

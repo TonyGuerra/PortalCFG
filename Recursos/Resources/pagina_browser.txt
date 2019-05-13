@@ -353,9 +353,7 @@
 		vm.MontaTabela();
 
 		parent.DATA.caminho(vm.cTrace1+vm.cTrace2);
-		//parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:history.go(-1);" style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
-		//parent.Frame1.hmheader.meutd2.innerHTML='';
-		//parent.Frame1.hmheader.meutd3.innerHTML='';
+		parent.DATA.showVoltar(false);
 
 	}
 

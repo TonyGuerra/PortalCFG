@@ -8,28 +8,6 @@
     <script type='text/javascript' src='knockout.js'></script>
     <script type="text/javascript" src="knockout.mapping-latest.js"></script>
 
-
-	    <script type="text/javascript">
-
-		  //function DATA() {
-		  //  var self = this;
-		//	self.showMenu= ko.observable(true);
-		//	self.caminho = ko.observable('>> Principal');
-		 // };
-		 
-		 var DATA = {
-		 	caminho: ko.observable('>> Principal'),
-			showMenu: ko.observable(true),
-			menuExplicativo: ko.observable('menutree_explicativo?dados={"login":"!XLOGIN!","sessao":"!XSESSAO!"}') 
-		 }
-		
-		window.onload = function() {
-		  ko.applyBindings(DATA);
-		};
-		
-
-	</script>
-	
 	<STYLE type="text/css">
 
 		html{
@@ -83,6 +61,31 @@
 	   
    </STYLE>
 
+    <script type="text/javascript">
+
+		  //function DATA() {
+		  //  var self = this;
+		//	self.showMenu= ko.observable(true);
+		//	self.caminho = ko.observable('>> Principal');
+		 // };
+		 
+		 var DATA = {
+		 	caminho: ko.observable('>> Principal'),
+			showMenu: ko.observable(true),
+			showVoltar: ko.observable(false),
+			menuExplicativo: ko.observable('menutree_explicativo?dados={"login":"!XLOGIN!","sessao":"!XSESSAO!"}'),
+			fFunVoltar : function() {
+                       alert("fVoltar: nao trocou!");
+            }
+		 }
+		
+		window.onload = function() {
+		  ko.applyBindings(DATA);
+		};
+		
+
+	</script>
+	
   </head>
 
   <body>

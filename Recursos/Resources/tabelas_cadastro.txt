@@ -24,14 +24,54 @@
 
 <script type='text/javascript'>
 
-function fVoltar() { 
-   document.form1.action = "pagina_browser";
-   document.form1.submit()
+var fVoltar = function() { 
+
+    var aCpDados = vm.aDados();
+    aCpDados = ko.toJS(aCpDados);
+    delete aCpDados.__ko_mapping__;  //Retira a propriedade de mapeamente para validar/gravar os dados;
+
+	//console.log('aCpDados')
+	//console.log(aCpDados)
+
+	var cAction = "!XPAGINAVOLTAR!";
+	var cTabela = "";
+	var cCodigo = "";
+
+	if (cAction == "campos_browse") {
+		cTabela = vm.cTabOrigem;
+		cCodigo = vm.cTabOrigem;
+	} 
+	else {
+		cTabela = vm.cTabela;
+		cCodigo = vm.cCodigo;
+	}
+
+	var cJson = ko.toJSON( { login: vm.cLogin, sessao: vm.cSessao, tabela: cTabela, codigo: cCodigo, operacao: vm.cOperacao, 
+	                         taborigem: vm.cTabOrigem, menu: vm.cMenu, origem: vm.cOrigem, paginaatu: vm.nPaginaAtu, 
+							 paginafim: vm.nPaginaFim, filtro: vm.cFiltro, trace1: vm.cTrace1, trace2: vm.cTrace2, dados: aCpDados });
+
+	document.form1.dados.value = cJson;
+
+	//console.log('document.form1.dados.value')
+	//console.log(document.form1.dados.value)
+
+    document.form1.action = cAction;
+    document.form1.submit()
+
 }
 
 function fFiltro(cTabela) { 
 
-    document.form1.action = cTabela+"_filtro?cMenu=!XMENU!";
+	var cTabela = "";
+	var cCodigo = "";
+
+	var cJson = ko.toJSON( { login: vm.cLogin, sessao: vm.cSessao, tabela: vm.cTabela, codigo: vm.cCodigo, operacao: vm.cOperacao, 
+	                         taborigem: vm.cTabOrigem, menu: vm.cMenu, origem: vm.cOrigem, paginaatu: vm.nPaginaAtu, 
+							 paginafim: vm.nPaginaFim, filtro: vm.cFiltro, trace1: vm.cTrace1, trace2: vm.cTrace2 });
+
+	document.form1.dados.value = cJson;
+
+    document.form1.action = "tabelas_filtro";
     document.form1.submit();
          
 }
@@ -58,24 +98,8 @@ function Right(str, n){
 <body style="color:#0080FF; margin-left:10px; font-family: Arial; font-style: normal; text-decoration: none; font-size: 10pt;width:98%;" onload="Init()">
 
 <form name="form1" id="form1" method="post" action="">
-<input name="trace1" id="trace1" type="hidden" value="!XTRACE1!">
-<input name="trace2" id="trace2" type="hidden" value="!XTRACE2!">
-<input name="login" id="login" type="hidden" value="!XLOGIN!">
-<input name="sessao" id="sessao" type="hidden" value="!XSESSAO!">
-<input name="menu" id="menu" type="hidden" value="!XMENU!">
-<input name="tabela" id="tabela" type="hidden" value="!XTABELA!">
-<input name="nometabela" id="nometabela" type="hidden" value="!XNOMETABELA!">
-<input name="registro" id="registro" type="hidden" value="!XREGISTRO!">
-<input name="origem" id="origem" type="hidden" value="!XORIGEM!">
-<input name="item" id="item" type="hidden" value="!XITEM!">
-<input name="itensexcluidos" id="itensexcluidos" type="hidden" value="">
-<input name="operacao" id="operacao" type="hidden" value="!XOPERACAO!">
-<input name="filtro" id="filtro" type="hidden" value="!XFILTRO!">
-<input name="paginaatu" id="paginaatu" type="hidden" value=!XPAGINAATU!>
-<input name="paginafim" id="paginafim" type="hidden" value=!XPAGINAFIM!>
 
 <input type="hidden" id="dados" name="dados" value=""/>
-
 
 <div id="DivGeral" name="DivGeral" style="visibility: hidden">
 
@@ -326,9 +350,13 @@ function Right(str, n){
 <div class="leftTitulo" style="position:relative;width:27%;Top:1mm;text-align:right;">
 <Input TYPE=button NAME="XVoltar" VALUE="Voltar" style="border-color:#808080;border-width:thin;" SIZE=10 onclick="javascript:fVoltar();" />
 </div>
-<div class="leftTitulo" style="position:relative; width: 68px;Top:1mm;left:020px;">
-<Input TYPE=button NAME="XFiltrar" VALUE="Filtro" style="border-color:#808080;border-width:thin;" SIZE=10 onclick="javascript:fFiltro('!XCHAVE!');" />
-</div>
+
+<!-- ko ifnot: (vm.cNomeTabela === "aa41campos") -->
+	<div class="leftTitulo" style="position:relative; width: 68px;Top:1mm;left:020px;">
+	<Input TYPE=button NAME="XFiltrar" VALUE="Filtro" style="border-color:#808080;border-width:thin;" SIZE=10 onclick="javascript:fFiltro('!XCHAVE!');" />
+	</div>
+<!-- /ko -->
+
 <div id='divgravar' class="leftTitulo" style="position:relative; width: 68px;Top:1mm;left:012px;" data-bind="visible: opGravar">
 <Input TYPE=button NAME="XGravar" VALUE="Gravar" style="border-color:#808080;border-width:thin;" SIZE=10 data-bind="click: validaCadastro" />
 </div>
@@ -350,12 +378,6 @@ function Right(str, n){
     var contador = 0;
     var aXLinhas = [];
     var cPasta   = '';
-
-	//parent.document.meuframe.document.getElementById("trace").name
-    //parent.Frame1.hmheader.meutd1.innerHTML='<a href="javascript:parent.Frame2.hmcontent.fVoltar();" style="text-decoration: none;"><ul><li>Voltar</li></ul></a>';
-    //parent.Frame1.hmheader.meutd2.innerHTML='<a href=javascript:parent.Frame2.hmcontent.fFiltro("!XCHAVE!"); style="text-decoration: none;"><ul><li>Filtro</li></ul></a>';
-    //parent.Frame1.hmheader.meutd3.innerHTML='<a href=javascript:parent.Frame2.hmcontent.vm.validaCadastro(); style="text-decoration: none;"><ul><li>Gravar</li></ul></a>';
-
 
     var ItemViewModel = function(title) {
         contador  += 1;
@@ -521,17 +543,24 @@ function ViewModel() {
 
     self.aDados   = ko.observable();
 
-    self.cLogin       = '!XLOGIN!';
-    self.cSessao      = '!XSESSAO!';
-    self.cTabela      = '!XTABELA!';
-    self.cCodigo      = '!XCODIGO!';
-    self.cTabOrigem   = '!XTABORIGEM!';
-    self.cOperacao    = '!XOPERACAO!';
-    self.aLinhas      = ko.observableArray([{id: "ok", valor: "ok"}]);
-	self.cTrace1      = '!XTRACE1!';
-	self.cTrace2      = '!XTRACE2!';
-	self.cFiltro      = '!XFILTRO!';
-
+    self.cLogin          = '!XLOGIN!';
+    self.cSessao         = '!XSESSAO!';
+    self.cTabela         = '!XTABELA!';
+    self.cNomeTabela     = '!XNOMETABELA!';
+    self.cCodigo         = '!XCODIGO!';
+    self.cTabOrigem      = '!XTABORIGEM!';
+    self.cOperacao       = '!XOPERACAO!';
+    self.aLinhas         = ko.observableArray([{id: "ok", valor: "ok"}]);
+	self.cTrace1         = '!XTRACE1!';
+	self.cTrace2         = '!XTRACE2!';
+	self.cFiltro         = '!XFILTRO!';
+	self.cMenu           = '!XMENU!';
+	//self.nRegistro       = !XREGISTRO!;
+	self.cOrigem         = '!XORIGEM!';
+	self.cItem           = '!XITEM!';
+	self.cItemExcluidos  = '!XITEM!';
+	self.nPaginaAtu      = !XPAGINAATU!;
+	self.nPaginaFim      = !XPAGINAFIM!;
 
     // Comportamento    
 //        self.obterCadastro = function() {
@@ -964,6 +993,8 @@ vm = new ViewModel();
 ko.applyBindings(vm);
 
 parent.DATA.caminho(vm.cTrace1+vm.cTrace2);
+parent.DATA.fFunVoltar = fVoltar;
+parent.DATA.showVoltar(true);
 
 // Executa a obtencao dos dados para o bind:with
 vm.obterCadastro();
